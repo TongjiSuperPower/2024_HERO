@@ -1,21 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * File Name          : freertos.c
-  * Description        : Code for freertos applications
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under Ultimate Liberty license
-  * SLA0044, the "License"; You may not use this file except in compliance with
-  * the License. You may obtain a copy of the License at:
-  *                             www.st.com/SLA0044
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * File Name          : freertos.c
+ * Description        : Code for freertos applications
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under Ultimate Liberty license
+ * SLA0044, the "License"; You may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at:
+ *                             www.st.com/SLA0044
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
@@ -25,7 +25,7 @@
 #include "cmsis_os.h"
 
 /* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */     
+/* USER CODE BEGIN Includes */
 
 #include "calibrate_task.h"
 #include "chassis_task.h"
@@ -80,82 +80,85 @@ osThreadId testHandle;
 
 /* USER CODE END FunctionPrototypes */
 
-void test_task(void const * argument);
-void user_delay_us(uint16_t us); 
-void user_delay_ms(uint16_t ms); 
+void test_task(void const *argument);
+void user_delay_us(uint16_t us);
+void user_delay_ms(uint16_t ms);
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize);
 
 /* GetTimerTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize );
+void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize);
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
 static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
-  
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize )
+
+void vApplicationGetIdleTaskMemory(StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize)
 {
-  *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
-  *ppxIdleTaskStackBuffer = &xIdleStack[0];
-  *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-  /* place for user code */
-}                   
+    *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
+    *ppxIdleTaskStackBuffer = &xIdleStack[0];
+    *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
+    /* place for user code */
+}
 /* USER CODE END GET_IDLE_TASK_MEMORY */
 
 /* USER CODE BEGIN GET_TIMER_TASK_MEMORY */
 static StaticTask_t xTimerTaskTCBBuffer;
 static StackType_t xTimerStack[configTIMER_TASK_STACK_DEPTH];
-  
-void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize )  
+
+void vApplicationGetTimerTaskMemory(StaticTask_t **ppxTimerTaskTCBBuffer, StackType_t **ppxTimerTaskStackBuffer, uint32_t *pulTimerTaskStackSize)
 {
-  *ppxTimerTaskTCBBuffer = &xTimerTaskTCBBuffer;
-  *ppxTimerTaskStackBuffer = &xTimerStack[0];
-  *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
-  /* place for user code */
-}                   
+    *ppxTimerTaskTCBBuffer = &xTimerTaskTCBBuffer;
+    *ppxTimerTaskStackBuffer = &xTimerStack[0];
+    *pulTimerTaskStackSize = configTIMER_TASK_STACK_DEPTH;
+    /* place for user code */
+}
 /* USER CODE END GET_TIMER_TASK_MEMORY */
 
 /**
-  * @brief  FreeRTOS initialization
-  * @param  None
-  * @retval None
-  */
-void MX_FREERTOS_Init(void) {
-  /* USER CODE BEGIN Init */
-       
-  /* USER CODE END Init */
+ * @brief  FreeRTOS initialization
+ * @param  None
+ * @retval None
+ */
+void MX_FREERTOS_Init(void)
+{
+    /* USER CODE BEGIN Init */
 
-  /* USER CODE BEGIN RTOS_MUTEX */
-  /* add mutexes, ... */
-  /* USER CODE END RTOS_MUTEX */
+    /* USER CODE END Init */
 
-  /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
-  /* USER CODE END RTOS_SEMAPHORES */
+    /* USER CODE BEGIN RTOS_MUTEX */
+    /* add mutexes, ... */
+    /* USER CODE END RTOS_MUTEX */
 
-  /* USER CODE BEGIN RTOS_TIMERS */
-  /* start timers, add new ones, ... */
-  /* USER CODE END RTOS_TIMERS */
+    /* USER CODE BEGIN RTOS_SEMAPHORES */
+    /* add semaphores, ... */
+    /* USER CODE END RTOS_SEMAPHORES */
 
-  /* USER CODE BEGIN RTOS_QUEUES */
-  /* add queues, ... */
-  /* USER CODE END RTOS_QUEUES */
+    /* USER CODE BEGIN RTOS_TIMERS */
+    /* start timers, add new ones, ... */
+    /* USER CODE END RTOS_TIMERS */
 
-  /* Create the thread(s) */
-  /* definition and creation of test */
-  osThreadDef(test, test_task, osPriorityNormal, 0, 128);
-  testHandle = osThreadCreate(osThread(test), NULL);
+    /* USER CODE BEGIN RTOS_QUEUES */
+    /* add queues, ... */
+    /* USER CODE END RTOS_QUEUES */
 
-  /* USER CODE BEGIN RTOS_THREADS */
-  /* add threads, ... */
+    /* Create the thread(s) */
+    /* definition and creation of test */
+
+    // 当前该任务中无实际作用，可用作使用蜂鸣器判断错误类型的任务
+    osThreadDef(test, test_task, osPriorityNormal, 0, 128);
+    testHandle = osThreadCreate(osThread(test), NULL);
+
+    /* USER CODE BEGIN RTOS_THREADS */
+    /* add threads, ... */
     osThreadDef(cali, calibrate_task, osPriorityNormal, 0, 512);
     calibrate_tast_handle = osThreadCreate(osThread(cali), NULL);
 
-   osThreadDef(ChassisTask, chassis_task, osPriorityAboveNormal, 0, 512);
-   chassisTaskHandle = osThreadCreate(osThread(ChassisTask), NULL);
+    osThreadDef(ChassisTask, chassis_task, osPriorityAboveNormal, 0, 512);
+    chassisTaskHandle = osThreadCreate(osThread(ChassisTask), NULL);
 
     osThreadDef(DETECT, detect_task, osPriorityNormal, 0, 256);
     detect_handle = osThreadCreate(osThread(DETECT), NULL);
@@ -169,14 +172,11 @@ void MX_FREERTOS_Init(void) {
     osThreadDef(led, led_RGB_flow_task, osPriorityNormal, 0, 256);
     led_RGB_flow_handle = osThreadCreate(osThread(led), NULL);
 
-
     osThreadDef(OLED, oled_task, osPriorityLow, 0, 256);
     oled_handle = osThreadCreate(osThread(OLED), NULL);
 
-
     osThreadDef(REFEREE, referee_usart_task, osPriorityNormal, 0, 128);
     referee_usart_task_handle = osThreadCreate(osThread(REFEREE), NULL);
-
 
     osThreadDef(USBTask, usb_task, osPriorityNormal, 0, 128);
     usb_task_handle = osThreadCreate(osThread(USBTask), NULL);
@@ -186,43 +186,57 @@ void MX_FREERTOS_Init(void) {
 
     osThreadDef(SERVO, servo_task, osPriorityNormal, 0, 128);
     servo_task_handle = osThreadCreate(osThread(SERVO), NULL);
-		
-		osThreadDef(CAPTask, supercap_task, osPriorityNormal, 0, 128);
+
+    osThreadDef(CAPTask, supercap_task, osPriorityNormal, 0, 128);
     supercap_task_handle = osThreadCreate(osThread(CAPTask), NULL);
 
-		buzzer_on(1, 30000);
-		user_delay_ms(300);
-		buzzer_off();	
+    buzzer_on(1, 30000);
+    user_delay_ms(300);
+    buzzer_off();
 
-  /* USER CODE END RTOS_THREADS */
-
+    /* USER CODE END RTOS_THREADS */
 }
 
 /* USER CODE BEGIN Header_test_task */
 /**
-  * @brief  Function implementing the test thread.
-  * @param  argument: Not used 
-  * @retval None
-  */
+ * @brief  Function implementing the test thread.
+ * @param  argument: Not used
+ * @retval None
+ */
 /* USER CODE END Header_test_task */
-__weak void test_task(void const * argument)
+__weak void test_task(void const *argument)
 {
-  /* init code for USB_DEVICE */
-  MX_USB_DEVICE_Init();
+    /* init code for USB_DEVICE */
+    MX_USB_DEVICE_Init();
 
-  /* USER CODE BEGIN test_task */
-  /* Infinite loop */
-  for(;;)
-  {
-    osDelay(1);
-  }
-  /* USER CODE END test_task */
+    /* USER CODE BEGIN test_task */
+    /* Infinite loop */
+    for (;;)
+    {
+        osDelay(1);
+    }
+    /* USER CODE END test_task */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
-void user_delay_us(uint16_t us) { for(; us > 0; us--) { for(uint8_t i = 50; i > 0; i--) { ; } }}
-void user_delay_ms(uint16_t ms) { for(; ms > 0; ms--) { user_delay_us(1000); } }     
+void user_delay_us(uint16_t us)
+{
+    for (; us > 0; us--)
+    {
+        for (uint8_t i = 50; i > 0; i--)
+        {
+            ;
+        }
+    }
+}
+void user_delay_ms(uint16_t ms)
+{
+    for (; ms > 0; ms--)
+    {
+        user_delay_us(1000);
+    }
+}
 /* USER CODE END Application */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

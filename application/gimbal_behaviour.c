@@ -951,18 +951,5 @@ static void gimbal_lob_shot_control(fp32 *yaw, fp32 *pitch, gimbal_control_t *gi
 //    *yaw = yaw_channel * YAW_RC_SEN - gimbal_control_set->gimbal_rc_ctrl->mouse.x * YAW_MOUSE_SEN;
 //    *pitch = pitch_channel * PITCH_RC_SEN + gimbal_control_set->gimbal_rc_ctrl->mouse.y * PITCH_MOUSE_SEN;
 #endif
-
 }
 
-
-
-/*static void gimbal_autoaim_control(fp32 *yaw, fp32 *pitch, gimbal_control_t *gimbal_control_set)
-{
-    if (yaw == NULL || pitch == NULL || gimbal_control_set == NULL)
-    {
-        return;
-    }
-    fp32 absolute_yaw_set = gimbal_control_set->gimbal_yaw_motor.absolute_angle_set;
-    fp32 absolute_pitch_set = gimbal_control_set->gimbal_pitch_motor.absolute_angle_set;
-    set_autoaim_angle(yaw, pitch, absolute_yaw_set, absolute_pitch_set);
-}*/

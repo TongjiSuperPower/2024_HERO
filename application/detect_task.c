@@ -173,7 +173,7 @@ const error_t *get_error_list_point(void)
 extern void OLED_com_reset(void);
 static void detect_init(uint32_t time)
 {
-    // 设置离线时间，上线稳定工作时间，优先级 offlineTime onlinetime priority
+    // 设置离线时间，上线稳定工作时间，优先级 offlineTime onlineFtime priority
     uint16_t set_item[ERROR_LIST_LENGHT][3] =
         {
             {30, 40, 15},  // SBUS

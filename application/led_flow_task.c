@@ -2,7 +2,7 @@
   ****************************(C) COPYRIGHT 2019 DJI****************************
   * @file       led_trigger_task.c/h
   * @brief      led RGB show.led RGBµÆÐ§¡£
-  * @note       
+  * @note
   * @history
   *  Version    Date            Author          Modification
   *  V1.0.0     Nov-11-2019     RM              1. rgb led
@@ -19,34 +19,32 @@
 #include "cmsis_os.h"
 #include "main.h"
 
-
-#define RGB_FLOW_COLOR_CHANGE_TIME  1000
-#define RGB_FLOW_COLOR_LENGHT   6
-//blue-> green(dark)-> red -> blue(dark) -> green(dark) -> red(dark) -> blue
-//À¶ -> ÂÌ(Ãð) -> ºì -> À¶(Ãð) -> ÂÌ -> ºì(Ãð) -> À¶ 
+#define RGB_FLOW_COLOR_CHANGE_TIME 1000
+#define RGB_FLOW_COLOR_LENGHT 6
+// blue-> green(dark)-> red -> blue(dark) -> green(dark) -> red(dark) -> blue
+// À¶ -> ÂÌ(Ãð) -> ºì -> À¶(Ãð) -> ÂÌ -> ºì(Ãð) -> À¶
 uint32_t RGB_flow_color[RGB_FLOW_COLOR_LENGHT + 1] = {0xFF0000FF, 0x0000FF00, 0xFFFF0000, 0x000000FF, 0xFF00FF00, 0x00FF0000, 0xFF0000FF};
 
 /**
-  * @brief          led rgb task
-  * @param[in]      pvParameters: NULL
-  * @retval         none
-  */
+ * @brief          led rgb task
+ * @param[in]      pvParameters: NULL
+ * @retval         none
+ */
 /**
-  * @brief          led RGBÈÎÎñ
-  * @param[in]      pvParameters: NULL
-  * @retval         none
-  */
-void led_RGB_flow_task(void const * argument)
+ * @brief          led RGBÈÎÎñ
+ * @param[in]      pvParameters: NULL
+ * @retval         none
+ */
+void led_RGB_flow_task(void const *argument)
 {
-    uint16_t i, j;
     fp32 delta_alpha, delta_red, delta_green, delta_blue;
-    fp32 alpha,red,green,blue;
+    fp32 alpha, red, green, blue;
     uint32_t aRGB;
 
-    while(1)
+    while (1)
     {
 
-        for(i = 0; i < RGB_FLOW_COLOR_LENGHT; i++)
+        for (uint16_t i = 0; i < RGB_FLOW_COLOR_LENGHT; i++)
         {
             alpha = (RGB_flow_color[i] & 0xFF000000) >> 24;
             red = ((RGB_flow_color[i] & 0x00FF0000) >> 16);
@@ -62,7 +60,7 @@ void led_RGB_flow_task(void const * argument)
             delta_red /= RGB_FLOW_COLOR_CHANGE_TIME;
             delta_green /= RGB_FLOW_COLOR_CHANGE_TIME;
             delta_blue /= RGB_FLOW_COLOR_CHANGE_TIME;
-            for(j = 0; j < RGB_FLOW_COLOR_CHANGE_TIME; j++)
+            for (uint16_t j = 0; j < RGB_FLOW_COLOR_CHANGE_TIME; j++)
             {
                 alpha += delta_alpha;
                 red += delta_red;
@@ -76,5 +74,3 @@ void led_RGB_flow_task(void const * argument)
         }
     }
 }
-
-

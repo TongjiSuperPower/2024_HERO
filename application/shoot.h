@@ -68,6 +68,8 @@
 #define REVERSE_TIME                800//500
 #define REVERSE_SPEED_LIMIT         13.0f
 #define MOVE_TIME                   1500
+#define FRIC_SPEED                  5650
+
 
 #define PI_FOUR                     0.78539816339744830961566084581988f
 #define PI_TEN                      0.314f
@@ -199,8 +201,8 @@ typedef struct
     uint16_t heat;
 		fric_state_e fric_state;
 		uint8_t debug_flag;
-	int16_t last_z_key;
-	int16_t z_key;
+	int16_t last_v_key;
+	int16_t v_key;
 } shoot_control_t;
 
 //由于射击和云台使用同一个can的id故也射击任务在云台任务中执行

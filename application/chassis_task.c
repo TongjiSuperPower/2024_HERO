@@ -248,6 +248,7 @@ static void chassis_init(chassis_move_t *chassis_move_init)
 
     const static fp32 chassis_x_order_filter[1] = {CHASSIS_ACCEL_X_NUM};
     const static fp32 chassis_y_order_filter[1] = {CHASSIS_ACCEL_Y_NUM};
+    
 
     // in beginning， chassis mode is raw
     // 底盘开机状态为原始

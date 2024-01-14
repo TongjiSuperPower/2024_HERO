@@ -50,7 +50,7 @@
 
 
 /**
-  * @brief          射击状态机设置，遥控器上拨一次开启，再上拨关闭，下拨1次发射1颗，一直处在下，则持续发射，用于3min准备时间清理子弹
+  * @brief          射击状态机设置，遥控器上拨一次开启，再上拨关闭，下拨1次发射1颗
   * @param[in]      void
   * @retval         void
   */
@@ -178,20 +178,19 @@ int16_t shoot_control_loop(void)
 	
     if (shoot_control.shoot_mode == SHOOT_STOP) //stop模式代表gimbal出现某些问题，例如在遥控器down状态、校准阶段等，需要全面停止射击系统
     {
-			shoot_control.move_flag2 = 0;
+				shoot_control.move_flag2 = 0;
     }
     else if (shoot_control.shoot_mode == SHOOT_READY_FRIC)
     {
-			if(shoot_control.move_flag2 == 0)//如果云台没啥问题，则保持当前位置，拨弹轮有力，防止弹链中弹丸重力推动拨弹轮反转
-			{
-				shoot_control.set_angle = shoot_control.shoot_motor_measure->relative_angle_19laps;
-			}
-			else
-			{
-				shoot_control.speed_set = 0.0f;
-			}
+				if(shoot_control.move_flag2 == 0)//如果云台没啥问题，则保持当前位置，拨弹轮有力，防止弹链中弹丸重力推动拨弹轮反转
+				{
+						shoot_control.set_angle = shoot_control.shoot_motor_measure->relative_angle_19laps;
+				}
+				else
+				{
+						shoot_control.speed_set = 0.0f;
+				}
     }
-		
     else if (shoot_control.shoot_mode == SHOOT_BULLET)
     {
 				shoot_control.move_flag2 = 1;
@@ -224,22 +223,23 @@ int16_t shoot_control_loop(void)
 				shoot_control.given_current = PID_calc(&shoot_control.trigger_motor_pid, shoot_control.speed, shoot_control.speed_set);
 				if(shoot_control.shoot_rc->key.v & CRAZY_SHOOT_KEY)
 				{
-					shoot_control.speed_set = 8000;
-					shoot_control.given_current = PID_calc(&shoot_control.trigger_motor_pid, shoot_control.speed, shoot_control.speed_set);
+						shoot_control.speed_set = 8000;
+						shoot_control.given_current = PID_calc(&shoot_control.trigger_motor_pid, shoot_control.speed, shoot_control.speed_set);
 				}
 		
-        if(shoot_control.shoot_mode < SHOOT_READY_FRIC)//_BULLET)
+        if(shoot_control.shoot_mode < SHOOT_READY_FRIC)
         {
             shoot_control.given_current = 0;
         }
     }
+		
 		fric_control_loop();
     
 		return shoot_control.given_current;
 }
 
 /**
-  * @brief          射击状态机设置，遥控器上拨一次开启，再上拨关闭，下拨1次发射1颗，一直处在下，则持续发射，用于3min准备时间清理子弹
+  * @brief          射击状态机设置，遥控器上拨一次开启，再上拨关闭，下拨1次发射1颗
   * @param[in]      void
   * @retval         void
   */
@@ -287,8 +287,21 @@ static void shoot_set_mode(void)
 				shoot_control.key_time = 0;
 				shoot_control.shoot_mode = SHOOT_READY_FRIC;
 			}
-	}
-
+		}
+		
+		//摩擦轮转速下降，打出一发，认为拨弹结束
+		if(fric_right_motor.fric_motor_measure->speed_rpm<(FRIC_SPEED-200))  
+		{
+				shoot_control.shoot_mode = SHOOT_DONE; 
+		}
+		//到达角度判断，如果到达目标角度附近则认为拨弹结束
+		if((rad_format(shoot_control.set_angle - shoot_control.shoot_motor_measure->relative_angle_19laps) < 0.1f) && (fabs(shoot_control.speed) < BLOCK_TRIGGER_SPEED))
+		{
+				shoot_control.shoot_mode = SHOOT_DONE;
+		}
+		
+		
+		
     //如果云台状态是 无力状态，就关闭射击
     if (gimbal_cmd_to_shoot_stop())
     {
@@ -410,16 +423,6 @@ static void shoot_bullet_control(void)
 			shoot_control.move_flag = 1; //改变目标角度后即改变flag，防止在当前轮拨弹过程中目标值发生变化
   }
 	
-	//摩擦轮转速下降，打出一发，认为拨弹结束
-	if(fric_right_motor.fric_motor_measure->speed_rpm<(FRIC_SPEED-200))  
-	{
-			shoot_control.shoot_mode = SHOOT_DONE; 
-	}
-	//到达角度判断，如果到达目标角度附近则认为拨弹结束
-	if((rad_format(shoot_control.set_angle - shoot_control.shoot_motor_measure->relative_angle_19laps) < 0.1f) && (fabs(shoot_control.speed) < BLOCK_TRIGGER_SPEED))
-	{
-			shoot_control.shoot_mode = SHOOT_DONE;
-	}
 }
 
 

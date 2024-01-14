@@ -189,7 +189,6 @@ typedef struct
     uint16_t press_r_time;
     uint16_t rc_s_time;
 	
-	uint16_t move_time;
     uint16_t block_time;
     uint16_t reverse_time;
     bool_t move_flag;

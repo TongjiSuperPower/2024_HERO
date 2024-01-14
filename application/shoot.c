@@ -8,7 +8,7 @@
   * @history
   *  Version    Date            Author          Modification
   *  V1.0.0     Dec-26-2018     RM              1. 完成
-  *
+  *	 V2.0.0			Jan-14-2024			lyf							2024HERO
   @verbatim
   ==============================================================================
 
@@ -39,10 +39,15 @@
 #define shoot_fric2_on(pwm) fric2_on((pwm)) //摩擦轮2pwm宏定义
 #define shoot_fric_off()    fric_off()      //关闭两个摩擦轮
 
+
+//暂时没用//
+//--------------------------------------------------------------------------------
 #define shoot_laser_on()    laser_on()      //激光开启宏定义
 #define shoot_laser_off()   laser_off()     //激光关闭宏定义
 //微动开关IO
 #define BUTTEN_TRIG_PIN HAL_GPIO_ReadPin(BUTTON_TRIG_GPIO_Port, BUTTON_TRIG_Pin)
+//--------------------------------------------------------------------------------
+
 
 /**
   * @brief          射击状态机设置，遥控器上拨一次开启，再上拨关闭，下拨1次发射1颗，一直处在下，则持续发射，用于3min准备时间清理子弹
@@ -118,11 +123,9 @@ void shoot_init(void)
     shoot_control.move_flag = 0;
 		shoot_control.move_flag2 = 0;
     shoot_control.set_angle = shoot_control.shoot_motor_measure->relative_angle_19laps;
-		shoot_control.angle_begin = shoot_control.shoot_motor_measure->relative_angle_19laps;
     shoot_control.speed = 0.0f;
     shoot_control.speed_set = 0.0f;
     shoot_control.key_time = 0;
-		shoot_control.move_time = 0;
 		shoot_control.v_key = 0;
 		shoot_control.last_v_key = 0;
 }
@@ -136,13 +139,11 @@ void fric_control_loop(void)
 	{
 		fric_left_motor.speed_set = -FRIC_SPEED;
 		fric_right_motor.speed_set = FRIC_SPEED;
-		if((shoot_control.shoot_rc->key.v & HEAT_FRIC_KEY) && fric_right_motor.fric_motor_measure->temperate <= 47.0f)
+		if((shoot_control.shoot_rc->key.v & HEAT_FRIC_KEY) && fric_right_motor.fric_motor_measure->temperate <= 47.0f) //摩擦轮疯转升温
 		{
 			fric_left_motor.speed_set = -20000;
 			fric_right_motor.speed_set = 20000;
 		}
-//		fric_left_motor.speed_set = -5350;
-//		fric_right_motor.speed_set = 5350;
 		
 	}
 	else
@@ -171,14 +172,17 @@ int16_t shoot_control_loop(void)
 
 		fric_right_motor_last_speed=fric_right_motor.speed;
 	
-		//根据状态机选取进行下一步操作
+		
+	//####################################//根据状态机选取进行下一步操作:获得控制量（目标角度）//#######################################//
+	
+	
     if (shoot_control.shoot_mode == SHOOT_STOP) //stop模式代表gimbal出现某些问题，例如在遥控器down状态、校准阶段等，需要全面停止射击系统
     {
 			shoot_control.move_flag2 = 0;
     }
     else if (shoot_control.shoot_mode == SHOOT_READY_FRIC)
     {
-			if(shoot_control.move_flag2 == 0)
+			if(shoot_control.move_flag2 == 0)//如果云台没啥问题，则保持当前位置，拨弹轮有力，防止弹链中弹丸重力推动拨弹轮反转
 			{
 				shoot_control.set_angle = shoot_control.shoot_motor_measure->relative_angle_19laps;
 			}
@@ -195,28 +199,26 @@ int16_t shoot_control_loop(void)
         shoot_control.trigger_angle_motor_pid.max_iout = TRIGGER_BULLET_PID_MAX_IOUT;
         shoot_bullet_control();
     }
-
-	
-    else if(shoot_control.shoot_mode == SHOOT_DONE)//down模式表示完成一次射击，在这一过程中
+    else if(shoot_control.shoot_mode == SHOOT_DONE)//down模式表示完成一次射击，属于过渡，在这一过程中进行一次小角度反转，目的是让拨弹轮在完成拨弹后快速停止
     {
         shoot_control.set_angle = rad_format(shoot_control.shoot_motor_measure->relative_angle_19laps-PI_THREE/10.0f);
     }
 
+	//########################################################################################################//
+		
+		
+	//####################################//根据状态机选取进行下一步操作：计算发送电流值//#######################################//
 
 		
     if(shoot_control.shoot_mode == SHOOT_STOP)
     {
 				shoot_control.fric_state = FRIC_OFF;		
-//        shoot_laser_off();
         shoot_control.given_current = 0;
     }
-
     else
     {
 				shoot_control.fric_state = FRIC_ON;
-//        shoot_laser_on(); 
         //计算拨弹轮电机PID
-
 				shoot_control.speed_set = shoot_PID_calc(&shoot_control.trigger_angle_motor_pid,rad_format(shoot_control.shoot_motor_measure->relative_angle_19laps),rad_format(shoot_control.set_angle), shoot_control.speed);
 				trigger_motor_turn_back();
 				shoot_control.given_current = PID_calc(&shoot_control.trigger_motor_pid, shoot_control.speed, shoot_control.speed_set);
@@ -226,12 +228,10 @@ int16_t shoot_control_loop(void)
 					shoot_control.given_current = PID_calc(&shoot_control.trigger_motor_pid, shoot_control.speed, shoot_control.speed_set);
 				}
 		
-
         if(shoot_control.shoot_mode < SHOOT_READY_FRIC)//_BULLET)
         {
             shoot_control.given_current = 0;
         }
-
     }
 		fric_control_loop();
     
@@ -402,15 +402,11 @@ static void trigger_motor_turn_back(void)
   */
 static void shoot_bullet_control(void)
 {
-	fric_right_motor_last_speed=fric_right_motor.speed;
-	
-    //每次拨动 1/3PI的角度
+    //每次拨动大于 1/3PI 的角度，使弹丸一定能打出去，并且一定能到达目标值，通过down中反转快速停止防止双发
 
 	if (shoot_control.move_flag == 0) //置零表示可以改变目标角度，说明已进入过down模式，并且flag清零，可以开始下一次拨弹
   {
 			shoot_control.set_angle = rad_format(shoot_control.shoot_motor_measure->relative_angle_19laps + PI_THREE*4.72f/3.0f);
-			shoot_control.angle_begin = shoot_control.set_angle;
-
 			shoot_control.move_flag = 1; //改变目标角度后即改变flag，防止在当前轮拨弹过程中目标值发生变化
   }
 	

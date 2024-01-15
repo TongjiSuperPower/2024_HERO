@@ -288,19 +288,6 @@ static void shoot_set_mode(void)
 			}
 		}
 		
-		//摩擦轮转速下降，打出一发，认为拨弹结束
-		if(fric_right_motor.fric_motor_measure->speed_rpm<(FRIC_SPEED-200))  
-		{
-				shoot_control.shoot_mode = SHOOT_DONE; 
-		}
-		//到达角度判断，如果到达目标角度附近则认为拨弹结束
-		if((rad_format(shoot_control.set_angle - shoot_control.shoot_motor_measure->relative_angle_19laps) < 0.1f) && (fabs(shoot_control.speed) < BLOCK_TRIGGER_SPEED))
-		{
-				shoot_control.shoot_mode = SHOOT_DONE;
-		}
-		
-		
-		
     //如果云台状态是 无力状态，就关闭射击
     if (gimbal_cmd_to_shoot_stop())
     {
@@ -421,7 +408,16 @@ static void shoot_bullet_control(void)
 			shoot_control.set_angle = rad_format(shoot_control.shoot_motor_measure->relative_angle_19laps + PI_THREE*4.72f/3.0f);
 			shoot_control.move_flag = 1; //改变目标角度后即改变flag，防止在当前轮拨弹过程中目标值发生变化
   }
-	
+		//摩擦轮转速下降，打出一发，认为拨弹结束
+	if(fric_right_motor.fric_motor_measure->speed_rpm<(FRIC_SPEED-200))  
+	{
+			shoot_control.shoot_mode = SHOOT_DONE; 
+	}
+	//到达角度判断，如果到达目标角度附近则认为拨弹结束
+	if((rad_format(shoot_control.set_angle - shoot_control.shoot_motor_measure->relative_angle_19laps) < 0.1f) && (fabs(shoot_control.speed) < BLOCK_TRIGGER_SPEED))
+	{
+			shoot_control.shoot_mode = SHOOT_DONE;
+	}
 }
 
 

@@ -201,6 +201,8 @@ extern const motor_measure_t *get_chassis_motor_measure_point(uint8_t i);
 extern const motor_measure_t *get_fricl_motor_measure_point(void);
 extern const motor_measure_t *get_fricr_motor_measure_point(void);
 extern const supercap_module_receive *get_cap_measure_point(void);
+extern const autoaim_data_t *get_autoaim_data_point(void);
+
 
 extern void CAN_send_imu_to_computer(fp32 x, fp32 y, fp32 z, fp32 w);
 extern void CAN_send_sth_to_computer(fp32 speed, uint8_t mode);

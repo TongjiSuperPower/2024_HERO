@@ -78,11 +78,11 @@ void autoaim_target_reset(void)
     autoaim_target.outdated_count = 100;
 }
 
-void autoaim_init(void)
-{
-    autoaim_target_reset();
-    usart1_rx_dma_init(autoaim_frame_rx_buf[0], autoaim_frame_rx_buf[1], AUTOAIM_FRAME_RX_BUF);
-}
+//void autoaim_init(void)
+//{
+//    autoaim_target_reset();
+//    usart1_rx_dma_init(autoaim_frame_rx_buf[0], autoaim_frame_rx_buf[1], AUTOAIM_FRAME_RX_BUF);
+//}
 
 uint8_t get_autoaim_flag(void)
 {
@@ -91,30 +91,30 @@ uint8_t get_autoaim_flag(void)
     return flag;
 }
 
-void set_autoaim_angle(fp32 *add_yaw_set, fp32 *add_pitch_set, fp32 absolute_yaw_set, fp32 absolute_pitch_set)
+void set_autoaim_angle(fp32 *add_yaw_set, fp32 *add_pitch_set, fp32 absolute_yaw_set, fp32 absolute_pitch_set, fp32 target_yaw_in_imu, fp32 target_pitch_in_imu)
 {
-    if (autoaim_target.outdated_count < 100)
-    {
-        autoaim_target.outdated_count++;
-        fp32 target_yaw_in_imu = 0.0f;
-        fp32 target_pitch_in_imu = 0.0f;
+//    if (autoaim_target.outdated_count < 100)
+//    {
+//        autoaim_target.outdated_count++;
+//        fp32 target_yaw_in_imu = 0.0f;
+//        fp32 target_pitch_in_imu = 0.0f;
 
         // 电控角度正方向：
         // yaw：操作手视角下，枪管向左为正方向
         // pitch: 抬枪为正方向
-        fp32 xz_length;
-        arm_sqrt_f32(autoaim_target.x_in_imu * autoaim_target.x_in_imu + autoaim_target.z_in_imu * autoaim_target.z_in_imu, &xz_length);
-        target_yaw_in_imu = -atan2(autoaim_target.x_in_imu, autoaim_target.z_in_imu);
-        target_pitch_in_imu = -atan2(autoaim_target.y_in_imu, xz_length);
+//        fp32 xz_length;
+//        arm_sqrt_f32(autoaim_target.x_in_imu * autoaim_target.x_in_imu + autoaim_target.z_in_imu * autoaim_target.z_in_imu, &xz_length);
+//        target_yaw_in_imu = -atan2(autoaim_target.x_in_imu, autoaim_target.z_in_imu);
+//        target_pitch_in_imu = -atan2(autoaim_target.y_in_imu, xz_length);
 
         *add_yaw_set = target_yaw_in_imu - absolute_yaw_set;
         *add_pitch_set = target_pitch_in_imu - absolute_pitch_set;
-    }
-    else
-    {
-        *add_yaw_set = 0.0f;
-        *add_pitch_set = 0.0f;
-    }
+//    }
+//    else
+//    {
+//        *add_yaw_set = 0.0f;
+//        *add_pitch_set = 0.0f;
+//    }
 }
 
 void usart1_rx_dma_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)

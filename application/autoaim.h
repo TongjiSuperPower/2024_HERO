@@ -16,8 +16,8 @@
 
 void autoaim_target_reset(void);
 uint8_t get_autoaim_flag(void);
-void autoaim_init(void);
-void set_autoaim_angle(fp32 *add_yaw_set, fp32 *add_pitch_set, fp32 absolute_yaw_set, fp32 absolute_pitch_set);
+//void autoaim_init(void);
+void set_autoaim_angle(fp32 *add_yaw_set, fp32 *add_pitch_set, fp32 absolute_yaw_set, fp32 absolute_pitch_set, fp32 target_yaw_in_imu, fp32 target_pitch_in_imu);
 void send_to_computer(fp32 absolute_yaw, fp32 absolute_pitch);
 
 #endif

@@ -103,7 +103,7 @@ static uint8_t              chassis_can_send_data[8];
 static CAN_TxHeaderTypeDef  supercap_tx_message;
 static uint8_t              supercap_can_send_data[8];
 
-autoaim_data_t autoaim_data;
+static autoaim_data_t autoaim_data;
 static CAN_TxHeaderTypeDef  autoaim_tx_message;
 static uint8_t              autoaim_send_data[8];
 
@@ -557,3 +557,15 @@ const supercap_module_receive *get_cap_measure_point(void)
 {
 	return &SCM_rx_message;
 }
+
+/**
+  * @brief          返回自瞄数据指针
+  * @param[in]      null
+  * @retval         自瞄数据指针
+  */
+const autoaim_data_t *get_autoaim_data_point(void)
+{
+    return &autoaim_data;
+}
+
+

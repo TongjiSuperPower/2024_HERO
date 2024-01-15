@@ -140,7 +140,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>CMSIS_AGDI</Key>
-          <Name>-X"ATK-HSWL-CMSIS-DAP" -UATK 20190528 -O718 -S8 -C0 -P00 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO65554 -TC10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC1000 -FN1 -FF0STM32F4xx_1024.FLM -FS08000000 -FL0100000 -FP0($$Device:STM32F407IGHx$CMSIS\Flash\STM32F4xx_1024.FLM)</Name>
+          <Name>-X"ATK-HSWL-CMSIS-DAP" -UATK 20190528 -O718 -S8 -C0 -P00000000 -N00("ARM CoreSight SW-DP") -D00(2BA01477) -L00(0) -TO65554 -TC10000000 -TT10000000 -TP20 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC1000 -FN1 -FF0STM32F4xx_1024.FLM -FS08000000 -FL0100000 -FP0($$Device:STM32F407IGHx$CMSIS\Flash\STM32F4xx_1024.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -157,34 +157,18 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>624</LineNumber>
+          <LineNumber>799</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134296648</Address>
+          <Address>134302208</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>D:\鍚屾祹\RoboMaster\2023_HERO\application\chassis_behaviour.c</Filename>
+          <Filename>D:\鍚屾祹\RoboMaster\2024_HERO\application\gimbal_behaviour.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\standard_tpye_c\../application/chassis_behaviour.c\624</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>267</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134294816</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>D:\鍚屾祹\RoboMaster\2023_HERO\application\chassis_behaviour.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\standard_tpye_c\../application/chassis_behaviour.c\267</Expression>
+          <Expression>\\standard_tpye_c\../application/gimbal_behaviour.c\799</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -202,6 +186,11 @@
           <count>2</count>
           <WinNumber>1</WinNumber>
           <ItemText>chassis_behaviour_mode,0x0A</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>shoot_control,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <WatchWindow2>

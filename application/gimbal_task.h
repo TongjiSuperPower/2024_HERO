@@ -404,7 +404,8 @@ typedef struct
     gimbal_motor_t gimbal_pitch_motor;
 
     gimbal_motor_t gimbal_assis_pitch_motor;
-
+		
+		const autoaim_data_t *autoaim_data; 
     gimbal_step_cali_t gimbal_cali;
     int16_t LOB_SHOT_FLAG;
     int16_t last_crtl_key;
@@ -494,4 +495,7 @@ extern bool_t cmd_cali_gimbal_hook(uint16_t *yaw_offset, uint16_t *pitch_offset,
  * @waring         这个函数使用到gimbal_control 静态变量导致函数不适用以上通用指针复用
  */
 extern void set_cali_gimbal_hook(const uint16_t yaw_offset, const uint16_t pitch_offset, const fp32 max_yaw, const fp32 min_yaw, const fp32 max_pitch, const fp32 min_pitch);
+
+static void autoaim_init(gimbal_control_t *init);
+
 #endif

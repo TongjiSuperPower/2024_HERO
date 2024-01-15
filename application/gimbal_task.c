@@ -326,7 +326,7 @@ void gimbal_task(void const *pvParameters)
     // 射击初始化
     shoot_init();
     // 自瞄初始化
-    autoaim_init();
+    autoaim_init(&gimbal_control);
     // wait for all motor online
     // 判断电机是否都上线
     while (toe_is_error(YAW_GIMBAL_MOTOR_TOE) || toe_is_error(PITCH_GIMBAL_MOTOR_TOE))
@@ -1273,3 +1273,13 @@ static void gimbal_PID_clear(gimbal_PID_t *gimbal_pid_clear)
     gimbal_pid_clear->last_err = gimbal_pid_clear->err = gimbal_pid_clear->set = gimbal_pid_clear->get = 0.0f;
     gimbal_pid_clear->out = gimbal_pid_clear->Pout = gimbal_pid_clear->Iout = gimbal_pid_clear->Dout = 0.0f;
 }
+
+
+
+
+static void autoaim_init(gimbal_control_t *init)
+{
+		init->autoaim_data = get_autoaim_data_point();
+}
+
+

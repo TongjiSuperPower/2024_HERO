@@ -144,7 +144,6 @@ void fric_control_loop(void)
 			fric_left_motor.speed_set = -20000;
 			fric_right_motor.speed_set = 20000;
 		}
-		
 	}
 	else
 	{

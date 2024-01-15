@@ -170,13 +170,12 @@ typedef struct
     ramp_function_source_t fric2_ramp;
     uint16_t fric_pwm2;
     pid_type_def trigger_motor_pid;
-	pid_type_def trigger_angle_motor_pid;
+		pid_type_def trigger_angle_motor_pid;
     fp32 trigger_speed_set;
     fp32 speed;
     fp32 speed_set;
     fp32 angle;
     fp32 set_angle;
-	fp32 angle_begin;
     int16_t given_current;
     int8_t ecd_count;
 	
@@ -192,7 +191,7 @@ typedef struct
     uint16_t block_time;
     uint16_t reverse_time;
     bool_t move_flag;
-	bool_t move_flag2;
+		bool_t move_flag2;
     bool_t key;
     uint8_t key_time;
 
@@ -200,8 +199,8 @@ typedef struct
     uint16_t heat;
 		fric_state_e fric_state;
 		uint8_t debug_flag;
-	int16_t last_v_key;
-	int16_t v_key;
+		int16_t last_v_key;
+		int16_t v_key;
 } shoot_control_t;
 
 //由于射击和云台使用同一个can的id故也射击任务在云台任务中执行

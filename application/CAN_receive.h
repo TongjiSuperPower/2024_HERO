@@ -39,7 +39,7 @@ typedef enum
     CAN_PIT_MOTOR_ID = 0x206,
     CAN_TRIGGER_MOTOR_ID = 0x207,
 	CAN_CAP_ID = 0X301,
-	
+
     CAN_GIMBAL_ALL_ID = 0x1FF,
 
 } can2_msg_id_e;
@@ -48,8 +48,23 @@ typedef enum
 {
     CAN_3508_FRICL_ID = 0x201,
     CAN_3508_FRICR_ID = 0x202,
+		//自瞄发送标识
+		CAN_AUTOAIM_IMU = 0x400,				//imu数据
+		CAN_AUTOAIM_STH = 0x401,				//枪管射速&功能模式
+		//自瞄接收数据标识符
+		CAN_AUTOAIM_DATA = 0x3FF,
 
 } can1_msg_id_e;
+
+//new_autoaim data
+typedef struct
+{
+	uint8_t vision_state;
+	bool_t shoot;
+	fp32 yaw;
+	fp32 pitch;	
+} autoaim_data_t;
+
 
 //rm motor data
 typedef struct
@@ -186,4 +201,7 @@ extern const motor_measure_t *get_chassis_motor_measure_point(uint8_t i);
 extern const motor_measure_t *get_fricl_motor_measure_point(void);
 extern const motor_measure_t *get_fricr_motor_measure_point(void);
 extern const supercap_module_receive *get_cap_measure_point(void);
+
+extern void CAN_send_imu_to_computer(fp32 x, fp32 y, fp32 z, fp32 w);
+extern void CAN_send_sth_to_computer(fp32 speed, uint8_t mode);
 #endif

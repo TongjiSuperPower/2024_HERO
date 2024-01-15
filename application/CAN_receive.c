@@ -68,6 +68,16 @@ static void get_cap_data(supercap_module_receive *ptr, uint8_t *data)
 		(ptr)->cap_vol 			= (int16_t) ((data)[6]<<8 | (data)[7])*1.25;
 }
 
+
+void get_autoaim_data(autoaim_data_t *ptr, uint8_t data[8])
+{
+	ptr->vision_state = data[0];
+	ptr->shoot = (data[1]==1);
+	ptr->yaw = (int16_t)(data[2] << 8 | data[3]) / 1e4f;
+	ptr->pitch = (int16_t)(data[4] << 8 | data[5]) / 1e4f;
+}
+
+
 //				SCM_rx_message.charge_enabled_state = rx_data[0] & 0x0001;
 //				SCM_rx_message.residue_power = rx_data[1];
 //				SCM_rx_message.charge_power  = (uint16_t)(rx_data[2]<<8 | rx_data[3])*25;
@@ -92,6 +102,12 @@ static CAN_TxHeaderTypeDef  chassis_tx_message;
 static uint8_t              chassis_can_send_data[8];
 static CAN_TxHeaderTypeDef  supercap_tx_message;
 static uint8_t              supercap_can_send_data[8];
+
+autoaim_data_t autoaim_data;
+static CAN_TxHeaderTypeDef  autoaim_tx_message;
+static uint8_t              autoaim_send_data[8];
+
+
 
 /**
   * @brief          hal CAN fifo call back, receive motor data
@@ -217,6 +233,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 			{
 				static uint8_t i = 8;
 				get_motor_measure(&motor_chassis[i], rx_data);
+				break;
+			}
+			case CAN_AUTOAIM_DATA:
+			{
+				get_autoaim_data(&autoaim_data, rx_data);
 				break;
 			}
 			default:
@@ -412,6 +433,46 @@ void CAN_cmd_supercap(int16_t flag)
 
 }
 
+/**
+  * @brief          自瞄can发送函数,发四元数，1000hz
+  * @param[in]      四元数
+  * @retval         NULL
+  */
+void CAN_send_imu_to_computer(fp32 x, fp32 y, fp32 z, fp32 w)
+{
+  uint32_t send_mail_box;
+	autoaim_tx_message.StdId = CAN_AUTOAIM_IMU;
+	autoaim_tx_message.IDE = CAN_ID_STD;
+	autoaim_tx_message.RTR = CAN_RTR_DATA;
+	autoaim_tx_message.DLC = 0x08;	
+	autoaim_send_data[0] = (int16_t)(x * 1e4f) >> 8;
+	autoaim_send_data[1] = (int16_t)(x * 1e4f);
+	autoaim_send_data[2] = (int16_t)(y * 1e4f) >> 8;
+	autoaim_send_data[3] = (int16_t)(y * 1e4f);
+	autoaim_send_data[4] = (int16_t)(z * 1e4f) >> 8;
+	autoaim_send_data[5] = (int16_t)(z * 1e4f);
+	autoaim_send_data[6] = (int16_t)(w * 1e4f) >> 8;
+	autoaim_send_data[7] = (int16_t)(w * 1e4f);
+	HAL_CAN_AddTxMessage(&hcan1, &autoaim_tx_message, autoaim_send_data, &send_mail_box);
+}	
+
+/**
+  * @brief          自瞄can发送函数,发枪管热量，控制模式等，50hz
+  * @param[in]      枪管射速，功能模式，1为自瞄、2为打符、3为推塔
+  * @retval         NULL
+  */
+void CAN_send_sth_to_computer(fp32 speed, uint8_t mode)
+{
+  uint32_t send_mail_box;
+	autoaim_tx_message.StdId = CAN_AUTOAIM_STH;
+	autoaim_tx_message.IDE = CAN_ID_STD;
+	autoaim_tx_message.RTR = CAN_RTR_DATA;
+	autoaim_tx_message.DLC = 0x08;	
+	autoaim_send_data[0] = (uint16_t)(speed * 1e2f) >> 8;
+	autoaim_send_data[1] = (uint16_t)(speed * 1e2f);
+	autoaim_send_data[2] = mode;
+	HAL_CAN_AddTxMessage(&hcan1, &autoaim_tx_message, autoaim_send_data, &send_mail_box);
+}	
 
 
 

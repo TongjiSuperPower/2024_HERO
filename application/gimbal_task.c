@@ -378,8 +378,9 @@ void gimbal_task(void const *pvParameters)
         J_scope_gimbal_test();
 #endif
 
-        send_to_computer(-gimbal_control.gimbal_yaw_motor.absolute_angle, gimbal_control.gimbal_pitch_motor.absolute_angle);
-
+//        send_to_computer(-gimbal_control.gimbal_yaw_motor.absolute_angle, gimbal_control.gimbal_pitch_motor.absolute_angle);
+				CAN_send_imu_to_computer(get_INS_quat_point()[1],get_INS_quat_point()[2],get_INS_quat_point()[3],get_INS_quat_point()[0]);
+				
         vTaskDelay(GIMBAL_CONTROL_TIME);
 //		heat_now = ext_shoot_data.bullet_speed;
 #if INCLUDE_uxTaskGetStackHighWaterMark

@@ -43,6 +43,7 @@ static fp32 motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd)
 
     return relative_ecd;
 }
+
 int count_i = 0;
 int start_up_i = 0;
 extern CAN_HandleTypeDef hcan1;
@@ -50,8 +51,8 @@ extern CAN_HandleTypeDef hcan2;
 //motor data read
 #define get_motor_measure(ptr, data)                                    \
     {                                                                   \
-		(ptr)->last_last_last_ecd = (ptr)->last_last_ecd;               \
-		(ptr)->last_last_ecd = (ptr)->last_ecd;                         \
+				(ptr)->last_last_last_ecd = (ptr)->last_last_ecd;               \
+				(ptr)->last_last_ecd = (ptr)->last_ecd;                         \
         (ptr)->last_ecd = (ptr)->ecd;                                   \
         (ptr)->ecd = (uint16_t)((data)[0] << 8 | (data)[1]);            \
         (ptr)->speed_rpm = (uint16_t)((data)[2] << 8 | (data)[3]);      \
@@ -71,7 +72,7 @@ static void get_cap_data(supercap_module_receive *ptr, uint8_t *data)
 
 void get_autoaim_data(autoaim_data_t *ptr, uint8_t data[8])
 {
-	ptr->vision_state = data[0];
+	ptr->control = data[0];
 	ptr->shoot = (data[1]==1);
 	ptr->yaw = (int16_t)(data[2] << 8 | data[3]) / 1e4f;
 	ptr->pitch = (int16_t)(data[4] << 8 | data[5]) / 1e4f;
@@ -108,6 +109,102 @@ static CAN_TxHeaderTypeDef  autoaim_tx_message;
 static uint8_t              autoaim_send_data[8];
 
 
+CAN_RxHeaderTypeDef rxMsg;
+CAN_TxHeaderTypeDef txMsg;
+uint8_t rx_data2[8];       //接收数据
+uint32_t Motor_Can_ID;    //接收数据电机ID
+uint8_t byte[4];          //转换临时数据
+uint32_t send_mail_box = {0};//NONE
+    
+#define can_txd() HAL_CAN_AddTxMessage(&hcan1, &txMsg, tx_data, &send_mail_box)//CAN发送宏定义
+
+motor_measure_t mi_motor[1];//预先定义小米电机
+
+
+
+/**
+  * @brief          浮点数转4字节函数
+  * @param[in]      f:浮点数
+  * @retval         4字节数组
+  * @description  : IEEE 754 协议
+  */
+static uint8_t* Float_to_Byte(float f)
+{
+	unsigned long longdata = 0;
+	longdata = *(unsigned long*)&f;       
+	byte[0] = (longdata & 0xFF000000) >> 24;
+	byte[1] = (longdata & 0x00FF0000) >> 16;
+	byte[2] = (longdata & 0x0000FF00) >> 8;
+	byte[3] = (longdata & 0x000000FF);
+	return byte;
+}
+
+/**
+  * @brief          小米电机回文16位数据转浮点
+  * @param[in]      x:16位回文
+  * @param[in]      x_min:对应参数下限
+  * @param[in]      x_max:对应参数上限
+  * @param[in]      bits:参数位数
+  * @retval         返回浮点值
+  */
+static float uint16_to_float(uint16_t x,float x_min,float x_max,int bits)
+{
+    uint32_t span = (1 << bits) - 1;
+    float offset = x_max - x_min;
+    return offset * x / span + x_min;
+}
+
+/**
+  * @brief          小米电机发送浮点转16位数据
+  * @param[in]      x:浮点
+  * @param[in]      x_min:对应参数下限
+  * @param[in]      x_max:对应参数上限
+  * @param[in]      bits:参数位数
+  * @retval         返回浮点值
+  */
+static int float_to_uint(float x, float x_min, float x_max, int bits)
+{
+  float span = x_max - x_min;
+  float offset = x_min;
+  if(x > x_max) x=x_max;
+  else if(x < x_min) x= x_min;
+  return (int) ((x-offset)*((float)((1<<bits)-1))/span);
+}
+
+/**
+  * @brief          电机回复帧数据处理函数
+  * @param[in]      Motor:对应控制电机结构体   
+  * @param[in]      DataFrame:数据帧
+  * @param[in]      IDFrame:扩展ID帧
+  * @retval         None
+  */
+static void Motor_Data_Handler(motor_measure_t *Motor,uint8_t DataFrame[8],uint32_t IDFrame)
+{	
+		Motor->last_ecd = Motor->ecd;
+		Motor->ecd=DataFrame[0]<<8|DataFrame[1];
+		Motor->speed_rpm=uint16_to_float(DataFrame[2]<<8|DataFrame[3],V_MIN,V_MAX,16);			
+		Motor->Torque=uint16_to_float(DataFrame[4]<<8|DataFrame[5],T_MIN,T_MAX,16);				
+		Motor->Temp=(DataFrame[6]<<8|DataFrame[7])*Temp_Gain;
+		Motor->error_code=(IDFrame&0x1F0000)>>16;	
+}
+		
+/**
+  * @brief          提取电机回复帧扩展ID中的电机CANID
+  * @param[in]      CAN_ID_Frame:电机回复帧中的扩展CANID   
+  * @retval         电机CANID
+  */
+static uint32_t Get_Motor_ID(uint32_t CAN_ID_Frame)
+{
+	return (CAN_ID_Frame&0xFFFF)>>8;
+}
+
+		
+		
+	
+
+
+
+
 
 /**
   * @brief          hal CAN fifo call back, receive motor data
@@ -119,10 +216,12 @@ static uint8_t              autoaim_send_data[8];
   * @param[in]      hcan:CAN句柄指针
   * @retval         none
   */
+
+CAN_RxHeaderTypeDef rx_header;
+    uint8_t rx_data[8];
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
-    CAN_RxHeaderTypeDef rx_header;
-    uint8_t rx_data[8];
+    
 
     HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rx_header, rx_data);
 	if (hcan == &hcan2)
@@ -133,7 +232,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 			case CAN_3508_M2_ID:
 			case CAN_3508_M3_ID:
 			case CAN_3508_M4_ID:
-			case CAN_PIT_MOTOR_ID:
 			
 			{
 				static uint8_t i = 0;
@@ -151,31 +249,6 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 				get_motor_measure(&motor_chassis[4], rx_data);
 				detect_hook(CHASSIS_MOTOR1_TOE + 4);
 				
-				if(count_i == 0)
-				{
-					motor_chassis[4].ecd_count =0;
-
-				}
-				count_i++;
-				if(count_i>500)
-				{
-					if(motor_ecd_to_angle_change(motor_chassis[4].ecd,MIDDLE_YAW) - motor_ecd_to_angle_change(motor_chassis[4].last_ecd,MIDDLE_YAW) > HALF_ECD_RANGE)
-					{
-						motor_chassis[4].ecd_count--;
-					}
-					else if(motor_ecd_to_angle_change(motor_chassis[4].ecd,MIDDLE_YAW) - motor_ecd_to_angle_change(motor_chassis[4].last_ecd,MIDDLE_YAW) < -HALF_ECD_RANGE)
-					{
-						motor_chassis[4].ecd_count++;
-					}
-
-					motor_chassis[4].relative_angle_2laps = motor_chassis[4].ecd_count * ECD_RANGE + motor_ecd_to_angle_change(motor_chassis[4].ecd , MIDDLE_YAW);
-					while(motor_chassis[4].relative_angle_2laps>=(8192.0f*2.0f))
-					{
-						motor_chassis[4].relative_angle_2laps -= 8192.0f*2.0f;
-					}
-					motor_chassis[4].relative_angle_2laps = rad_format_4PI(motor_chassis[4].relative_angle_2laps*MOTOR_ECD_TO_ANGLE);
-					motor_chassis[4].relative_angle_2laps = motor_chassis[4].relative_angle_2laps/2.0f;
-				}
 				break;
 			}
 			case CAN_TRIGGER_MOTOR_ID:
@@ -221,30 +294,98 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	}
 	else if (hcan == &hcan1)
 	{
-		switch (rx_header.StdId)
+		if(rx_header.IDE == 0)
 		{
-			case CAN_3508_FRICL_ID:
+			switch (rx_header.StdId)
 			{
-				static uint8_t i = 7;
-				get_motor_measure(&motor_chassis[i], rx_data);
-				break;
+				case CAN_3508_FRICL_ID:
+				{
+					static uint8_t i = 7;
+					get_motor_measure(&motor_chassis[i], rx_data);
+					break;
+				}
+				case CAN_3508_FRICR_ID:
+				{
+					static uint8_t i = 8;
+					get_motor_measure(&motor_chassis[i], rx_data);
+					break;
+				}
+				case CAN_AUTOAIM_DATA:
+				{
+					get_autoaim_data(&autoaim_data, rx_data);
+					break;
+				}
+				default:
+					break;
 			}
-			case CAN_3508_FRICR_ID:
-			{
-				static uint8_t i = 8;
-				get_motor_measure(&motor_chassis[i], rx_data);
-				break;
-			}
-			case CAN_AUTOAIM_DATA:
-			{
-				get_autoaim_data(&autoaim_data, rx_data);
-				break;
-			}
-			default:
-				break;
 		}
+
 	}
+
+	if(rx_header.IDE == CAN_ID_STD)
+	{}
+	else
+	{
+		Motor_Can_ID=Get_Motor_ID(rx_header.ExtId);//首先获取回传电机ID信息  
+		switch(Motor_Can_ID)                   //将对应ID电机信息提取至对应结构体
+		{
+				case 0X06:  
+						if(rx_header.ExtId>>24 != 0)               //检查是否为广播模式
+								Motor_Data_Handler(&mi_motor[0],rx_data,rx_header.ExtId);
+						else 
+								mi_motor[0].MCU_ID = rx_data[0];
+						break;           
+				default:
+						break;		
+		}
+	}	
 }
+	
+//	HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &rxMsg, rx_data2);//接收数据
+//	if (hcan == &hcan1)
+//	{
+//		if(rxMsg.StdId!=CAN_3508_FRICL_ID && rxMsg.StdId!=CAN_3508_FRICR_ID && rxMsg.StdId!=CAN_AUTOAIM_DATA && rxMsg.StdId!=CAN_3508_M1_ID && rxMsg.StdId!=CAN_3508_M2_ID &&
+//			rxMsg.StdId!=CAN_3508_M3_ID && rxMsg.StdId!=CAN_3508_M4_ID && rxMsg.StdId!=CAN_TRIGGER_MOTOR_ID && rxMsg.StdId!=CAN_YAW_MOTOR_ID && rxMsg.StdId!=CAN_CAP_ID)
+//		{
+//			Motor_Can_ID=Get_Motor_ID(rxMsg.ExtId);//首先获取回传电机ID信息  
+//			switch(Motor_Can_ID)                   //将对应ID电机信息提取至对应结构体
+//			{
+//					case 0X02:  
+//							if(rxMsg.ExtId>>24 != 0)               //检查是否为广播模式
+//									Motor_Data_Handler(&mi_motor[0],rx_data2,rxMsg.ExtId);
+//							else 
+//									mi_motor[0].MCU_ID = rx_data2[0];
+//							break;           
+//					default:
+//							break;		
+//			}
+//		}
+//	}
+
+
+
+
+//	{		
+//		if(rxMsg.IDE == 0x00)
+//		{
+//		}
+//		else
+//		{
+//			Motor_Can_ID=Get_Motor_ID(rxMsg.ExtId);//首先获取回传电机ID信息  
+//			switch(Motor_Can_ID)                   //将对应ID电机信息提取至对应结构体
+//			{
+//					case 0X06:  
+//							if(rxMsg.ExtId>>24 != 0)               //检查是否为广播模式
+//									Motor_Data_Handler(&mi_motor[0],rx_data2,rxMsg.ExtId);
+//							else 
+//									mi_motor[0].MCU_ID = rx_data2[0];
+//							break;           
+//					default:
+//							break;		
+//			}
+//		}
+//	}
+//}
 
 /**
   * @brief          send control current of motor (0x205, 0x206, 0x207, 0x208)
@@ -503,10 +644,13 @@ const motor_measure_t *get_yaw_gimbal_motor_measure_point(void)
   */
 const motor_measure_t *get_pitch_gimbal_motor_measure_point(void)
 {
-    return &motor_chassis[5];
+    return &mi_motor[0];
 }
 
-
+motor_measure_t *get_pitch_gimbal_motor_measure_point_for_init(void)
+{
+    return &mi_motor[0];
+}
 /**
   * @brief          return the trigger 2006 motor data point
   * @param[in]      none
@@ -568,4 +712,179 @@ const autoaim_data_t *get_autoaim_data_point(void)
     return &autoaim_data;
 }
 
+autoaim_data_t *get_autoaim_data_point_changeable(void)
+{
+    return &autoaim_data;
+}
+
+
+
+
+
+/**
+  * @brief          写入电机参数
+  * @param[in]      Motor:对应控制电机结构体
+  * @param[in]      Index:写入参数对应地址
+  * @param[in]      Value:写入参数值
+  * @param[in]      Value_type:写入参数数据类型
+  * @retval         none
+  */
+static void Set_Motor_Parameter(motor_measure_t *Motor,uint16_t Index,float Value,char Value_type){
+	uint8_t tx_data[8];
+	txMsg.ExtId = Communication_Type_SetSingleParameter<<24|Master_CAN_ID<<8|Motor->CAN_ID;
+	tx_data[0]=Index;
+	tx_data[1]=Index>>8;
+	tx_data[2]=0x00;
+	tx_data[3]=0x00;
+	if(Value_type == 'f'){
+		Float_to_Byte(Value);
+		tx_data[4]=byte[3];
+		tx_data[5]=byte[2];
+		tx_data[6]=byte[1];
+		tx_data[7]=byte[0];		
+	}
+	else if(Value_type == 's'){
+		tx_data[4]=(uint8_t)Value;
+		tx_data[5]=0x00;
+		tx_data[6]=0x00;
+		tx_data[7]=0x00;				
+	}
+	can_txd();	
+}
+
+
+
+
+/**
+  * @brief          小米电机ID检查
+  * @param[in]      id:  控制电机CAN_ID【出厂默认0x7F】
+  * @retval         none
+  */
+void chack_cybergear(uint8_t ID)
+{
+    uint8_t tx_data[8] = {0};
+    txMsg.ExtId = Communication_Type_GetID<<24|Master_CAN_ID<<8|ID;
+    can_txd();
+}
+
+/**
+  * @brief          使能小米电机
+  * @param[in]      Motor:对应控制电机结构体   
+  * @retval         none
+  */
+void start_cybergear(motor_measure_t *Motor)
+{
+    uint8_t tx_data[8] = {0}; 
+    txMsg.ExtId = Communication_Type_MotorEnable<<24|Master_CAN_ID<<8|Motor->CAN_ID;
+    can_txd();
+}
+
+/**
+  * @brief          停止电机
+  * @param[in]      Motor:对应控制电机结构体   
+  * @param[in]      clear_error:清除错误位（0 不清除 1清除）
+  * @retval         None
+  */
+void stop_cybergear(motor_measure_t *Motor,uint8_t clear_error)
+{
+	uint8_t tx_data[8]={0};
+	tx_data[0]=clear_error;//清除错误位设置
+	txMsg.ExtId = Communication_Type_MotorStop<<24|Master_CAN_ID<<8|Motor->CAN_ID;
+    can_txd();
+}
+
+/**
+  * @brief          设置电机模式(必须停止时调整！)
+  * @param[in]      Motor:  电机结构体
+  * @param[in]      Mode:   电机工作模式（1.运动模式Motion_mode 2. 位置模式Position_mode 3. 速度模式Speed_mode 4. 电流模式Current_mode）
+  * @retval         none
+  */
+void set_mode_cybergear(motor_measure_t *Motor,uint8_t Mode)
+{	
+	Set_Motor_Parameter(Motor,Run_mode,Mode,'s');
+}
+
+/**
+  * @brief          电流控制模式下设置电流
+  * @param[in]      Motor:  电机结构体
+  * @param[in]      Current:电流设置
+  * @retval         none
+  */
+void set_current_cybergear(motor_measure_t *Motor,float Current)
+{
+	Set_Motor_Parameter(Motor,Iq_Ref,Current,'f');
+}
+
+/**
+  * @brief          设置电机零点
+  * @param[in]      Motor:  电机结构体
+  * @retval         none
+  */
+void set_zeropos_cybergear(motor_measure_t *Motor)
+{
+	uint8_t tx_data[8]={0};
+	txMsg.ExtId = Communication_Type_SetPosZero<<24|Master_CAN_ID<<8|Motor->CAN_ID;
+	can_txd();		
+}
+
+/**
+  * @brief          设置电机CANID
+  * @param[in]      Motor:  电机结构体
+  * @param[in]      Motor:  设置新ID
+  * @retval         none
+  */
+void set_CANID_cybergear(motor_measure_t *Motor,uint8_t CAN_ID)
+{
+	uint8_t tx_data[8]={0};
+	txMsg.ExtId = Communication_Type_CanID<<24|CAN_ID<<16|Master_CAN_ID<<8|Motor->CAN_ID;
+    Motor->CAN_ID = CAN_ID;//将新的ID导入电机结构体
+    can_txd();	
+}
+/**
+  * @brief          小米电机初始化
+  * @param[in]      Motor:  电机结构体
+  * @param[in]      Can_Id: 小米电机ID(默认0x7F)
+  * @param[in]      Motor_Num: 电机编号
+  * @param[in]      mode: 电机工作模式（0.运动模式Motion_mode 1. 位置模式Position_mode 2. 速度模式Speed_mode 3. 电流模式Current_mode）
+  * @retval         none
+  */
+void init_cybergear(motor_measure_t *Motor,uint8_t Can_Id, uint8_t mode)
+{
+    txMsg.StdId = 0;            //配置CAN发送：标准帧清零 
+    txMsg.ExtId = 0;            //配置CAN发送：扩展帧清零     
+    txMsg.IDE = CAN_ID_EXT;     //配置CAN发送：扩展帧
+    txMsg.RTR = CAN_RTR_DATA;   //配置CAN发送：数据帧
+    txMsg.DLC = 0x08;           //配置CAN发送：数据长度
+    
+	Motor->CAN_ID=Can_Id;       //ID设置 
+	set_mode_cybergear(Motor,mode);//设置电机模式
+	start_cybergear(Motor);        //使能电机
+}
+
+/**
+  * @brief          小米运控模式指令
+  * @param[in]      Motor:  目标电机结构体
+  * @param[in]      torque: 力矩设置[-12,12] N*M
+  * @param[in]      MechPosition: 位置设置[-12.5,12.5] rad
+  * @param[in]      speed: 速度设置[-30,30] rpm
+  * @param[in]      kp: 比例参数设置
+  * @param[in]      kd: 微分参数设置
+  * @retval         none
+  */
+void motor_controlmode(motor_measure_t *Motor,float torque, float MechPosition, float speed, float kp, float kd)
+{   
+    uint8_t tx_data[8];//发送数据初始化
+    //装填发送数据
+    tx_data[0]=float_to_uint(MechPosition,P_MIN,P_MAX,16)>>8;  
+    tx_data[1]=float_to_uint(MechPosition,P_MIN,P_MAX,16);  
+    tx_data[2]=float_to_uint(speed,V_MIN,V_MAX,16)>>8;  
+    tx_data[3]=float_to_uint(speed,V_MIN,V_MAX,16);  
+    tx_data[4]=float_to_uint(kp,KP_MIN,KP_MAX,16)>>8;  
+    tx_data[5]=float_to_uint(kp,KP_MIN,KP_MAX,16);  
+    tx_data[6]=float_to_uint(kd,KD_MIN,KD_MAX,16)>>8;  
+    tx_data[7]=float_to_uint(kd,KD_MIN,KD_MAX,16); 
+    
+    txMsg.ExtId = Communication_Type_MotionControl<<24|float_to_uint(torque,T_MIN,T_MAX,16)<<8|Motor->CAN_ID;//装填扩展帧数据
+    can_txd();
+}
 

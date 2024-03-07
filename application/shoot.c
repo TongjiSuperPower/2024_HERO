@@ -128,6 +128,10 @@ void shoot_init(void)
     shoot_control.key_time = 0;
 		shoot_control.v_key = 0;
 		shoot_control.last_v_key = 0;
+		shoot_control.autoaim_mode = 1;
+		shoot_control.shoot_flag = 0;
+		shoot_control.last_shoot_flag = 0;
+		shoot_control.autoaim_data = get_autoaim_data_point_changeable();
 }
 
 void fric_control_loop(void)
@@ -167,7 +171,8 @@ int16_t shoot_control_loop(void)
 
     shoot_set_mode();        //设置状态机
     shoot_feedback_update(); //更新数据
-
+		
+		CAN_send_sth_to_computer(ext_shoot_data.bullet_speed,shoot_control.autoaim_mode);
 
 		fric_right_motor_last_speed=fric_right_motor.speed;
 	
@@ -247,7 +252,6 @@ static void shoot_set_mode(void)
     static int8_t last_s = RC_SW_UP;
 		shoot_control.v_key = shoot_control.shoot_rc->key.v & AUTOAIM_SHOOT_KEY;
 
-
     //上拨判断， 一次开启，再次关闭
     if ((switch_is_up(shoot_control.shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_up(last_s) && shoot_control.shoot_mode == SHOOT_STOP))
     {
@@ -262,12 +266,12 @@ static void shoot_set_mode(void)
 		if(shoot_control.shoot_mode == SHOOT_READY_FRIC)  
 		{
 					//下拨一次或者鼠标按下一次，进入射击状态
-			if ((switch_is_down(shoot_control.shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_down(last_s)) || (shoot_control.press_l && shoot_control.last_press_l == 0) || (get_autoaim_flag() == AUTOAIM_FIRE_FLAG && (shoot_control.press_r) && shoot_control.v_key))
+			if ((switch_is_down(shoot_control.shoot_rc->rc.s[SHOOT_RC_MODE_CHANNEL]) && !switch_is_down(last_s)) || (shoot_control.press_l && shoot_control.last_press_l == 0) || (shoot_control.autoaim_data->shoot == AUTOAIM_FIRE_FLAG)) //&& (shoot_control.press_r) && shoot_control.v_key))
 			{
 				shoot_control.shoot_mode = SHOOT_BULLET;//射击状态
 				cooling_heat=ext_power_heat_data.shooter_id1_42mm_cooling_heat;				//当前枪口热量
 				cooling_heat_limit=ext_game_robot_status.shooter_id1_42mm_cooling_limit;	//枪口热量上限
-				
+				shoot_control.autoaim_data->shoot = 0;
 				if(cooling_heat_limit - cooling_heat < 100.0)		//如果当前枪口热量小于发射一颗所需热量上限，则返回到ready状态
 				{
 					shoot_control.shoot_mode = SHOOT_READY_FRIC;

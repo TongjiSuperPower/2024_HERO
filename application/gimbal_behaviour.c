@@ -372,7 +372,8 @@ void gimbal_behaviour_control_set(fp32 *add_yaw, fp32 *add_pitch, gimbal_control
     {
         return;
     }
-
+		
+//		gimbal_behaviour = GIMBAL_ABSOLUTE_ANGLE;
 
     if (gimbal_behaviour == GIMBAL_ZERO_FORCE)
     {
@@ -495,8 +496,9 @@ static void gimbal_behavour_set(gimbal_control_t *gimbal_mode_set)
         static uint16_t init_stop_time = 0;
         init_time++;
         
-        if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR &&
-             fabs(gimbal_mode_set->gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR))
+        if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR ))
+//					&&
+//             fabs(gimbal_mode_set->gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR))
         {
             
             if (init_stop_time < GIMBAL_INIT_STOP_TIME)
@@ -758,7 +760,11 @@ static void gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch, gimbal_control
 			else
 			{
 				*yaw = -gimbal_control_set->gimbal_rc_ctrl->mouse.x * YAW_MOUSE_SEN;
-			    *pitch = -gimbal_control_set->gimbal_rc_ctrl->mouse.y * PITCH_MOUSE_SEN;
+				#if C_TURN
+					*pitch = gimbal_control_set->gimbal_rc_ctrl->mouse.y * PITCH_MOUSE_SEN;
+				#else
+					*pitch = -gimbal_control_set->gimbal_rc_ctrl->mouse.y * PITCH_MOUSE_SEN;
+				#endif
 			}
 //			*yaw = -gimbal_control_set->gimbal_rc_ctrl->mouse.x * YAW_MOUSE_SEN;
 //			*pitch = -gimbal_control_set->gimbal_rc_ctrl->mouse.y * PITCH_MOUSE_SEN;
@@ -769,8 +775,13 @@ static void gimbal_absolute_angle_control(fp32 *yaw, fp32 *pitch, gimbal_control
 			rc_deadband_limit(gimbal_control_set->gimbal_rc_ctrl->rc.ch[YAW_CHANNEL], yaw_channel, RC_DEADBAND);
 			rc_deadband_limit(gimbal_control_set->gimbal_rc_ctrl->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
 
-			        *yaw = yaw_channel * YAW_RC_SEN;
+			*yaw = yaw_channel * YAW_RC_SEN;
+			
+      #if C_TURN
         *pitch = pitch_channel * PITCH_RC_SEN;
+			#else
+				*pitch = -pitch_channel * PITCH_RC_SEN;
+			#endif
 		}
 		else{
 			//不控制机器人

@@ -289,8 +289,6 @@ static void chassis_init(chassis_move_t *chassis_move_init)
     chassis_move_init->vy_min_speed = -NORMAL_MAX_CHASSIS_SPEED_Y;
 
     chassis_move_init->ecd_count = 0;
-    chassis_move_init->relative_angle_2laps = 0;
-
     chassis_move_init->last_crtl_key = 0;
     chassis_move_init->LOB_SHOT_FLAG = 1;
     chassis_move_init->set_angle_flag = 0;
@@ -569,17 +567,12 @@ static void chassis_set_contorl(chassis_move_t *chassis_move_control)
             spinning_state = 1;
 
             spinning_move(chassis_move_control, angle_set);
-
-            sin_yaw = arm_sin_f32(-chassis_move_control->chassis_yaw_motor->gimbal_motor_measure->relative_angle_2laps);
-            cos_yaw = arm_cos_f32(-chassis_move_control->chassis_yaw_motor->gimbal_motor_measure->relative_angle_2laps);
-            chassis_move_control->vx_set = (cos_yaw * vx_set - sin_yaw * vy_set);
-            chassis_move_control->vy_set = (sin_yaw * vx_set + cos_yaw * vy_set);
         }
         else
         {
             spinning_state = 0;
             chassis_move_control->chassis_relative_angle_set = rad_format(angle_set);
-            chassis_move_control->wz_set = (-PID_calc(&chassis_move_control->chassis_angle_pid, chassis_move_control->chassis_yaw_motor->gimbal_motor_measure->relative_angle_2laps, chassis_move_control->chassis_relative_angle_set));
+            chassis_move_control->wz_set = (-PID_calc(&chassis_move_control->chassis_angle_pid, chassis_move_control->chassis_yaw_motor->relative_angle, chassis_move_control->chassis_relative_angle_set));
         }
         // calculate ratation speed
         // 计算旋转PID角速度
@@ -618,7 +611,7 @@ static void chassis_set_contorl(chassis_move_t *chassis_move_control)
 
         // calculate ratation speed
         // 计算旋转PID角速度
-        chassis_move_control->wz_set = (-PID_calc(&chassis_move_control->chassis_angle_pid, chassis_move_control->chassis_yaw_motor->gimbal_motor_measure->relative_angle_2laps, chassis_move_control->chassis_relative_angle_set));
+        chassis_move_control->wz_set = (-PID_calc(&chassis_move_control->chassis_angle_pid, chassis_move_control->chassis_yaw_motor->relative_angle, chassis_move_control->chassis_relative_angle_set));
 
         // speed limit
         // 速度限幅
@@ -635,7 +628,7 @@ static void chassis_set_contorl(chassis_move_t *chassis_move_control)
 static void spinning_move(chassis_move_t *chassis_move_spinnig, fp32 angle_tran)
 {
 
-    chassis_move_spinnig->chassis_relative_angle_set = rad_format(angle_tran) + chassis_move_spinnig->chassis_yaw_motor->gimbal_motor_measure->relative_angle_2laps;
+    chassis_move_spinnig->chassis_relative_angle_set = rad_format(angle_tran) + chassis_move_spinnig->chassis_yaw_motor->relative_angle;
     /*
         随机小陀螺
         if(time_i>=200)
@@ -653,7 +646,7 @@ static void spinning_move(chassis_move_t *chassis_move_spinnig, fp32 angle_tran)
         匀速小陀螺
     */
     chassis_move_spinnig->wz_set = (-2.5f * PID_calc(&chassis_move_spinnig->chassis_angle_pid,
-                                                     chassis_move_spinnig->chassis_yaw_motor->gimbal_motor_measure->relative_angle_2laps,
+                                                     chassis_move_spinnig->chassis_yaw_motor->relative_angle,
                                                      chassis_move_spinnig->chassis_relative_angle_set));
 }
 

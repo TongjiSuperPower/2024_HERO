@@ -184,7 +184,6 @@ typedef struct
     fp32 chassis_roll;  // the roll angle calculated by gyro sensor and gimbal motor.陀螺仪和云台电机叠加的roll角度
 
     int16_t ecd_count;
-    fp32 relative_angle_2laps;
     int16_t LOB_SHOT_FLAG;
     int16_t last_crtl_key;
     int16_t set_angle_flag;

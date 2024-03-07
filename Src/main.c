@@ -147,6 +147,7 @@ int main(void)
     cali_param_init();
     remote_control_init();
     usart1_tx_dma_init();
+		init_cybergear(get_pitch_gimbal_motor_measure_point_for_init(),0x06, 0);
     /* USER CODE END 2 */
 
     /* Call init function for freertos objects (in freertos.c) */

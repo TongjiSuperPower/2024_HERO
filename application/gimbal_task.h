@@ -189,11 +189,11 @@
 /*****************************************************************************************************************************/
 
 #ifdef New_Hero
-#define PITCH_SPEED_PID_KP 15000.0f // 5000.0f//2900.0f
+#define PITCH_SPEED_PID_KP 1.0f // 5000.0f//2900.0f
 #define PITCH_SPEED_PID_KI 0.0f     // 1.0f//25.0f
 #define PITCH_SPEED_PID_KD 0.0f
-#define PITCH_SPEED_PID_MAX_OUT 30000.0f
-#define PITCH_SPEED_PID_MAX_IOUT 10000.0f
+#define PITCH_SPEED_PID_MAX_OUT 10.0f
+#define PITCH_SPEED_PID_MAX_IOUT 0.0f
 
 // yaw speed close-loop PID params, max out and max iout
 // yaw 速度环 PID参数以及 PID最大输出，积分输出
@@ -212,11 +212,11 @@
 
 // pitch gyro angle close-loop PID params, max out and max iout
 // pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
-#define PITCH_GYRO_ABSOLUTE_PID_KP 45.0f
+#define PITCH_GYRO_ABSOLUTE_PID_KP 1.0f
 #define PITCH_GYRO_ABSOLUTE_PID_KI 0.0f
-#define PITCH_GYRO_ABSOLUTE_PID_KD 0.0f
+#define PITCH_GYRO_ABSOLUTE_PID_KD 0.01f
 
-#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 10.0f
+#define PITCH_GYRO_ABSOLUTE_PID_MAX_OUT 100.0f
 #define PITCH_GYRO_ABSOLUTE_PID_MAX_IOUT 0.0f
 
 // yaw gyro angle close-loop PID params, max out and max iout
@@ -272,7 +272,7 @@
 
 #define PITCH_TURN 0
 #define YAW_TURN 0
-
+#define C_TURN 0
 // 电机码盘值最大以及中值
 #define HALF_ECD_RANGE 4096
 #define ECD_RANGE 8192
@@ -309,12 +309,15 @@
 #ifndef MOTOR_ECD_TO_RAD
 #define MOTOR_ECD_TO_RAD 0.000766990394f //      2*  PI  /8192
 #endif
+#ifndef MOTOR_ECD_TO_RAD_PITCH
+#define MOTOR_ECD_TO_RAD_PITCH  0.000383495f //      4*2*  PI  /65536
+#endif
 
 #define MIDDLE_YAW 1750   // 400//437//6045//3280//6390//3804//1248//8091//1739
-#define MIDDLE_PITCH 1991 // 4815//4500
+#define MIDDLE_PITCH  35918 //1991// 4815//4500
 
-#define MAX_PITCH 2672 // 5613//2432//4950
-#define MIN_PITCH 1727 // 4475//2018//4010
+#define MAX_PITCH 36848  // 5613//2432//4950
+#define MIN_PITCH 34960   //1727 // 4475//2018//4010
 
 // 是否有滑环，有为1没有为0
 #define SLIP_RING 1

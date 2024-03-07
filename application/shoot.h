@@ -201,6 +201,10 @@ typedef struct
 		uint8_t debug_flag;
 		int16_t last_v_key;
 		int16_t v_key;
+		int16_t autoaim_mode;
+		bool_t shoot_flag;
+		bool_t last_shoot_flag;
+		autoaim_data_t *autoaim_data;
 } shoot_control_t;
 
 //由于射击和云台使用同一个can的id故也射击任务在云台任务中执行

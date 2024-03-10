@@ -496,9 +496,11 @@ static void gimbal_behavour_set(gimbal_control_t *gimbal_mode_set)
         static uint16_t init_stop_time = 0;
         init_time++;
         
-        if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR ))
+//        if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR 
 //					&&
 //             fabs(gimbal_mode_set->gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR))
+			if(fabs(gimbal_mode_set->gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR)
+				
         {
             
             if (init_stop_time < GIMBAL_INIT_STOP_TIME)
@@ -561,7 +563,7 @@ static void gimbal_behavour_set(gimbal_control_t *gimbal_mode_set)
     }
     else if (switch_is_up(gimbal_mode_set->gimbal_rc_ctrl->rc.s[GIMBAL_MODE_CHANNEL]))
     {
-        gimbal_behaviour = GIMBAL_AUTO;
+        gimbal_behaviour = GIMBAL_ABSOLUTE_ANGLE;
     }
 
     if( toe_is_error(DBUS_TOE))

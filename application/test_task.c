@@ -35,8 +35,8 @@ const error_t *error_list_test_local;
  */
 void test_task(void const *argument)
 {
-    static uint8_t error, last_error;
-    static uint8_t error_num;
+//    static uint8_t error, last_error;
+//    static uint8_t error_num;
     error_list_test_local = get_error_list_point();
     while (1)
     {

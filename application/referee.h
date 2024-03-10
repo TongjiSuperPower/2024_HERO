@@ -54,14 +54,14 @@ void send_string(char *str, char *name, int x, int y, int upd, int colour);
 void send_pitch_graphic(int type);
 void UI_send_update(void);
 void UI_send_init(void);
-void send_five_graphic();
+void send_five_graphic(void);
 void send_snipeMode(int type);
-void send_pitch_data();
+void send_pitch_data(void);
 void send_change_test(int lenth0);
 void send_capvol_graphic(int capvols);
-void send_string_test();
-void send_autoaim_state();
-void send_double_text();
+void send_string_test(void);
+void send_autoaim_state(void);
+void send_double_text(void);
 // flaot?????
 typedef union
 {

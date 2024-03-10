@@ -29,20 +29,20 @@
 
 
 
-static fp32 motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd)
-{
-    int32_t relative_ecd = ecd - offset_ecd;
-    if (relative_ecd >= 0 && relative_ecd <=8191)
-    {
-        
-    }
-    else
-    {
-        relative_ecd += 8192;
-    }
+//static fp32 motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd)
+//{
+//    int32_t relative_ecd = ecd - offset_ecd;
+//    if (relative_ecd >= 0 && relative_ecd <=8191)
+//    {
+//        
+//    }
+//    else
+//    {
+//        relative_ecd += 8192;
+//    }
 
-    return relative_ecd;
-}
+//    return relative_ecd;
+//}
 
 int count_i = 0;
 int start_up_i = 0;

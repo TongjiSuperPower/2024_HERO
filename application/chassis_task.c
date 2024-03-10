@@ -127,19 +127,19 @@ static void chassis_control_loop(chassis_move_t *chassis_move_control_loop);
 
 static void spinning_move(chassis_move_t *chassis_move_spinnig, fp32 angle_tran);
 
-static fp32 motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd)
-{
-    int32_t relative_ecd = ecd - offset_ecd;
-    if (relative_ecd >= 0 && relative_ecd <= 8191)
-    {
-    }
-    else
-    {
-        relative_ecd += 8192;
-    }
+//static fp32 motor_ecd_to_angle_change(uint16_t ecd, uint16_t offset_ecd)
+//{
+//    int32_t relative_ecd = ecd - offset_ecd;
+//    if (relative_ecd >= 0 && relative_ecd <= 8191)
+//    {
+//    }
+//    else
+//    {
+//        relative_ecd += 8192;
+//    }
 
-    return relative_ecd;
-}
+//    return relative_ecd;
+//}
 
 #if INCLUDE_uxTaskGetStackHighWaterMark
 uint32_t chassis_high_water;

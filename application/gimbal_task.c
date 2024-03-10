@@ -301,7 +301,7 @@ gimbal_control_t gimbal_control;
 // 发送的电机电流
 static int16_t yaw_can_set_current = 0, pitch_can_set_current = 0, shoot_can_set_current = 0;
 
-static uint8_t send_count = 0; // 自瞄发送值计数
+//static uint8_t send_count = 0; // 自瞄发送值计数
 
 /**
  * @brief          gimbal task, osDelay GIMBAL_CONTROL_TIME (1ms)
@@ -1019,7 +1019,8 @@ static void gimbal_relative_angle_limit(gimbal_motor_t *gimbal_motor, fp32 add)
     {
         return;
     }
-    gimbal_motor->relative_angle_set += add;
+    gimbal_motor->relative_angle_set -= add;
+		aaaa = add;
     // 是否超过最大 最小值
     if (gimbal_motor->relative_angle_set > gimbal_motor->max_relative_angle)
     {
@@ -1042,7 +1043,7 @@ static void gimbal_relative_angle_no_limit(gimbal_motor_t *gimbal_motor, fp32 ad
     {
         return;
     }
-    gimbal_motor->relative_angle_set += add;
+    gimbal_motor->relative_angle_set -= add;
     // 是否超过最大 最小值
     if (gimbal_motor->relative_angle_set > gimbal_motor->max_relative_angle)
     {
@@ -1151,7 +1152,7 @@ static void gimbal_motor_relative_angle_control(gimbal_motor_t *gimbal_motor)
     gimbal_motor->motor_gyro_set = gimbal_PID_calc(&gimbal_motor->gimbal_motor_relative_angle_pid, gimbal_motor->relative_angle, gimbal_motor->relative_angle_set, gimbal_motor->motor_gyro);
     gimbal_motor->current_set = PID_calc(&gimbal_motor->gimbal_motor_gyro_pid, gimbal_motor->motor_gyro, gimbal_motor->motor_gyro_set);
     // 控制值赋值
-    gimbal_motor->given_current = (int16_t)(gimbal_motor->current_set);
+    gimbal_motor->given_current = -(int16_t)(gimbal_motor->current_set);
 }
 
 /**

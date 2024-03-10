@@ -47,11 +47,15 @@
 //摩擦轮高速 加速 时间
 #define UP_ADD_TIME                 80
 //电机反馈码盘值范围
+#ifndef HALF_ECD_RANGE
 #define HALF_ECD_RANGE              4096
+#endif
+#ifndef ECD_RANGE
 #define ECD_RANGE                   8191
+#endif
 //电机rmp 变化成 旋转速度的比例
 #define MOTOR_RPM_TO_SPEED          0.00290888208665721596153948461415f
-#define MOTOR_ECD_TO_ANGLE19          0.000039929622401811//0.00004036791547f//0.000021305288720633905968306772076277f
+#define MOTOR_ECD_TO_ANGLE19          0.000039929622401811f//0.00004036791547f//0.000021305288720633905968306772076277f
 #define FULL_COUNT                  10//18
 //拨弹速度
 #define TRIGGER_SPEED               0.2f//5.0f

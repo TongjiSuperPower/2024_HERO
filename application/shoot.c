@@ -84,7 +84,7 @@ int fric_right_motor_last_speed=0;
 
 static uint16_t cooling_heat;
 static uint16_t cooling_heat_limit;
-static uint16_t remain_times;
+//static uint16_t remain_times;
 
 
 /**

@@ -219,6 +219,7 @@ static uint32_t Get_Motor_ID(uint32_t CAN_ID_Frame)
 
 CAN_RxHeaderTypeDef rx_header;
     uint8_t rx_data[8];
+int test = 0;
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
     
@@ -261,11 +262,12 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 				}
 				else
 				{
-					if (motor_chassis[6].ecd - motor_chassis[6].last_ecd > HALF_ECD_RANGE)
+					test = motor_chassis[6].ecd - motor_chassis[6].last_ecd;
+					if (test > HALF_ECD_RANGE)
 					{
 						motor_chassis[6].ecd_count--;
 					}
-					else if (motor_chassis[6].ecd - motor_chassis[6].last_ecd < -HALF_ECD_RANGE)
+					else if (test < -4096)
 					{
 						motor_chassis[6].ecd_count++;
 					}

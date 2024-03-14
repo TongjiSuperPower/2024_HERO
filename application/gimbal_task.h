@@ -201,14 +201,14 @@
 #define YAW_SPEED_PID_KP 3600.0f       // 2500.0f//3600.0f
 #define YAW_SPEED_PID_KI 0.0f          // 20.0f//1.5f//20.0f
 #define YAW_SPEED_PID_KD 0.0f          // 0.0f//0.0f
-#define YAW_GYRO_ABSOLUTE_PID_KP 26.0f // 20.0f//26.0f
-#define YAW_GYRO_ABSOLUTE_PID_KI 0.0f  // 0.0f//0.0f
-#define YAW_GYRO_ABSOLUTE_PID_KD 0.0f  // 3.4f//0.3f
+#define YAW_GYRO_ABSOLUTE_PID_KP 250.0f//26.0f // 20.0f//26.0f
+#define YAW_GYRO_ABSOLUTE_PID_KI 1.0f  // 0.0f//0.0f
+#define YAW_GYRO_ABSOLUTE_PID_KD -20.0f  //0.0f  // 3.4f//0.3f
 
 #define YAW_SPEED_PID_MAX_OUT 30000.0f
 #define YAW_SPEED_PID_MAX_IOUT 5000.0f
-#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 10.0f // 10
-#define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 0.0f
+#define YAW_GYRO_ABSOLUTE_PID_MAX_OUT 100.0f // 10
+#define YAW_GYRO_ABSOLUTE_PID_MAX_IOUT 20.0f
 
 // pitch gyro angle close-loop PID params, max out and max iout
 // pitch 角度环 角度由陀螺仪解算 PID参数以及 PID最大输出，积分输出
@@ -314,7 +314,7 @@
 #define MOTOR_ECD_TO_RAD_PITCH  0.000383495f //      4*2*  PI  /65536
 #endif
 
-#define MIDDLE_YAW 1750   // 400//437//6045//3280//6390//3804//1248//8091//1739
+#define MIDDLE_YAW 6980   // 400//437//6045//3280//6390//3804//1248//8091//1739
 #define MIDDLE_PITCH  34100 //1991// 4815//4500
 
 #define MAX_PITCH 35345  // 5613//2432//4950

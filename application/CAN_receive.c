@@ -54,7 +54,7 @@ extern CAN_HandleTypeDef hcan2;
 				(ptr)->last_last_last_ecd = (ptr)->last_last_ecd;               \
 				(ptr)->last_last_ecd = (ptr)->last_ecd;                         \
         (ptr)->last_ecd = (ptr)->ecd;                                   \
-        (ptr)->ecd = (uint16_t)((data)[0] << 8 | (data)[1]);            \
+        (ptr)->ecd = (uint32_t)((data)[0] << 8 | (data)[1]);            \
         (ptr)->speed_rpm = (uint16_t)((data)[2] << 8 | (data)[3]);      \
         (ptr)->given_current = (uint16_t)((data)[4] << 8 | (data)[5]);  \
         (ptr)->temperate = (data)[6];                                   \
@@ -219,7 +219,7 @@ static uint32_t Get_Motor_ID(uint32_t CAN_ID_Frame)
 
 CAN_RxHeaderTypeDef rx_header;
     uint8_t rx_data[8];
-int test = 0;
+int16_t test = 0;
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
     
@@ -262,7 +262,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 				}
 				else
 				{
-					test = motor_chassis[6].ecd - motor_chassis[6].last_ecd;
+					test = (int16_t)(motor_chassis[6].ecd) - (int16_t)(motor_chassis[6].last_ecd);
 					if (test > HALF_ECD_RANGE)
 					{
 						motor_chassis[6].ecd_count--;
@@ -275,10 +275,10 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 				start_up_i ++;
 				
 				
-				motor_chassis[6].relative_angle_19laps = motor_chassis[6].ecd_count * ECD_RANGE + motor_chassis[6].ecd;
-				while(motor_chassis[6].relative_angle_19laps>=(8192.0f*3592.0f/187.0f))
+				motor_chassis[6].relative_angle_19laps = (float)motor_chassis[6].ecd_count * ECD_RANGE + (float)motor_chassis[6].ecd;
+				while(motor_chassis[6].relative_angle_19laps>=(8192.0f*3592.0f/187.0f*66.0f/38.0f))
 				{
-					motor_chassis[6].relative_angle_19laps -= 8192.0f*3592.0f/187.0f;
+					motor_chassis[6].relative_angle_19laps -= 8192.0f*3592.0f/187.0f*66.0f/38.0f;
 				}
 				motor_chassis[6].relative_angle_19laps = rad_format(motor_chassis[6].relative_angle_19laps*MOTOR_ECD_TO_ANGLE19);
 				break;

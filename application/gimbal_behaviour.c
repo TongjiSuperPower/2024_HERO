@@ -499,7 +499,7 @@ static void gimbal_behavour_set(gimbal_control_t *gimbal_mode_set)
 //        if ((fabs(gimbal_mode_set->gimbal_yaw_motor.relative_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR 
 //					&&
 //             fabs(gimbal_mode_set->gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR))
-			if(fabs(gimbal_mode_set->gimbal_pitch_motor.absolute_angle - INIT_PITCH_SET) < GIMBAL_INIT_ANGLE_ERROR)
+			if(fabs(gimbal_mode_set->gimbal_yaw_motor.absolute_angle - INIT_YAW_SET) < GIMBAL_INIT_ANGLE_ERROR)
 				
         {
             
@@ -861,7 +861,7 @@ static void gimbal_relative_angle_control(fp32 *yaw, fp32 *pitch, gimbal_control
 			rc_deadband_limit(gimbal_control_set->gimbal_rc_ctrl->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
 			
 			*yaw = yaw_channel * YAW_RC_SEN;
-			*pitch = pitch_channel * PITCH_RC_SEN;//新英雄去掉负号
+			*pitch = -pitch_channel * PITCH_RC_SEN;
 
 		}
 		else{
@@ -950,7 +950,7 @@ static void gimbal_lob_shot_control(fp32 *yaw, fp32 *pitch, gimbal_control_t *gi
 			rc_deadband_limit(gimbal_control_set->gimbal_rc_ctrl->rc.ch[PITCH_CHANNEL], pitch_channel, RC_DEADBAND);
 
 			        *yaw = yaw_channel * YAW_RC_SEN;
-        *pitch = pitch_channel * PITCH_RC_SEN;
+        *pitch = -pitch_channel * PITCH_RC_SEN;
 		}
 		else{
 			//不控制机器人

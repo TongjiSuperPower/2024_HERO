@@ -372,7 +372,7 @@ static void trigger_motor_turn_back(void)
 {
     if( shoot_control.block_time >= BLOCK_TIME) //堵转一定时间后，给定反转速度
     {
-        shoot_control.speed_set = -1.5;
+        shoot_control.speed_set = -0.5;
     }
 		
 		if(fabs(shoot_control.speed) >= BLOCK_TRIGGER_SPEED)
@@ -409,7 +409,7 @@ static void shoot_bullet_control(void)
 
 	if (shoot_control.move_flag == 0) //置零表示可以改变目标角度，说明已进入过down模式，并且flag清零，可以开始下一次拨弹
   {
-			shoot_control.set_angle = rad_format(shoot_control.shoot_motor_measure->relative_angle_19laps + PI_THREE*4.72f/3.0f);
+			shoot_control.set_angle = rad_format(shoot_control.shoot_motor_measure->relative_angle_19laps + PI_THREE*4.72f/3.0f*66.0f/38.0f);
 			shoot_control.move_flag = 1; //改变目标角度后即改变flag，防止在当前轮拨弹过程中目标值发生变化
   }
 		//摩擦轮转速下降，打出一发，认为拨弹结束

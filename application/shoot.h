@@ -69,7 +69,7 @@
 //卡单时间 以及反转时间
 #define BLOCK_TRIGGER_SPEED         1.0f
 #define BLOCK_TIME                  1500//700
-#define REVERSE_TIME                800//500
+#define REVERSE_TIME                500//800//500
 #define REVERSE_SPEED_LIMIT         13.0f
 #define MOVE_TIME                   1500
 #define FRIC_SPEED                  5650
@@ -107,10 +107,10 @@
 #define TRIGGER_ANGLE_PID_KI        0.0f
 #define TRIGGER_ANGLE_PID_KD        -6.5f//-6.0f//-5.0f//-4.1f
 
-#define TRIGGER_BULLET_PID_MAX_OUT  10000.0f
+#define TRIGGER_BULLET_PID_MAX_OUT  16384.0f
 #define TRIGGER_BULLET_PID_MAX_IOUT 9000.0f
 
-#define TRIGGER_READY_PID_MAX_OUT   10000.0f
+#define TRIGGER_READY_PID_MAX_OUT   16384.0f
 #define TRIGGER_READY_PID_MAX_IOUT  7000.0f
 
 #endif

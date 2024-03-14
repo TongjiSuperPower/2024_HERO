@@ -253,7 +253,7 @@ void chassis_behaviour_mode_set(chassis_move_t *chassis_move_mode)
             {
                 chassis_behaviour_mode = CHASSIS_ANGLE_SET;
             }
-            if (abs(chassis_move_mode->chassis_yaw_motor->gimbal_motor_measure->ecd - (MIDDLE_YAW + 2048)) < 50)
+            if (abs(chassis_move_mode->chassis_yaw_motor->gimbal_motor_measure->ecd - (MIDDLE_YAW + 1024)) < 50)
             {
                 chassis_behaviour_mode = CHASSIS_NO_MOVE;
                 chassis_move_mode->set_angle_flag = 1;
@@ -476,7 +476,7 @@ static void chassis_infantry_follow_gimbal_yaw_control(fp32 *vx_set, fp32 *vy_se
 
     if (swing_flag)
     {
-        swing_angle = 0.2f * max_angle; // * arm_sin_f32(swing_time);
+        swing_angle = 0.0f * max_angle; // * arm_sin_f32(swing_time);
     }
     else
     {
@@ -530,21 +530,21 @@ static void chassis_yaw_set_angle_control(fp32 *vx_set, fp32 *vy_set, fp32 *angl
         swing_flag = 0;
     }
 
-    // judge if keyboard is controlling the chassis, if yes, reduce the max_angle
-    // 判断键盘输入是不是在控制底盘运动，底盘在运动减小摇摆角度
-    if (chassis_move_rc_to_vector->chassis_RC->key.v & CHASSIS_FRONT_KEY || chassis_move_rc_to_vector->chassis_RC->key.v & CHASSIS_BACK_KEY ||
-        chassis_move_rc_to_vector->chassis_RC->key.v & CHASSIS_LEFT_KEY || chassis_move_rc_to_vector->chassis_RC->key.v & CHASSIS_RIGHT_KEY)
-    {
-        max_angle = SWING_MOVE_ANGLE;
-    }
-    else
-    {
-        max_angle = SWING_NO_MOVE_ANGLE;
-    }
+//    // judge if keyboard is controlling the chassis, if yes, reduce the max_angle
+//    // 判断键盘输入是不是在控制底盘运动，底盘在运动减小摇摆角度
+//    if (chassis_move_rc_to_vector->chassis_RC->key.v & CHASSIS_FRONT_KEY || chassis_move_rc_to_vector->chassis_RC->key.v & CHASSIS_BACK_KEY ||
+//        chassis_move_rc_to_vector->chassis_RC->key.v & CHASSIS_LEFT_KEY || chassis_move_rc_to_vector->chassis_RC->key.v & CHASSIS_RIGHT_KEY)
+//    {
+//        max_angle = 2*SWING_MOVE_ANGLE;
+//    }
+//    else
+//    {
+//        max_angle = 2*SWING_NO_MOVE_ANGLE;
+//    }
 
     if (swing_flag)
     {
-        swing_angle = 1.5707963267948966192313f / 2; // * arm_sin_f32(swing_time);
+        swing_angle = 1.5707963267948966192313f/2.0f; // * arm_sin_f32(swing_time);
     }
     else
     {

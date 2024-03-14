@@ -380,7 +380,7 @@ void gimbal_task(void const *pvParameters)
             {
                 //				 heat_last = heat_now;
                 CAN_cmd_gimbal(yaw_can_set_current, 0, shoot_can_set_current, 0);
-								motor_controlmode(&mi_motor[0],pitch_can_set_current,0,0,0,0);
+//								motor_controlmode(&mi_motor[0],pitch_can_set_current,0,0,0,0);
                 //				CAN_cmd_gimbal(0, pitch_can_set_current, shoot_can_set_current, 0);
             }
         }

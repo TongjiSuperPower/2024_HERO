@@ -22,7 +22,7 @@ void servo_pwm_set(uint16_t pwm, uint8_t i)
         }break;
         case 3:
         {
-            __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_3, pwm);
+            __HAL_TIM_SetCompare(&htim1, TIM_CHANNEL_1, pwm);
         }break;
     }
 }

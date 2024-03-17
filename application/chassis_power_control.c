@@ -1,13 +1,13 @@
 /**
   ****************************(C) COPYRIGHT 2019 DJI****************************
   * @file       chassis_power_control.c/h
-  * @brief      chassis power control.µ×ÅÌ¹¦ÂÊ¿ØÖÆ
+  * @brief      chassis power control.ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½Ê¿ï¿½ï¿½ï¿½
   * @note       this is only controling 80 w power, mainly limit motor current set.
   *             if power limit is 40w, reduce the value JUDGE_TOTAL_CURRENT_LIMIT 
   *             and POWER_CURRENT_LIMIT, and chassis max speed (include max_vx_speed, min_vx_speed)
-  *             Ö»¿ØÖÆ80w¹¦ÂÊ£¬Ö÷ÒªÍ¨¹ý¿ØÖÆµç»úµçÁ÷Éè¶¨Öµ,Èç¹ûÏÞÖÆ¹¦ÂÊÊÇ40w£¬¼õÉÙ
-  *             JUDGE_TOTAL_CURRENT_LIMITºÍPOWER_CURRENT_LIMITµÄÖµ£¬»¹ÓÐµ×ÅÌ×î´óËÙ¶È
-  *             (°üÀ¨max_vx_speed, min_vx_speed)
+  *             Ö»ï¿½ï¿½ï¿½ï¿½80wï¿½ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ÒªÍ¨ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¶¨Öµ,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¹ï¿½ï¿½ï¿½ï¿½ï¿½40wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  *             JUDGE_TOTAL_CURRENT_LIMITï¿½ï¿½POWER_CURRENT_LIMITï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
+  *             (ï¿½ï¿½ï¿½ï¿½max_vx_speed, min_vx_speed)
   * @history
   *  Version    Date            Author          Modification
   *  V1.0.0     Nov-11-2019     RM              1. add chassis power control
@@ -29,9 +29,9 @@
 
 #define WARNING_POWER_BUFF  55.0f
 
-#define NO_JUDGE_TOTAL_CURRENT_LIMIT    64000.0f    //16000 * 4, ÎÞÅÐ¶Ï×ÜµçÁ÷ÏÞÖÆ
-#define BUFFER_TOTAL_CURRENT_LIMIT      16000.0f    //»º³åÆ÷×ÜµçÁ÷ÏÞÖÆ
-#define POWER_TOTAL_CURRENT_LIMIT       20000.0f    //¹¦ÂÊµçÁ÷ÏÞÖÆ
+#define NO_JUDGE_TOTAL_CURRENT_LIMIT    64000.0f    //16000 * 4, ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define BUFFER_TOTAL_CURRENT_LIMIT      16000.0f    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+#define POWER_TOTAL_CURRENT_LIMIT       20000.0f    //ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 fp32 current_scale;
 /**
   * @brief          limit the power, mainly limit motor current
@@ -39,8 +39,8 @@ fp32 current_scale;
   * @retval         none
   */
 /**
-  * @brief          ÏÞÖÆ¹¦ÂÊ£¬Ö÷ÒªÏÞÖÆµç»úµçÁ÷
-  * @param[in]      chassis_power_control: µ×ÅÌÊý¾Ý
+  * @brief          ï¿½ï¿½ï¿½Æ¹ï¿½ï¿½Ê£ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+  * @param[in]      chassis_power_control: ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
   * @retval         none
   */
 
@@ -49,9 +49,9 @@ void chassis_power_control(chassis_move_t *chassis_power_control)
 {
 	float power_limit,warning_power;
 
-	if(ext_game_robot_status.robot_level==1)
+	if(ext_robot_status.robot_level==1)
 	{
-		if(ext_game_robot_status.chassis_power_limit == 70)
+		if(ext_robot_status.chassis_power_limit == 70)
 		{
 			warning_power = 55.0;
 		}
@@ -60,9 +60,9 @@ void chassis_power_control(chassis_move_t *chassis_power_control)
 			warning_power = 45.0;
 		}
 	}
-	if(ext_game_robot_status.robot_level==2)
+	if(ext_robot_status.robot_level==2)
 	{
-		if(ext_game_robot_status.chassis_power_limit == 90)
+		if(ext_robot_status.chassis_power_limit == 90)
 		{
 			warning_power = 70.0;
 		}
@@ -71,9 +71,9 @@ void chassis_power_control(chassis_move_t *chassis_power_control)
 			warning_power = 50.0;
 		}
 	}
-	if(ext_game_robot_status.robot_level==3)
+	if(ext_robot_status.robot_level==3)
 	{
-		if(ext_game_robot_status.chassis_power_limit == 120)
+		if(ext_robot_status.chassis_power_limit == 120)
 		{
 			warning_power = 100.0;
 		}
@@ -83,7 +83,7 @@ void chassis_power_control(chassis_move_t *chassis_power_control)
 		}
 	}
 	
-	power_limit=ext_game_robot_status.chassis_power_limit;
+	power_limit=ext_robot_status.chassis_power_limit;
 	
 	
 	fp32 chassis_power = 0.0f;
@@ -104,38 +104,38 @@ void chassis_power_control(chassis_move_t *chassis_power_control)
     {
         get_chassis_power_and_buffer(&chassis_power, &chassis_power_buffer);
         // power > 80w and buffer < 60j, because buffer < 60 means power has been more than 80w
-        //¹¦ÂÊ³¬¹ý80w ºÍ»º³åÄÜÁ¿Ð¡ÓÚwarning buff,ÒòÎª»º³åÄÜÁ¿Ð¡ÓÚwarning buffÒâÎ¶×Å¹¦ÂÊ³¬¹ý85
+        //ï¿½ï¿½ï¿½Ê³ï¿½ï¿½ï¿½80w ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½warning buff,ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½warning buffï¿½ï¿½Î¶ï¿½Å¹ï¿½ï¿½Ê³ï¿½ï¿½ï¿½85
         if(chassis_power_buffer < WARNING_POWER_BUFF)
         {
             fp32 power_scale;
 //            if(chassis_power_buffer > 5.0f)
             {
                 //scale down WARNING_POWER_BUFF
-                //ËõÐ¡WARNING_POWER_BUFF
+                //ï¿½ï¿½Ð¡WARNING_POWER_BUFF
                 power_scale = chassis_power_buffer / WARNING_POWER_BUFF;
 
             }
             //scale down
-            //ËõÐ¡
+            //ï¿½ï¿½Ð¡
             total_current_limit = BUFFER_TOTAL_CURRENT_LIMIT * power_scale;
         }
-        else//»º³åÄÜÁ¿´óÓÚ50
+        else//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½50
         {
             //power > warning_power
-            //¹¦ÂÊ´óÓÚwarning_power
+            //ï¿½ï¿½ï¿½Ê´ï¿½ï¿½ï¿½warning_power
             if(chassis_power > warning_power)
             {
                 fp32 power_scale;
                 //power < 80w
-                //¹¦ÂÊÐ¡ÓÚ80w
+                //ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½80w
                 if(chassis_power < power_limit)
                 {
                     //scale down
-                    //ËõÐ¡
+                    //ï¿½ï¿½Ð¡
                     power_scale = (power_limit - chassis_power) / (power_limit - warning_power);
                 }
                 //power > 80w
-                //¹¦ÂÊ´óÓÚ80w
+                //ï¿½ï¿½ï¿½Ê´ï¿½ï¿½ï¿½80w
                 else
                 {
                     power_scale = 0.0f;
@@ -144,7 +144,7 @@ void chassis_power_control(chassis_move_t *chassis_power_control)
                 total_current_limit = BUFFER_TOTAL_CURRENT_LIMIT + POWER_TOTAL_CURRENT_LIMIT * power_scale;
             }
             //power < warning_power
-            //¹¦ÂÊÐ¡ÓÚwarning_power
+            //ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½warning_power
             else
             {
                 total_current_limit = BUFFER_TOTAL_CURRENT_LIMIT + POWER_TOTAL_CURRENT_LIMIT;
@@ -155,7 +155,7 @@ void chassis_power_control(chassis_move_t *chassis_power_control)
     
     total_current = 0.0f;
     //calculate the original motor current set
-    //¼ÆËãÔ­±¾µç»úµçÁ÷Éè¶¨
+    //ï¿½ï¿½ï¿½ï¿½Ô­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è¶¨
     for(uint8_t i = 0; i < 4; i++)
     {
         total_current += fabs(chassis_power_control->motor_speed_pid[i].out);

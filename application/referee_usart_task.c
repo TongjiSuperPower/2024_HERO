@@ -79,13 +79,16 @@ void referee_usart_task(void const * argument)
 		//USART6通过串口中断接收数据。
 	
 		uint16_t UI_PushUp_Counter = 261;
+	
 		/* 裁判系统初始化 */
 		vTaskDelay(300);
 	
     while(1)
     {		
 				referee_unpack_fifo_data();//接收数据
-				vTaskDelay(10);
+				vTaskDelay(20);
+				UI_send_init();
+			  
 			
 				UI_PushUp_Counter++;
 		
@@ -95,7 +98,7 @@ void referee_usart_task(void const * argument)
 			
 			
 		  //aim line
-			if(UI_PushUp_Counter % 500 == 0){
+			if(UI_PushUp_Counter % 47 == 0){
 				capdraw = true;
 				first_pitch_draw = true;
 				auto_state = true;
@@ -103,18 +106,18 @@ void referee_usart_task(void const * argument)
 				
 				continue;
 			}
-			if(UI_PushUp_Counter % 600 == 0){
-				
-				//send_text_graphic("009");
-				send_double_text();
-				continue;
-			}
-			if(UI_PushUp_Counter % 7 ==0){
-				//REST ENERGY
-			send_string_test();
-			
-			continue;
-			}
+//			if(UI_PushUp_Counter % 600 == 0){
+//				
+//				//send_text_graphic("009");
+//				send_double_text();
+//				continue;
+//			}
+//			if(UI_PushUp_Counter % 7 ==0){
+//				//REST ENERGY
+//			send_string_test();
+//			
+//			continue;
+//			}
 		/*	if(UI_PushUp_Counter % 47 ==0){
 				
 				if(snipeMode ==1)
@@ -130,39 +133,48 @@ void referee_usart_task(void const * argument)
 			
 			continue;
 			}
-		
-		
 			
-			if(UI_PushUp_Counter % 37 ==0){
-				//STATE OF RUB
-				if (shoot_control.fric_state == FRIC_ON)
-				{
-					send_rub_graphic("004", 1800,500,2,1);//green
-				}
-				else
-				{
-					send_rub_graphic("004", 1800,500,2,3);
-				}
+			if(UI_PushUp_Counter % 53 ==0){
+				//STATE OF FRIC
+
+					send_bool_state_graphic("004", 1800,500,4,1);//green rectangle
+
 			
 				continue;
 			}
+		
+		
+			
+//			if(UI_PushUp_Counter % 37 ==0){
+//				//STATE OF FRIC
+//				if (shoot_control.fric_state == FRIC_ON)
+//				{
+//					send_bool_state_graphic("004", 1800,500,2,1);//green circle on 
+//				}
+//				else
+//				{
+//					send_bool_state_graphic("004", 1800,500,2,3);//green circle off 
+//				}
+//			
+//				continue;
+//			}
 			if(UI_PushUp_Counter % 23 ==0){
 					send_autoaim_state();
 				continue;
 			}
 				
-			if(UI_PushUp_Counter % 31 ==0){
-				//STATE OF SPINNING
-				if (spinning_state == 1)
-			  {
-					send_spinning_graphic("003", 1800,700,2,1);//green
-				}
-				else
-				{
-					send_spinning_graphic("003", 1800,700,3,3);
-				}
-				continue;
-			}
+//			if(UI_PushUp_Counter % 31 ==0){
+//				//STATE OF SPINNING
+//				if (spinning_state == 1)
+//			  {
+//					send_bool_state_graphic("003", 1800,700,2,1);//green circle on 
+//				}
+//				else
+//				{
+//					send_bool_state_graphic("003", 1800,700,2,3);//green circle off 
+//				}
+//				continue;
+//			}
 
     }
 }

@@ -40,7 +40,7 @@ typedef struct
     uint8_t stamp;        // 1 byte
     int16_t yaw;          // 2 byte
     int16_t pitch;        // 2 byte
-    int16_t bullet_speed; // 2 byte
+    int16_t initial_speed; // 2 byte
     uint8_t flag;         // 1 byte
     uint8_t crc8_check;   // 1 byte
     uint8_t tail;         // 1 byte
@@ -245,8 +245,8 @@ void send_to_computer(fp32 absolute_yaw, fp32 absolute_pitch)
     frame_tx.stamp = stamp_count;
     frame_tx.yaw = (int16_t)(absolute_yaw * 180.f / PI * 1e2f);
     frame_tx.pitch = (int16_t)(absolute_pitch * 180.f / PI * 1e2f);
-    frame_tx.bullet_speed = (int16_t)(ext_shoot_data.bullet_speed * 1e2f);
-    frame_tx.flag = ext_game_robot_status.robot_id;
+    frame_tx.initial_speed = (int16_t)(ext_shoot_data.initial_speed * 1e2f);
+    frame_tx.flag = ext_robot_status.robot_id;
 
     if (stamp_count == 255)
         stamp_count = 0;

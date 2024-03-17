@@ -116,10 +116,10 @@ static void Cap_Contorl(cap_control_t *cap_control)
 {
 
 	get_chassis_power_and_buffer(&chassis_state.Chassis_power, &chassis_state.chassis_power_buffer);
-	chassis_state.Chassis_power_limit=ext_game_robot_status.chassis_power_limit;
+	chassis_state.Chassis_power_limit=ext_robot_status.chassis_power_limit;
 	chassis_state.remain_power=chassis_state.Chassis_power_limit-chassis_state.Chassis_power;
 	//chassis_state.remain_buffer=chassis_state.chassis_power_buffer;
-	if(ext_game_robot_status.mains_power_chassis_output==0)//如果底盘被裁判系统断电，电容不放电
+	if(ext_robot_status.power_management_chassis_output==0)//如果底盘被裁判系统断电，电容不放电
 	{
 		if(cap_control->cap_message->cap_vol<Cap_Toutuous_Uppest)
 			cap_FSM=cap_dis_charge;//只充不放

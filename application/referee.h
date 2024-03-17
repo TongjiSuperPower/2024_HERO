@@ -44,7 +44,7 @@ float _bytes2float(uint8_t *chosen_Message);
 void float2bytes(float chosen_value, u8 *res_message);
 void send_single_icon(char *name, int x, int y, int type, int color);
 void send_spinning_graphic(char name[3], int x, int y, int color, int type);
-void send_rub_graphic(char graphname[3], int x, int y, int color, int type);
+void send_bool_state_graphic(char graphname[3], int x, int y, int color, int type);
 void send_multi_graphic(void);
 void send_text_graphic(char GraphName[3]);
 void send_frame1_graphic(char graphname[3], int x, int y);
@@ -54,14 +54,14 @@ void send_string(char *str, char *name, int x, int y, int upd, int colour);
 void send_pitch_graphic(int type);
 void UI_send_update(void);
 void UI_send_init(void);
-void send_five_graphic(void);
+void send_five_graphic();
 void send_snipeMode(int type);
-void send_pitch_data(void);
+void send_pitch_data();
 void send_change_test(int lenth0);
 void send_capvol_graphic(int capvols);
-void send_string_test(void);
-void send_autoaim_state(void);
-void send_double_text(void);
+void send_string_test();
+void send_autoaim_state();
+void send_double_text();
 // flaot?????
 typedef union
 {
@@ -120,42 +120,7 @@ typedef __packed struct
 	uint16_t blue_base_HP;	  // offset=30 ??????
 } ext_game_robot_HP_t;
 
-typedef __packed struct
-{
-	uint8_t supply_projectile_id;
-	uint8_t supply_robot_id;
-	uint8_t supply_num;
-} ext_supply_projectile_booking_t;
 
-////??????:0x0004
-// typedef __packed struct
-//{
-//	uint8_t dart_belong;
-//	uint16_t stage_remaining_time;
-// }ext_dart_status_t;
-
-/* ???????????????:0x0005?????:1Hz ????,????:????? */
-typedef __packed struct
-{
-	/* bit[0, 4, 8, 12, 16, 20]? F1 - F6 ????:0 ????,1 ????
-	   bit[1-3, 5-7, 9-11, 13-15, 17-19, 21-23]? F1-F6 ?????:*/
-	uint8_t F1_zone_status : 1;				// 0bit F1????
-	uint8_t F1_zone_buff_debuff_status : 3; // 1-3bit F1????
-	uint8_t F2_zone_status : 1;				// 4bit F2????
-	uint8_t F2_zone_buff_debuff_status : 3; // 5-7bit F2????
-	uint8_t F3_zone_status : 1;				// 8bit F3????
-	uint8_t F3_zone_buff_debuff_status : 3; // 9-11bit F3????
-	uint8_t F4_zone_status : 1;				// 12bit F4????
-	uint8_t F4_zone_buff_debuff_status : 3; // 13-15bit F4????
-	uint8_t F5_zone_status : 1;				// 16bit F5????
-	uint8_t F5_zone_buff_debuff_status : 3; // 17-19bit F5????
-	uint8_t F6_zone_status : 1;				// 20bit F6????
-	uint8_t F6_zone_buff_debuff_status : 3; // 21-23bit F6????
-	uint16_t red1_bullet_left;				// offset=3 ?? 1 ?????
-	uint16_t red2_bullet_left;				// offset=5 ?? 2 ?????
-	uint16_t blue1_bullet_left;				// offset=7 ?? 1 ?????
-	uint16_t blue2_bullet_left;				// offset=9 ?? 2 ?????
-} ext_ICRA_buff_debuff_zone_status_t;
 
 /* ??????:0x0101?????:1Hz */
 typedef __packed struct
@@ -168,7 +133,7 @@ typedef __packed struct
 	0 ???????;
 	bit 10 -31: ??
 	*/
-	uint32_t event_type;
+	uint32_t event_data;
 } ext_event_data_t;
 
 /* ???????:0x0102?????:???????, ????:????? */
@@ -189,14 +154,16 @@ typedef __packed struct
 typedef __packed struct // cmd_id (0x0104)
 {
 	uint8_t level;		   // 1:?? 2:?? 3:??
-	uint8_t foul_robot_id; //???,???ID?0;????????????ID
+	uint8_t offending_robot_id; //???,???ID?0;????????????ID
+	uint8_t count; 
 } ext_referee_warning_t;
 
 //----????????----
 typedef __packed struct // cmd_id(0x0105)
 {
 	uint8_t dart_remaining_time; // 15s???
-} ext_dart_remaining_time_t;
+	uint16_t dart_info;
+} ext_dart_info_t;
 
 //----???????----
 typedef __packed struct // cmd_id(0x0201)
@@ -207,37 +174,30 @@ typedef __packed struct // cmd_id(0x0201)
 	//   103/104/105:???????;106:???????;107:???????;108:???????;109:??????
 
 	uint8_t robot_level; //?????  1:??  2:??  3:??
-	uint16_t remain_HP;	 //???????
-	uint16_t max_HP;	 //???????
+	uint16_t current_HP;	 //???????
+	uint16_t maximum_HP;	 //???????
 
-	uint16_t shooter_id1_17mm_cooling_rate;	 //???1?17mm???????
-	uint16_t shooter_id1_17mm_cooling_limit; //???1?17mm??????
-	uint16_t shooter_id1_17mm_speed_limit;	 //???1?17mm?????? ??m/s
+	uint16_t shooter_barrel_cooling_value;	 //???1?42mm???????
+	uint16_t shooter_barrel_heat_limit; //???1?42mm??????
 
-	uint16_t shooter_id2_17mm_cooling_rate;	 //???2?17mm???????
-	uint16_t shooter_id2_17mm_cooling_limit; //???2?17mm??????
-	uint16_t shooter_id2_17mm_speed_limit;	 //???2?17mm?????? ??m/s
 
-	uint16_t shooter_id1_42mm_cooling_rate;	 //???42mm???????
-	uint16_t shooter_id1_42mm_cooling_limit; //???42mm??????
-	uint16_t shooter_id1_42mm_speed_limit;	 //???42mm?????? ??m/s
 
 	uint16_t chassis_power_limit;			//???????????
-	uint8_t mains_power_gimbal_output : 1;	//????????  0bit:gimbal??    0??24V??,1??24V??
-	uint8_t mains_power_chassis_output : 1; //                 1bit:chassis??
-	uint8_t mains_power_shooter_output : 1; //                 2bit:shooter??
-} ext_game_robot_status_t;
+	uint8_t power_management_gimbal_output : 1;	//????????  0bit:gimbal??    0??24V??,1??24V??
+	uint8_t power_management_chassis_output : 1; //                 1bit:chassis??
+	uint8_t power_management_shooter_output : 1; //                 2bit:shooter??
+} ext_robot_status_t;
 
 //----????????----
 typedef __packed struct // 0x0202
 {
-	uint16_t chassis_volt;					//?????? ?? ??
+	uint16_t chassis_voltage;					//?????? ?? ??
 	uint16_t chassis_current;				//?????? ?? ??
 	float chassis_power;					//?????? ?? W ?
-	uint16_t chassis_power_buffer;			//?????? ?? J ?? ??:?????????250J
-	uint16_t shooter_id1_17mm_cooling_heat; // 1?17mm ????
-	uint16_t shooter_id2_17mm_cooling_heat; // 2?17mm????
-	uint16_t shooter_id1_42mm_cooling_heat; // 42mm ????
+	uint16_t buffer_energy;			//?????? ?? J ?? ??:?????????250J
+	uint16_t shooter_17mm_1_barrel_heat; // 1?17mm ????
+	uint16_t shooter_17mm_2_barrel_heat; // 2?17mm????
+	uint16_t shooter_42mm_barrel_heat; // 42mm ????
 } ext_power_heat_data_t;
 
 //----?????----
@@ -245,29 +205,33 @@ typedef __packed struct // 0x0203
 {
 	float x;   //??x??,??m
 	float y;   //??y??,??m
-	float z;   //??z??,??m
-	float yaw; //????,???
-} ext_game_robot_pos_t;
+	float angle; //????,???
+} ext_robot_pos_t;
 
 //----?????----
 typedef __packed struct // 0x0204
 {
-	uint8_t power_rune_buff;
+	uint8_t recovery_buff;
 	// bit 0:?????????; bit 1:????????; bit 2:???????; bit 3:???????; ??bit??
+	uint8_t cooling_buff;
+	uint8_t defence_buff;
+	uint8_t vulnerability_buff;
+	uint16_t attack_buff;
 
 } ext_buff_t;
 
 //----?????????----
 typedef __packed struct // 0x0205
 {
-	uint8_t attack_time; //????? ?? s?30s ???0
-} aerial_robot_energy_t;
+	uint8_t airforce_status;
+	uint8_t time_remain; //????? ?? s?35s ???0
+} ext_air_support_data_t;
 
 //----????----
 typedef __packed struct // 0x0206
 {
 	uint8_t armor_id : 4;
-	uint8_t hurt_type : 4;
+	uint8_t HP_deduction_reason : 4;
 	// bit 0-3:????????????,????ID,?????0-4????????????,????????,??????0?
 	// bit 4-7:??????
 	// 0x0 ??????;
@@ -276,24 +240,24 @@ typedef __packed struct // 0x0206
 	// 0x3 ???????;
 	// 0x4 ???????;
 	// 0x5 ??????
-} ext_robot_hurt_t;
+} ext_hurt_data_t;
 
 //----??????----
 typedef __packed struct // 0x0207
 {
 	uint8_t bullet_type; //????: 1:17mm?? 2:42mm??
-	uint8_t shooter_id;	 //????ID:1:1?17mm????; 2:2?17mm????; 3:42mm ????
-	uint8_t bullet_freq; //???? ?? Hz
-	float bullet_speed;	 //???? ?? m/s
+	uint8_t shooter_number;	 //????ID:1:1?17mm????; 2:2?17mm????; 3:42mm ????
+	uint8_t launching_frequency; //???? ?? Hz
+	float initial_speed;	 //???? ?? m/s
 } ext_shoot_data_t;
 
 //----???????----
 typedef __packed struct // 0x0208
 {
-	uint16_t remaining_num_17mm; // 17mm????????
-	uint16_t remaining_num_42mm; // 42mm????????
-	uint16_t coin_remaining_num; //??????
-} ext_bullet_remaining_t;
+	uint16_t projectile_allowance_17mm; // 17mm????????
+	uint16_t projectile_allowance_42mm; // 42mm????????
+	uint16_t remaining_gold_coin; //??????
+} ext_projectile_allowance_t;
 
 //----???RFID??----
 typedef __packed struct // 0x0209
@@ -309,12 +273,45 @@ typedef __packed struct // 0x020A
 {
 	uint8_t dart_launch_opening_status;
 	//??????????: 1:??; 2:?????????; 0:????
-	uint8_t dart_attack_target;
-	//???????,??????; 0:???; 1:???
 
 	uint16_t target_change_time;	  //??????????????,???,???????0
 	uint16_t operate_launch_cmd_time; //?????????????????????,???, ????0?
 } ext_dart_client_cmd_t;
+
+typedef __packed struct // 0x020B
+{
+	float hero_x; 
+	float hero_y; 
+	float engineer_x; 
+	float engineer_y; 
+	float standard_3_x; 
+	float standard_3_y; 
+	float standard_4_x; 
+	float standard_4_y; 
+	float standard_5_x; 
+	float standard_5_y;
+} ext_ground_robot_position_t;
+
+typedef __packed struct // 0x020C
+{
+	uint8_t mark_hero_progress; 
+	uint8_t mark_engineer_progress; 
+	uint8_t mark_standard_3_progress;
+	uint8_t mark_standard_4_progress; 
+	uint8_t mark_standard_5_progress; 
+	uint8_t mark_sentry_progress;
+} ext_radar_mark_data_t;
+
+typedef __packed struct // 0x020D
+{ 
+	uint32_t sentry_info; 
+} ext_sentry_info_t;
+
+typedef __packed struct // 0x020E
+{ 
+	uint8_t radar_info; 
+} ext_radar_info_t;
+
 
 /*----------0x0301????------------*/
 //----????????----
@@ -323,12 +320,12 @@ typedef __packed struct // 0x0301
 	uint16_t data_cmd_id;				 //?? ID
 	uint16_t sender_ID;					 //???? ID
 	uint16_t receiver_ID;				 //???? ID
-} ext_student_interactive_header_data_t; //??????????????
+} ext_robot_interactive_header_data_t; //??????????????
 
 //----????????----
 typedef __packed struct
 {
-	ext_student_interactive_header_data_t header_data; //??????????????
+	ext_robot_interactive_header_data_t header_data; //??????????????
 	uint8_t data[113];								   /*???????113 */
 } robot_interactive_data_t;							   //?? ID:0x0200~0x02FF
 
@@ -336,82 +333,96 @@ typedef __packed struct
 typedef __packed struct
 {
 	//?? ID:0x0100
-	ext_student_interactive_header_data_t header_data; //??????????????
-	uint8_t operate_tpye;							   /*????,??:
+	ext_robot_interactive_header_data_t header_data; //??????????????
+	uint8_t delete_type;							   /*????,??:
 														 0: ???;
 														 1: ????;
 														 2: ????;
 														 */
 	uint8_t layer;									   //???:0~9
-} ext_client_custom_graphic_delete_t;
+} ext_interaction_layer_delete_t;
 
 //----????----
 typedef __packed struct
 {
-	uint8_t graphic_name[3];   //???,???,??????,?????????
-	uint32_t operate_tpye : 3; // bit 0 - 2:????
-	uint32_t graphic_tpye : 3; // Bit 3-5:????
+	uint8_t figure_name[3];   //???,???,??????,?????????
+	uint32_t operate_type : 3; // bit 0 - 2:????
+	uint32_t graphic_type : 3; // Bit 3-5:????
 	uint32_t layer : 4;		   // Bit 6 - 9:???,0~9
 	uint32_t color : 4;		   // Bit 10-13:??
-	uint32_t start_angle : 9;  // Bit 14-22:????,??:???[0,360];
-	uint32_t end_angle : 9;	   // Bit 23-31:????,??:???[0,360]?
+	uint32_t details_a : 9;  // Bit 14-22:????,??:???[0,360];
+	uint32_t details_b : 9;	   // Bit 23-31:????,??:???[0,360]?
 	uint32_t width : 10;	   // Bit 0-9:??;
 	uint32_t start_x : 11;	   // Bit 10-20:?? x ??;
 	uint32_t start_y : 11;	   // Bit 21-31:?? y ???
-	uint32_t radius : 10;	   // Bit 0-9:????????;
-	uint32_t end_x : 11;	   // Bit 10-20:?? x ??;
-	uint32_t end_y : 11;	   // Bit 21-31:?? y ???
+	uint32_t details_c : 10;	   // Bit 0-9:????????;
+	uint32_t details_d : 11;	   // Bit 10-20:?? x ??;
+	uint32_t details_e : 11;	   // Bit 21-31:?? y ???
 } graphic_data_struct_t;	   //??????22??
 
 //----?????????----
 typedef __packed struct
 {
 	//?? ID:0x0101
-	ext_student_interactive_header_data_t header_data; //??????????????
+	ext_robot_interactive_header_data_t header_data; //??????????????
 	graphic_data_struct_t graphic_data_struct;		   //?? 1
-} ext_client_custom_graphic_single_t;
+} ext_interaction_figure_t;
 
 //----?????????----
 typedef __packed struct
 {
 	//?? ID:0x0102
-	// ext_student_interactive_header_data_t header_data;  //??????????????
+	ext_robot_interactive_header_data_t header_data;  //??????????????
 	graphic_data_struct_t graphic_data_struct[2]; //??1,2
-} ext_client_custom_graphic_double_t;
+} ext_interaction_figure_double_t;
 
 //----?????????----
 typedef __packed struct
 {
 	//?? ID:0x0103
-	// ext_student_interactive_header_data_t header_data;//??????????????
+	ext_robot_interactive_header_data_t header_data;//??????????????
 	graphic_data_struct_t graphic_data_struct[5]; //??1~5
-} ext_client_custom_graphic_five_t;
+} ext_interaction_figure_five_t;
 
 //----?????????----
 typedef __packed struct
 {
 	//?? ID:0x0104
-	// ext_student_interactive_header_data_t header_data;//??????????????
+	ext_robot_interactive_header_data_t header_data;//??????????????
 	graphic_data_struct_t graphic_data_struct[7]; //??1~7
-} ext_client_custom_graphic_seven_t;
+} ext_interaction_figure_seven_t;
 
 //----???????----
 
 typedef __packed struct
 {
 	//?? ID:0x0110
-	// ext_student_interactive_header_data_t header_data;//??????????????
+	ext_robot_interactive_header_data_t header_data;//??????????????
 	graphic_data_struct_t graphic_data_struct; //????
 	uint8_t data[30];						   //??
 } ext_client_custom_character_t;
+
+typedef __packed struct
+{
+	//?? ID:0x0120
+	ext_robot_interactive_header_data_t header_data;//??????????????
+	uint32_t sentry_cmd;				   
+} ext_sentry_cmd_t;
+
+typedef __packed struct
+{
+	//?? ID:0x0121
+	ext_robot_interactive_header_data_t header_data;//??????????????
+	uint8_t radat_cmd;				   
+} ext_radar_cmd_t;
 /*----------0x0301????------------*/
 
 //----????????----
 //????:?? 30Hz
-// typedef __packed struct //0x0302
-//{
-//	uint8_t data[]; //?????,?????30???
-//} robot_interactive_data_t;
+ typedef __packed struct //0x0302
+{
+	uint8_t data[30]; //?????,?????30???
+} ext_custom_robot_data_t;
 
 //----?????????----
 /*????:?????.*/
@@ -419,42 +430,59 @@ typedef __packed struct // 0x0303
 {
 	float target_position_x;  //?? x ????,?? m,???????? ID ?,??? 0
 	float target_position_y;  //?? y ????,?? m,???????? ID ?,??? 0
-	float target_position_z;  //?? z ????,?? m,???????? ID ?,??? 0
-	uint8_t commd_keyboard;	  //?????,?????????? ,??????? 0
+	uint8_t cmd_keyboard;	  //?????,?????????? ,??????? 0
 	uint16_t target_robot_ID; //????????? ID,????????,??? 0
+	uint8_t cmd_source;	  //?????,?????????? ,??????? 0
 	/*???ID????????27?*/
 
-	// 0x0304????????????
-	int16_t mouse_x;		   //?? X ???
+} ext_map_command_t;
+
+ typedef __packed struct // 0x0304
+{
+  int16_t mouse_x;		   //?? X ???
 	int16_t mouse_y;		   //?? Y ???
 	int16_t mouse_z;		   //??????
 	uint8_t left_button_down;  //????
 	uint8_t right_button_down; //??????
 	uint16_t keyboard_value;   //????
 	uint16_t reserved;		   //???
-} ext_robot_command_t;
-
-// typedef __pack struct
-//{
-// int16_t mouse_x;
-// int16_t mouse_y;
-// int16_t mouse_z;
-// int8 left_button_down;
-// int8 right_button_down;
-// uint16_t keyboard_value;
-// uint16_t reserved;
-// } ext_robot_command_t
+ } ext_remote_control_t;
 
 //----?????????----
 //??????:10Hz?
 //???????????????????????????????
 typedef __packed struct // 0x0305
 {
-	uint16_t target_robot_ID; //????? ID
+	uint16_t target_robot_id; //????? ID
 	float target_position_x;  //?? x ????,?? m
 	float target_position_y;  //?? y ????,?? m
-} ext_client_map_command_t;	  // ???????,????? x,y ??????????
+} ext_map_robot_data_t;	  // ???????,????? x,y ??????????
 
+typedef __packed struct // 0x0306
+{
+	uint16_t key_value; 
+	uint16_t x_position:12;
+	uint16_t mouse_left:4;
+	uint16_t y_position:12;
+	uint16_t mouse_right:4; 
+	uint16_t reserved;
+} ext_custom_client_data_t;
+typedef __packed struct // 0x0307
+{
+	uint8_t intention;
+	uint16_t start_position_x;
+	uint16_t start_position_y;
+	int8_t delta_x[49];
+	int8_t delta_y[49];
+	uint16_t sender_id;
+} ext_map_data_t;
+
+typedef __packed struct // 0x0308
+{ 
+	uint16_t sender_id;
+	uint16_t receiver_id;
+	uint8_t user_data[30];
+} ext_custom_info_t;
 /*
 ????:
 bit 0:?? W ????
@@ -508,32 +536,42 @@ extern ext_game_status_t ext_game_state;			 // ??????(0x0001)
 extern ext_game_status_t ext_game_state;			 // ??????(0x0001)
 extern ext_game_result_t ext_game_result;			 //??????(0x0002)
 extern ext_game_robot_HP_t ext_game_robot_survivors; //????????(0x0003)
-// extern ext_dart_status_t                          ext_dart_status;//??????(0x0004)
 extern ext_event_data_t ext_event_data;								//???????(0x0101)
 extern ext_supply_projectile_action_t ext_supply_projectile_action; //???????(0x0102)
-// extern ext_supply_projectile_booking_t            ext_supply_projectile_booking;//???????(0x0103)
+
 extern ext_referee_warning_t ext_referee_warning;		  //??????(0x0104)
-extern ext_dart_remaining_time_t ext_dart_remaining_time; //????????(0x0105)
-extern ext_game_robot_status_t ext_game_robot_status;	  //???????(0x0201)
+extern ext_dart_info_t ext_dart_info_time; //????????(0x0105)
+extern ext_robot_status_t ext_robot_status;	  //???????(0x0201)
 extern ext_power_heat_data_t ext_power_heat_data;		  ////????????(0x0202)
-extern ext_game_robot_pos_t ext_game_robot_pos;			  //?????(0x0203)
+extern ext_robot_pos_t ext_robot_pos;			  //?????(0x0203)
 extern ext_buff_t ext_buff;								  //?????(0x0204)
-extern aerial_robot_energy_t ext_aerial_robot_energy;	  //?????????(0x0205)
-extern ext_robot_hurt_t ext_robot_hurt;					  //????(0x0206)
+extern ext_air_support_data_t ext_air_support_data;	  //?????????(0x0205)
+extern ext_hurt_data_t ext_hurt_data_;					  //????(0x0206)
 extern ext_shoot_data_t ext_shoot_data;					  //??????(0x0207)
-extern ext_bullet_remaining_t ext_bullet_remaining;		  //???????(0x0208)
+extern ext_projectile_allowance_t ext_projectile_allowance;		  //???????(0x0208)
 extern ext_rfid_status_t ext_rfid_status;				  //???RFID??(0x0209)
 extern ext_dart_client_cmd_t ext_dart_client_cmd;		  //????????????(0x020A)
+extern ext_ground_robot_position_t ext_ground_robot_position;		  //(0x020B)
+extern ext_radar_mark_data_t ext_radar_mark_data;		  //(0x020C)
+extern ext_sentry_info_t ext_sentry_info;		  //(0x020D)
+extern ext_radar_info_t ext_radar_info;		  //(0x020E)
 extern graphic_data_struct_t graphic_data_struct;
 
-extern ext_student_interactive_header_data_t ext_student_interactive_header_data; //????????(0x0301)
-extern ext_client_custom_graphic_delete_t ext_client_custom_graphic_delete;
-extern ext_client_custom_graphic_single_t ext_client_custom_graphic_single;
-extern ext_client_custom_graphic_double_t ext_client_custom_graphic_double;
-extern ext_client_custom_graphic_five_t ext_client_custom_graphic_five;
-extern ext_client_custom_graphic_seven_t ext_client_custom_graphic_seven;
-// extern ext_robot_command_t                        ext_robot_command;//???????(0x0303)
-extern robot_interactive_data_t robot_interactive_data; //????
+extern ext_robot_interactive_header_data_t ext_robot_interactive_header_data; //????????(0x0301)
+// extern robot_interactive_data_t robot_interactive_data; //????
+extern ext_interaction_layer_delete_t ext_interaction_layer_delete;
+extern ext_interaction_figure_t ext_interaction_figure;
+extern ext_interaction_figure_double_t ext_interaction_figure_double;
+extern ext_interaction_figure_five_t ext_interaction_figure_five;
+extern ext_interaction_figure_seven_t ext_interaction_figure_seven;
+
+extern ext_custom_robot_data_t ext_custom_robot_data; // (0x0302)
+extern ext_map_command_t ext_map_command;//???????(0x0303)
+extern ext_remote_control_t ext_remote_control; // (0x0304)
+extern ext_map_robot_data_t  ext_map_robot_data; // (0x0305)
+extern ext_custom_client_data_t ext_custom_client_data; // (0x0306)
+extern ext_map_data_t ext_map_data; // (0x0307) 
+extern ext_custom_info_t ext_custom_info; // (0x0308)
 
 /************************************************************/
 typedef enum
@@ -541,25 +579,31 @@ typedef enum
 	game_status = 0x0001,	/*!< frequency = 1Hz */
 	game_result = 0x0002,	/*!< send at game ending */
 	game_robot_HP = 0x0003, /*!< frequency = 1Hz */
-							//	dart_status = 0x0004,
-	ICRA_buff_debuff_zone_status = 0x0005,
+
 	event_data = 0x0101,			   /*!< send at event changing */
 	supply_projectile_action = 0x0102, /*!< send at action */
-	//    supply_projectile_booking   = 0x0103,     /*!< send by user, max frequency = 10Hz */
 	referee_warning = 0x0104,
-	dart_remaining_time = 0x0105,
-	game_robot_status = 0x0201,	  /*!< frequency = 10Hz */
+	dart_info = 0x0105,
+	
+	robot_status = 0x0201,	  /*!< frequency = 10Hz */
 	power_heat_data = 0x0202,	  /*!< frequency = 50Hz */
-	game_robot_pos = 0x0203,	  /*!< frequency = 10Hz */
+	robot_pos = 0x0203,	  /*!< frequency = 10Hz */
 	buff = 0x0204,				  /*!< send at changing */
-	aerial_robot_energy = 0x0205, /*!< frequency = 10Hz, only for aerial robot */
-	robot_hurt = 0x0206,		  /*!< send at hurting */
+	air_support_data = 0x0205, /*!< frequency = 10Hz, only for aerial robot */
+	hurt_data = 0x0206,		  /*!< send at hurting */
 	shoot_data = 0x0207,		  /*!< send at shooting */
-	bullet_remaining = 0x0208,
+	projectile_allowance = 0x0208,
 	rfid_status = 0x0209,
 	dart_client_cmd = 0x020A,
-	student_interactive_header = 0x0301, /*!< send by user, max frequency = 10Hz */
-	robot_command = 0x0302,
+	ground_robot_position = 0x020B,
+	radar_mark_data = 0x020C,
+	sentry_info = 0x020D,
+	radar_info = 0x020E,
+	
+	robot_interactive_header = 0x0301, /*!< send by user, max frequency = 10Hz */
+	custom_robot_data = 0x0302,
+	map_command = 0x0303,
+	robot_command = 0x0304
 } ext_cmd_id_t;
 
 typedef __packed struct
@@ -601,6 +645,7 @@ typedef enum
 	clientid_blue_infantry_2 = 0x0168,
 	clientid_blue_infantry_3 = 0x0169,
 	clientid_blue_aerial = 0x016A,
+	serverid = 0x8080,
 } ext_id_t;
 
 typedef __packed struct
@@ -637,7 +682,7 @@ typedef __packed struct
 	uint16_t data_id; /*!< range 0x200~0x2FF */
 	uint16_t sender_id;
 	uint16_t robot_id;
-	ext_client_custom_graphic_double_t graphic_data; /*!< max data length = 13byte */
+	ext_interaction_figure_double_t graphic_data; /*!< max data length = 13byte */
 
 	uint16_t crc16;
 } ext_robot_two_graphic_data_t;
@@ -650,7 +695,7 @@ typedef __packed struct
 	uint16_t data_id; /*!< range 0x200~0x2FF */
 	uint16_t sender_id;
 	uint16_t robot_id;
-	ext_client_custom_graphic_five_t graphic_data; /*!< max data length = 13byte */
+	ext_interaction_figure_five_t graphic_data; /*!< max data length = 13byte */
 
 	uint16_t crc16;
 } ext_robot_five_graphic_data_t;
@@ -663,10 +708,10 @@ typedef __packed struct
 	uint16_t data_id; /*!< range 0x200~0x2FF */
 	uint16_t sender_id;
 	uint16_t robot_id;
-	ext_client_custom_graphic_seven_t graphic_data; /*!< max data length = 13byte */
+	ext_interaction_figure_seven_t graphic_data; /*!< max data length = 13byte */
 
 	uint16_t crc16;
-} ext_robot_sev_graphic_data_t;
+} ext_robot_seven_graphic_data_t;
 
 typedef __packed struct
 {
@@ -685,6 +730,6 @@ extern void init_referee_struct_data(void);
 extern void referee_data_solve(uint8_t *frame);
 
 extern void get_chassis_power_and_buffer(fp32 *power, fp32 *buffer);
-extern ext_robot_command_t ext_robot_command;
+extern ext_map_command_t ext_map_command;
 extern uint8_t get_robot_id(void);
 #endif /*__REFEREEINFO_H__*/

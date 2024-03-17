@@ -297,6 +297,24 @@ static void J_scope_gimbal_test(void);
 // 云台控制所有相关数据
 gimbal_control_t gimbal_control;
 
+/**
+  * @brief          get gimbal control data point
+  * @param[in]      none
+  * @retval         gimbal control data point
+  */
+/**
+  * @brief          获取云台数据指针
+  * @param[in]      none
+  * @retval         云台数据指针
+  */
+//获取云台数据
+
+const gimbal_control_t *get_gimbal_control_point(void)
+{
+    return &gimbal_control;
+}
+
+
 // motor current
 // 发送的电机电流
 static int16_t yaw_can_set_current = 0, pitch_can_set_current = 0, shoot_can_set_current = 0;

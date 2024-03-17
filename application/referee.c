@@ -19,49 +19,53 @@ update: 2017.5.7
 //#include "Task.h"
 u16 cmd_id;  // Êý¾Ý°üID
 // ²ÃÅÐÐÅÏ¢Ïà¹Ø½á¹¹Ìå  
-ext_game_status_t                           ext_game_status;// ±ÈÈü×´Ì¬Êý¾Ý£¨0x0001£©
+ext_game_status_t                          ext_game_status;// ±ÈÈü×´Ì¬Êý¾Ý£¨0x0001£©
 ext_game_result_t                          ext_game_result;//±ÈÈü½á¹ûÊý¾Ý(0x0002)
-ext_game_robot_HP_t                 ext_game_robot_HP;//»úÆ÷ÈË´æ´æ»îÊý¾Ý£¨0x0003£©
-//ext_dart_status_t                          ext_dart_status;//·ÉïÚ·¢Éä×´Ì¬(0x0004)//ÐÂÊÖ²áÖÐÃ»ÓÐ
-ext_ICRA_buff_debuff_zone_status_t         ext_ICRA_buff_debuff_zone_status; //ÈË¹¤ÖÇÄÜÌôÕ½Èü¼Ó³ÉÓë³Í·£Çø×´Ì¬(0x0005)
+ext_game_robot_HP_t                 	   ext_game_robot_HP;//»úÆ÷ÈËÑªÁ¿Êý¾Ý£¨0x0003£©
 
 
+ext_event_data_t                           ext_event_data;//³¡µØÊÂ¼þÊý¾Ý£¨0x0101£©
+ext_supply_projectile_action_t             ext_supply_projectile_action;//²¹¸øÕ¾¶¯×÷±êÊ¶Êý¾Ý£¨0x0102£©
 
-ext_event_data_t                           ext_event_data;//³¡µØÊ±ÊÂ¼þÊý¾Ý£¨0x0101£©
-ext_supply_projectile_action_t             ext_supply_projectile_action;//²¹¸øÕ¾¶¯×÷±êÊ¶£¨0x0102£©
-//ext_supply_projectile_booking_t            ext_supply_projectile_booking;//²¹¸øÕ¾Ô¤Ô¼×Óµ¯£¨0x0103£©//ÐÂÊÖ²áÖÐÃ»ÓÐ
-ext_referee_warning_t                      ext_referee_warning;//²ÃÅÐ¾¯¸æÐÅÏ¢(0x0104)
-ext_dart_remaining_time_t                  ext_dart_remaining_time;//·ÉïÚ·¢Éä¿Úµ¹¼ÆÊ±(0x0105)
+ext_referee_warning_t                      ext_referee_warning;//²ÃÅÐ¾¯¸æÊý¾Ý(0x0104)
+ext_dart_info_t                  		ext_dart_info;//·ÉïÚ·¢ÉäÏà¹ØÊý¾Ý(0x0105)
 
 
-ext_game_robot_status_t                    ext_game_robot_status;//±ÈÈü»úÆ÷ÈË×´Ì¬(0x0201)
-ext_power_heat_data_t                      ext_power_heat_data;////ÊµÊ±¹¦ÂÊÈÈÁ¿Êý¾Ý£¨0x0202£©
-ext_game_robot_pos_t                       ext_game_robot_pos;//»úÆ÷ÈËÎ»ÖÃ£¨0x0203£©
-ext_buff_t                                 ext_buff;//»úÆ÷ÈËÔöÒæ£¨0x0204£©
-aerial_robot_energy_t                      ext_aerial_robot_energy;//¿ÕÖÐ»úÆ÷ÈËÄÜÁ¿×´Ì¬£¨0x0205£©
-ext_robot_hurt_t                           ext_robot_hurt;//ÉËº¦×´Ì¬£¨0x0206£©
-ext_shoot_data_t                           ext_shoot_data;//ÊµÊ±Éä»÷ÐÅÏ¢£¨0x0207£©
-ext_bullet_remaining_t                     ext_bullet_remaining;//×Óµ¯Ê£Óà·¢ÉäÊý(0x0208)
-ext_rfid_status_t                          ext_rfid_status;//»úÆ÷ÈËRFID×´Ì¬(0x0209)
-ext_dart_client_cmd_t                      ext_dart_client_cmd;//·ÉïÚ»úÆ÷ÈË¿Í»§¶ËÖ¸ÁîÊý¾Ý(0x020A)
+ext_robot_status_t                    		 ext_robot_status;//»úÆ÷ÈËÐÔÄÜÌåÏµÊý¾Ý(0x0201)
+ext_power_heat_data_t                      ext_power_heat_data;//ÊµÊ±µ×ÅÌ¹¦ÂÊºÍÇ¹¿ÚÈÈÁ¿Êý¾Ý£¨0x0202£©
+ext_robot_pos_t                       		 ext_robot_pos;//»úÆ÷ÈËÎ»ÖÃÊý¾Ý£¨0x0203£©
+ext_buff_t                                 ext_buff;//»úÆ÷ÈËÔöÒæÊý¾Ý£¨0x0204£©
+ext_air_support_data_t                     ext_air_support_data;//¿ÕÖÐÖ§Ô®Ê±¼äÊý¾Ý£¨0x0205£©
+ext_hurt_data_t                            ext_hurt_data;//ÉËº¦×´Ì¬Êý¾Ý£¨0x0206£©
+ext_shoot_data_t                           ext_shoot_data;//ÊµÊ±Éä»÷Êý¾Ý£¨0x0207£©
+ext_projectile_allowance_t                 ext_projectile_allowance;//ÔÊÐí·¢µ¯Á¿(0x0208)
+ext_rfid_status_t                          ext_rfid_status;//»úÆ÷ÈË RFID Ä£¿é×´Ì¬(0x0209)
+ext_dart_client_cmd_t                      ext_dart_client_cmd;//·ÉïÚÑ¡ÊÖ¶ËÖ¸ÁîÊý¾Ý(0x020A)
+ext_ground_robot_position_t                ext_ground_robot_position;//µØÃæ»úÆ÷ÈËÎ»ÖÃÊý¾Ý(0x020B)
+ext_radar_mark_data_t                      ext_radar_mark_data;//À×´ï±ê¼Ç½ø¶ÈÊý¾Ý(0x020C)
+ext_sentry_info_t                          ext_sentry_info;//ÉÚ±ø×ÔÖ÷¾ö²ßÐÅÏ¢Í¬²½(0x020D)
+ext_radar_info_t                      		 ext_radar_info;//À×´ï×ÔÖ÷¾ö²ßÐÅÏ¢Í¬²½(0x020E)
 
 //-------------0x0301²¿·Ö¿ªÊ¼-------------------
-ext_student_interactive_header_data_t      ext_student_interactive_header_data;//½»»¥Êý¾Ý½ÓÊÕÐÅÏ¢£¨0x0301£©
-//client_custom_data_t                       client_custom_data;
+ext_robot_interactive_header_data_t        ext_robot_interactive_header_data;//»úÆ÷ÈË½»»¥Êý¾Ý£¨0x0301£©
 robot_interactive_data_t                   robot_interactive_data;//»úÆ÷ÈË¼ä½»»¥Êý¾Ý£¬ÄÚÈÝ ID:0x0200~0x02FF
-ext_client_custom_graphic_delete_t         ext_client_custom_graphic_delete;//¿Í»§¶ËÉ¾³ýÍ¼ÐÎ£¬ÄÚÈÝ ID:0x0100;
+ext_interaction_layer_delete_t             ext_interaction_layer_delete;//¿Í»§¶ËÉ¾³ýÍ¼ÐÎ£¬ÄÚÈÝ ID:0x0100;
 graphic_data_struct_t                      graphic_data_struct;//Í¼ÐÎÊý¾Ý
-ext_client_custom_graphic_single_t         ext_client_custom_graphic_single;//¿Í»§¶Ë»æÖÆÒ»¸öÍ¼ÐÎ
-ext_client_custom_graphic_double_t         ext_client_custom_graphic_double;//¿Í»§¶Ë»æÖÆÁ½¸öÍ¼ÐÎ
-ext_client_custom_graphic_five_t           ext_client_custom_graphic_five;//¿Í»§¶Ë»æÖÆÎå¸öÍ¼ÐÎ
-ext_client_custom_graphic_seven_t          ext_client_custom_graphic_seven;//¿Í»§¶Ë»æÖÆÆß¸öÍ¼ÐÎ
+ext_interaction_figure_t         					 ext_interaction_figure;//¿Í»§¶Ë»æÖÆÒ»¸öÍ¼ÐÎ
+ext_interaction_figure_double_t            ext_interaction_figure_double;//¿Í»§¶Ë»æÖÆÁ½¸öÍ¼ÐÎ
+ext_interaction_figure_five_t              ext_interaction_figure_five;//¿Í»§¶Ë»æÖÆÎå¸öÍ¼ÐÎ
+ext_interaction_figure_seven_t             ext_interaction_figure_seven;//¿Í»§¶Ë»æÖÆÆß¸öÍ¼ÐÎ
 ext_client_custom_character_t              ext_client_custom_character;//¿Í»§¶Ë»æÖÆ×Ö·û
 //-------------0x0301²¿·Ö½áÊø-------------------
 
 
-//robot_interactive_data_t                 robot_interactive_data;½»»¥Êý¾Ý½ÓÊÕÐÅÏ¢(0x0302)
-ext_robot_command_t                        ext_robot_command; //Ð¡µØÍ¼ÏÂ·¢ÐÅÏ¢±êÊ¶(0x0303)/*·¢ËÍÆµÂÊ£º´¥·¢Ê±·¢ËÍ.*/
-ext_client_map_command_t                   ext_client_map_command; //Ð¡µØÍ¼½ÓÊÕÐÅÏ¢±êÊ¶(0x0305)
+ext_custom_robot_data_t                    ext_custom_robot_data;//×Ô¶¨Òå¿ØÖÆÆ÷Óë»úÆ÷ÈË½»»¥Êý¾Ý(0x0302)
+ext_map_command_t                          ext_map_command; //Ñ¡ÊÖ¶ËÐ¡µØÍ¼½»»¥Êý¾Ý(0x0303)/*·¢ËÍÆµÂÊ£º´¥·¢Ê±·¢ËÍ.*/
+ext_remote_control_t                       ext_remote_control;//¼üÊóÒ£¿ØÊý¾Ý(0x0304)
+ext_map_robot_data_t                       ext_map_robot_data; //Ñ¡ÊÖ¶ËÐ¡µØÍ¼½ÓÊÕÀ×´ïÊý¾Ý(0x0305)
+ext_custom_client_data_t                   ext_custom_client_data; //×Ô¶¨Òå¿ØÖÆÆ÷ÓëÑ¡ÊÖ¶Ë½»»¥Êý¾Ý(0x0306)
+ext_map_data_t                             ext_map_data; //Ñ¡ÊÖ¶ËÐ¡µØÍ¼½ÓÊÕÉÚ±øÊý¾Ý(0x0307)
+ext_custom_info_t                          ext_custom_info; //Ñ¡ÊÖ¶ËÐ¡µØÍ¼½ÓÊÕ»úÆ÷ÈËÊý¾Ý(0x0308)
 
 frame_header_struct_t ext_referee_receive_header;
 frame_header_struct_t ext_referee_send_header;
@@ -111,23 +115,29 @@ void init_referee_struct_data(void)
     memset(&ext_event_data, 0, sizeof(ext_event_data_t));
     memset(&ext_supply_projectile_action, 0, sizeof(ext_supply_projectile_action_t));
     memset(&ext_referee_warning, 0, sizeof(ext_referee_warning_t));
-		memset(&ext_dart_remaining_time, 0, sizeof(ext_dart_remaining_time));
+		memset(&ext_dart_info, 0, sizeof(ext_dart_info));
 
-    memset(&ext_game_robot_status, 0, sizeof(ext_game_robot_status_t));
+    memset(&ext_robot_status, 0, sizeof(ext_robot_status_t));
     memset(&ext_power_heat_data, 0, sizeof(ext_power_heat_data_t));
-    memset(&ext_game_robot_pos, 0, sizeof(ext_game_robot_pos_t));
+    memset(&ext_robot_pos, 0, sizeof(ext_robot_pos_t));
     memset(&ext_buff, 0, sizeof(ext_buff));
-    memset(&ext_aerial_robot_energy, 0, sizeof(aerial_robot_energy));
-    memset(&ext_robot_hurt, 0, sizeof(ext_robot_hurt_t));
+    memset(&ext_air_support_data, 0, sizeof(ext_air_support_data));
+    memset(&ext_hurt_data, 0, sizeof(ext_hurt_data_t));
     memset(&ext_shoot_data, 0, sizeof(ext_shoot_data_t));
-    memset(&ext_bullet_remaining, 0, sizeof(ext_bullet_remaining_t));
-	memset(&ext_rfid_status,                     0, sizeof(ext_rfid_status));
-	memset(&ext_dart_client_cmd,                 0, sizeof(ext_dart_client_cmd));
+    memset(&ext_projectile_allowance, 0, sizeof(ext_projectile_allowance_t));
+	  memset(&ext_rfid_status, 0, sizeof(ext_rfid_status));
+	  memset(&ext_dart_client_cmd, 0, sizeof(ext_dart_client_cmd));
+		memset(&ext_ground_robot_position, 0, sizeof(ext_ground_robot_position));
+		memset(&ext_radar_mark_data, 0, sizeof(ext_radar_mark_data));
+		memset(&ext_sentry_info, 0, sizeof(ext_sentry_info));
+		memset(&ext_radar_info, 0, sizeof(ext_radar_info));
+		
 
-    memset(&ext_student_interactive_header_data, 0, sizeof(ext_student_interactive_header_data_t));
-	memset(&robot_interactive_data,          0, sizeof(robot_interactive_data));
-	memset(&ext_robot_command,                   0, sizeof(ext_robot_command));
-	memset(&ext_client_map_command,              0, sizeof(ext_client_map_command));
+    memset(&ext_robot_interactive_header_data, 0, sizeof(ext_robot_interactive_header_data_t));
+		memset(&robot_interactive_data, 0, sizeof(robot_interactive_data));
+		memset(&ext_custom_robot_data, 0, sizeof(ext_custom_robot_data));
+		memset(&ext_map_command, 0, sizeof(ext_map_command));
+		memset(&ext_remote_control, 0, sizeof(ext_remote_control));
 }
 
 void referee_data_solve(uint8_t *frame)
@@ -145,102 +155,128 @@ void referee_data_solve(uint8_t *frame)
 
     switch (cmd_id)
     {
-        case GAME_STATE_CMD_ID:
+        case GAME_STATE_CMD_ID: // 0x0001
         {
             memcpy(&ext_game_status, frame + index, sizeof(ext_game_status_t));
         }
         break;
-        case GAME_RESULT_CMD_ID:
+        case GAME_RESULT_CMD_ID: // 0x0002
         {
             memcpy(&ext_game_result, frame + index, sizeof(ext_game_result));
         }
         break;
-        case GAME_ROBOT_HP_CMD_ID:
+        case GAME_ROBOT_HP_CMD_ID: // 0x0003
         {
             memcpy(&ext_game_robot_HP, frame + index, sizeof(ext_game_robot_HP_t));
         }
         break;
-        case ICRA_BUFF_DEBUFF_ZONE_STATUS_CMD_ID:
-        {
-            memcpy(&ext_ICRA_buff_debuff_zone_status, frame + index, sizeof(ext_ICRA_buff_debuff_zone_status_t));
-        }
-        break;
-
-        case EVENTS_DATA_CMD_ID:
+        case EVENTS_DATA_CMD_ID: // 0x0101
         {
             memcpy(&ext_event_data, frame + index, sizeof(ext_event_data_t));
         }
         break;
-        case SUPPLY_PROJECTILE_ACTION_CMD_ID:
+        case SUPPLY_PROJECTILE_ACTION_CMD_ID: // 0x0102
         {
             memcpy(&ext_supply_projectile_action, frame + index, sizeof(ext_supply_projectile_action_t));
         }
         break;
-
-        case REFEREE_WARNING_CMD_ID:
+        case REFEREE_WARNING_CMD_ID: // 0x0104
         {
             memcpy(&ext_referee_warning, frame + index, sizeof(ext_referee_warning_t));
         }
         break;
-
-        case ROBOT_STATE_CMD_ID:
+				case DART_INFO_CMD_ID: // 0x0105
         {
-            memcpy(&ext_game_robot_status, frame + index, sizeof(ext_game_robot_status_t));
+            memcpy(&ext_dart_info, frame + index, sizeof(ext_dart_info_t));
         }
         break;
-        case POWER_HEAT_DATA_CMD_ID:
+        case ROBOT_STATUS_CMD_ID: // 0x0201
+        {
+            memcpy(&ext_robot_status, frame + index, sizeof(ext_robot_status_t));
+        }
+        break;
+        case POWER_HEAT_DATA_CMD_ID: // 0x0202
         {
             memcpy(&ext_power_heat_data, frame + index, sizeof(ext_power_heat_data_t));
         }
         break;
-        case ROBOT_POS_CMD_ID:
+        case ROBOT_POS_CMD_ID: // 0x0203
         {
-            memcpy(&ext_game_robot_pos, frame + index, sizeof(ext_game_robot_pos_t));
+            memcpy(&ext_robot_pos, frame + index, sizeof(ext_robot_pos_t));
         }
         break;
-        case BUFF_CMD_ID:
+        case BUFF_CMD_ID: // 0x0204
         {
             memcpy(&ext_buff, frame + index, sizeof(ext_buff_t));
         }
         break;
-        case AERIAL_ROBOT_ENERGY_CMD_ID:
+        case AIR_SUPPORT_DATA_CMD_ID: // 0x0205
         {
-            memcpy(&ext_aerial_robot_energy, frame + index, sizeof(aerial_robot_energy_t));
+            memcpy(&ext_air_support_data, frame + index, sizeof(ext_air_support_data_t));
         }
         break;
-        case ROBOT_HURT_CMD_ID:
+        case HURT_DATA_CMD_ID: // 0x0206
         {
-            memcpy(&ext_robot_hurt, frame + index, sizeof(ext_robot_hurt_t));
+            memcpy(&ext_hurt_data, frame + index, sizeof(ext_hurt_data_t));
         }
         break;
-        case SHOOT_DATA_CMD_ID:
+        case SHOOT_DATA_CMD_ID: // 0x0207
         {
             memcpy(&ext_shoot_data, frame + index, sizeof(ext_shoot_data_t));
         }
         break;
-        case BULLET_REMAINING_CMD_ID:
+        case PROJECTILE_ALLOWANCE_CMD_ID: // 0x0208
         {
-            memcpy(&ext_bullet_remaining, frame + index, sizeof(ext_bullet_remaining_t));
+            memcpy(&ext_projectile_allowance, frame + index, sizeof(ext_projectile_allowance_t));
         }
         break;
-        case RFID_STATUS_CMD_ID:
+        case RFID_STATUS_CMD_ID: // 0x0209
         {
             memcpy(&ext_rfid_status, frame + index, sizeof(ext_rfid_status_t));
         }
         break;
-		case DART_CLIENT_CMD_CMD_ID:
+				case DART_CLIENT_CMD_CMD_ID: // 0x020A
         {
             memcpy(&ext_dart_client_cmd, frame + index, sizeof( ext_dart_client_cmd_t));
         }
         break;
-        case STUDENT_INTERACTIVE_DATA_CMD_ID:
+        case GROUND_ROBOT_POSITION_CMD_ID: // 0x020B
         {
-            memcpy(&ext_student_interactive_header_data, frame + index, sizeof(ext_student_interactive_header_data_t));
+            memcpy(&ext_ground_robot_position, frame + index, sizeof(ext_ground_robot_position_t));
         }
         break;
-        case ROBOT_COMMAND_CMD_ID://0x0303¿Í»§¶ËÏÂ·¢ÐÅÏ¢
+				case RADAR_MARK_DATA_CMD_ID: // 0x020C
         {
-            memcpy(&ext_robot_command, frame + index, sizeof(ext_robot_command_t));
+            memcpy(&ext_radar_mark_data, frame + index, sizeof(ext_radar_mark_data_t));
+        }
+        break;
+        case SENTRY_INFO_CMD_ID: // 0x020D
+        {
+            memcpy(&ext_sentry_info, frame + index, sizeof(ext_sentry_info_t));
+        }
+        break;
+				case RADAR_INFO_CMD_ID: // 0x020E
+        {
+            memcpy(&ext_radar_info, frame + index, sizeof(ext_radar_info_t));
+        }
+        break;
+				case ROBOT_INTERACTIVE_DATA_CMD_ID: // 0x0301
+        {
+            memcpy(&ext_robot_interactive_header_data, frame + index, sizeof(ext_robot_interactive_header_data_t));
+        }
+				case CUSTOM_ROBOT_DATA_CMD_ID: // 0x0302
+        {
+            memcpy(&ext_custom_robot_data , frame + index, sizeof(ext_custom_robot_data_t));
+        }
+        break;
+				case MAP_COMMAND_CMD_ID: // 0x0303
+        {
+            memcpy(&ext_map_command, frame + index, sizeof(ext_map_command_t));
+        }
+        break;
+				case ROBOT_COMMAND_CMD_ID: // 0x0304
+        {
+            memcpy(&ext_remote_control, frame + index, sizeof(ext_remote_control_t));
         }
         break;
         default:
@@ -253,12 +289,12 @@ void referee_data_solve(uint8_t *frame)
 void get_chassis_power_and_buffer(fp32 *power, fp32 *buffer)
 {
     *power = ext_power_heat_data.chassis_power;
-    *buffer = ext_power_heat_data.chassis_power_buffer;
+    *buffer = ext_power_heat_data.buffer_energy;
 }
 
 uint8_t get_robot_id(void)
 {
-    return ext_game_robot_status.robot_id;
+    return ext_robot_status.robot_id;
 }
 
 //FROM INFANTRY:
@@ -266,11 +302,16 @@ void UI_send_init(){
 
 	if(	UI_if_init == 0)//the first time to draw, need init
 	{
-		switch(ext_game_robot_status.robot_id)
+		switch(ext_robot_status.robot_id)
 		{
 			case robotid_red_hero:{
 					MY_CLIENT_ID = clientid_red_hero;
 					MY_ROBOT_ID = robotid_red_hero;	
+				  break;
+			}
+			case robotid_red_engineer:{
+					MY_CLIENT_ID = clientid_red_engineer;
+					MY_ROBOT_ID = robotid_red_engineer;	
 				  break;
 			}
 			case robotid_red_infantry_1:{
@@ -288,10 +329,20 @@ void UI_send_init(){
 					MY_ROBOT_ID = robotid_red_infantry_3;
 				  break;					
 			}
+			case robotid_red_aerial:{
+					MY_CLIENT_ID = clientid_red_aerial;
+					MY_ROBOT_ID = robotid_red_aerial;
+				  break;					
+			} 
 		
 			case robotid_blue_hero:{
 					MY_CLIENT_ID = clientid_blue_hero;
 					MY_ROBOT_ID = robotid_blue_hero;	
+				  break;
+			}
+				case robotid_blue_engineer:{
+					MY_CLIENT_ID = clientid_blue_engineer;
+					MY_ROBOT_ID = robotid_blue_engineer;	
 				  break;
 			}
 			case robotid_blue_infantry_1:{
@@ -309,6 +360,12 @@ void UI_send_init(){
 					MY_ROBOT_ID = robotid_blue_infantry_3;
 				  break;					
 			}
+			case robotid_blue_aerial:{
+					MY_CLIENT_ID = clientid_blue_aerial;
+					MY_ROBOT_ID = robotid_blue_aerial;
+				  break;					
+			} 
+ 
 		}
 		send_multi_graphic();//aim lineÃé×¼Ïß
     }
@@ -346,13 +403,12 @@ void UI_send_update(){
 }
 
 void init_referee_info() {
-	ext_game_robot_pos.x = 0;
-	ext_game_robot_pos.y = 0;
-	ext_game_robot_pos.z = 0;
-	ext_game_robot_pos.yaw = 0;
-	ext_power_heat_data.shooter_id1_17mm_cooling_heat = 0;
-	ext_power_heat_data.shooter_id2_17mm_cooling_heat = 0;
-	ext_power_heat_data.shooter_id1_42mm_cooling_heat = 0;
+	ext_robot_pos.x = 0;
+	ext_robot_pos.y = 0;
+	ext_robot_pos.angle = 0;
+	ext_power_heat_data.shooter_17mm_1_barrel_heat = 0;
+	ext_power_heat_data.shooter_17mm_2_barrel_heat = 0;
+	ext_power_heat_data.shooter_42mm_barrel_heat = 0;
 }
 
 //crc8 Éú³É¶àÏîÊ½:G(x)=x8+x5+x4+1
@@ -542,7 +598,7 @@ void float2bytes(float chosen_value, u8* res_message) {
 	for (i = 0; i < 4; i++)
 		res_message[i] = bytes2float.b[i];
 }
-// ±ÈÈü»úÆ÷ÈË×´Ì¬£¨0x0001£©, ·¢ËÍÆµÂÊÎª10Hz¡£
+// ±ÈÈü×´Ì¬Êý¾Ý£¨0x0001£©, ·¢ËÍÆµÂÊÎª10Hz¡£
 void ext_game_status_interpret(uint8_t* ext_game_status_Message)
 {
 	
@@ -565,51 +621,19 @@ void  ext_game_result_interpret(uint8_t* ext_game_result_t_Message)
 //»úÆ÷ÈËÑªÁ¿Êý¾Ý£¨0x0003£©
 void ext_game_robot_HP_interpret(uint8_t* ext_game_robot_HP_t_Message)
 {
-	//memcpy((uint8_t*)&ext_game_robot_HP.robot_legion,ext_game_robot_HP_t_Message,2);
 	memcpy((uint8_t*)&ext_game_robot_HP, ext_game_robot_HP_t_Message, 2);
 
 }
 
-//ÈË¹¤ÖÇÄÜÌôÕ½Èü¼Ó³ÉÓë³Í·£Çø×´Ì¬(0x0005)
-void ext_ICRA_buff_debuff_zone_status_interpret(uint8_t* ext_ICRA_buff_debuff_zone_status_t_Message)
-{
-	uint8_t *F12,*F34,*F56;
-	//F1£¬F2
-	memcpy(F12, ext_ICRA_buff_debuff_zone_status_t_Message, 1);
-	ext_ICRA_buff_debuff_zone_status.F1_zone_status = (*F12) >> 7;//È¡×Ö½Ú×î¸ßÒ»Î»
-	ext_ICRA_buff_debuff_zone_status.F1_zone_buff_debuff_status = (*F12) & 0x0070;//µÍ8Î»£º01110000
-	ext_ICRA_buff_debuff_zone_status.F2_zone_status = (*F12) & 0x0008;            //Óë00001000ÏàÓë£¬È¡1bit
-	ext_ICRA_buff_debuff_zone_status.F2_zone_buff_debuff_status = (*F12) & 0x0007;//Óë00000111ÏàÓë£¬È¡×îµÍ3bit
-	//F3£¬F4
-	memcpy(F34, ext_ICRA_buff_debuff_zone_status_t_Message+1, 1);
-	ext_ICRA_buff_debuff_zone_status.F3_zone_status = (*F34) >> 7;//È¡×Ö½Ú×î¸ßÒ»Î»
-	ext_ICRA_buff_debuff_zone_status.F3_zone_buff_debuff_status = (*F34) & 0x0070;//µÍ8Î»£º01110000
-	ext_ICRA_buff_debuff_zone_status.F4_zone_status = (*F34) & 0x0008;
-	ext_ICRA_buff_debuff_zone_status.F4_zone_buff_debuff_status = (*F34) & 0x0007;
-	//F5£¬F6
-	memcpy(F56, ext_ICRA_buff_debuff_zone_status_t_Message+2, 1);
-	ext_ICRA_buff_debuff_zone_status.F5_zone_status = (*F56) >> 7;//È¡×Ö½Ú×î¸ßÒ»Î»
-	ext_ICRA_buff_debuff_zone_status.F5_zone_buff_debuff_status = (*F56) & 0x0070;//µÍ8Î»£º01110000
-	ext_ICRA_buff_debuff_zone_status.F6_zone_status = (*F56) & 0x0008;
-	ext_ICRA_buff_debuff_zone_status.F6_zone_buff_debuff_status = (*F56) & 0x0007;
 
 
-	memcpy((uint8_t*)&ext_ICRA_buff_debuff_zone_status.red1_bullet_left, ext_ICRA_buff_debuff_zone_status_t_Message + 3, 2);
-	memcpy((uint8_t*)&ext_ICRA_buff_debuff_zone_status.red2_bullet_left, ext_ICRA_buff_debuff_zone_status_t_Message + 5, 2);
-	memcpy((uint8_t*)&ext_ICRA_buff_debuff_zone_status.blue1_bullet_left, ext_ICRA_buff_debuff_zone_status_t_Message + 7, 2);
-	memcpy((uint8_t*)&ext_ICRA_buff_debuff_zone_status.blue2_bullet_left, ext_ICRA_buff_debuff_zone_status_t_Message + 9, 2);
-
-}
-
-
-//³¡µØÊ±ÊÂ¼þÊý¾Ý£¨0x0101£©...........Õâ¸öµÃÖØÐ´£¬²îµÄÌ«¶à
-//ÊÖ²áÀïËµµÄÊ²Ã´Õ¼Áì×´Ì¬É¶µÄ£¬ÔÚÊÖ²áÖÐ¶¼Ã»ÓÐ¸øÌá¹©±äÁ¿£¬Õâ²»ÐÐ°¡£»
+//³¡µØÊÂ¼þÊý¾Ý£¨0x0101£©
 void ext_event_data_interpret(uint8_t* ext_event_data_t_Message)
 {
-	memcpy((uint8_t*)&ext_event_data.event_type, ext_event_data_t_Message, 4);
+	memcpy((uint8_t*)&ext_event_data.event_data, ext_event_data_t_Message, 4);
 }
 
-//²¹¸øÕ¾¶¯×÷±êÊ¶£¨0x0102£©
+//²¹¸øÕ¾¶¯×÷±êÊ¶Êý¾Ý£¨0x0102£©
 void ext_supply_projectile_action_interpret(uint8_t* ext_supply_projectile_action_Message)
 {
 	memcpy((uint8_t*)&ext_supply_projectile_action.supply_projectile_id, ext_supply_projectile_action_Message, 1);
@@ -618,131 +642,163 @@ void ext_supply_projectile_action_interpret(uint8_t* ext_supply_projectile_actio
 	memcpy((uint8_t*)&ext_supply_projectile_action.supply_projectile_num, ext_supply_projectile_action_Message + 3, 1);
 }
 
-//²ÃÅÐ¾¯¸æÐÅÏ¢£ºcmd_id(0x0104)
+//²ÃÅÐ¾¯¸æÊý¾Ý(0x0104)
 void ext_referee_warning_interpret(uint8_t* ext_referee_warning_t_Message)
 {
 	memcpy((uint8_t*)&ext_referee_warning.level, ext_referee_warning_t_Message, 1);
-	memcpy((uint8_t*)&ext_referee_warning.foul_robot_id, ext_referee_warning_t_Message+1, 1);
+	memcpy((uint8_t*)&ext_referee_warning.offending_robot_id, ext_referee_warning_t_Message + 1, 1);
+	memcpy((uint8_t*)&ext_referee_warning.count, ext_referee_warning_t_Message + 2, 1);
 
 }
 
-//·ÉïÚ·¢Éä¿Úµ¹¼ÆÊ±£ºcmd_id (0x0105)
-void ext_dart_remaining_time_interpret(uint8_t* ext_dart_remaining_time_t_Message)
+//·ÉïÚ·¢ÉäÏà¹ØÊý¾Ý(0x0105)
+void ext_dart_info_interpret(uint8_t* ext_dart_info_t_Message)
 {
-	memcpy((uint8_t*)&ext_dart_remaining_time.dart_remaining_time, ext_dart_remaining_time_t_Message, 1);
+	memcpy((uint8_t*)&ext_dart_info.dart_remaining_time, ext_dart_info_t_Message, 1);
+	memcpy((uint8_t*)&ext_dart_info.dart_info, ext_dart_info_t_Message+1, 2);
 }
 
-//±ÈÈü»úÆ÷ÈË×´Ì¬(0x0201)
-void ext_game_robot_status_interpret(uint8_t* ext_game_robot_status_Message)
+//»úÆ÷ÈËÐÔÄÜÌåÏµÊý¾Ý(0x0201)
+void ext_robot_status_interpret(uint8_t* ext_robot_status_Message)
 {
-	memcpy((uint8_t*)&ext_game_robot_status.robot_id, ext_game_robot_status_Message, 1);
-	memcpy((uint8_t*)&ext_game_robot_status.robot_level, ext_game_robot_status_Message + 1, 1);
-	memcpy((uint8_t*)&ext_game_robot_status.remain_HP, ext_game_robot_status_Message + 2, 2);
-	memcpy((uint8_t*)&ext_game_robot_status.max_HP, ext_game_robot_status_Message + 4, 2);
-	memcpy((uint8_t*)&ext_game_robot_status.shooter_id1_17mm_cooling_rate, ext_game_robot_status_Message + 6, 2);
-	memcpy((uint8_t*)&ext_game_robot_status.shooter_id1_17mm_cooling_limit, ext_game_robot_status_Message + 8, 2);
-	memcpy((uint8_t*)&ext_game_robot_status.shooter_id1_17mm_speed_limit, ext_game_robot_status_Message + 10, 2);
-	memcpy((uint8_t*)&ext_game_robot_status.shooter_id2_17mm_cooling_rate, ext_game_robot_status_Message + 12, 2);
-	memcpy((uint8_t*)&ext_game_robot_status.shooter_id2_17mm_cooling_limit, ext_game_robot_status_Message + 14, 2);
-	memcpy((uint8_t*)&ext_game_robot_status.shooter_id2_17mm_speed_limit, ext_game_robot_status_Message + 16, 2);
-	memcpy((uint8_t*)&ext_game_robot_status.shooter_id1_42mm_cooling_rate, ext_game_robot_status_Message + 18, 2);
-	memcpy((uint8_t*)&ext_game_robot_status.shooter_id1_42mm_cooling_limit, ext_game_robot_status_Message + 20, 2);
-	memcpy((uint8_t*)&ext_game_robot_status.shooter_id1_42mm_speed_limit, ext_game_robot_status_Message + 22, 2);
+	memcpy((uint8_t*)&ext_robot_status.robot_id, ext_robot_status_Message, 1);
+	memcpy((uint8_t*)&ext_robot_status.robot_level, ext_robot_status_Message + 1, 1);
+	memcpy((uint8_t*)&ext_robot_status.current_HP, ext_robot_status_Message + 2, 2);
+	memcpy((uint8_t*)&ext_robot_status.maximum_HP, ext_robot_status_Message + 4, 2);
+	memcpy((uint8_t*)&ext_robot_status.shooter_barrel_cooling_value, ext_robot_status_Message + 6, 2);
+	memcpy((uint8_t*)&ext_robot_status.shooter_barrel_heat_limit, ext_robot_status_Message + 8, 2);
 
-	//ÕâÀï»¹ÓÐ»úÆ÷ÈËµ×ÅÌ¹¦ÂÊÏÞÖÆÉÏÏÞÃ»Ð´
-	//Ð´ÁË£º
-	memcpy((uint8_t*)&ext_game_robot_status.chassis_power_limit, ext_game_robot_status_Message + 24, 2);
+
+	memcpy((uint8_t*)&ext_robot_status.chassis_power_limit, ext_robot_status_Message + 10, 2);
 	uint8_t a;
-	//memcpy(&a, ext_game_robot_status_Message + 14, 1);/////////////////
-	memcpy(&a, ext_game_robot_status_Message + 26, 1);
-	ext_game_robot_status.mains_power_gimbal_output = a >> 7;
-	ext_game_robot_status.mains_power_chassis_output = (a >> 6) & 0x0001;
-	ext_game_robot_status.mains_power_shooter_output = (a >> 5) & 0x0001;
+	memcpy(&a, ext_robot_status_Message + 12, 1);
+	ext_robot_status.power_management_gimbal_output = a >> 7;
+	ext_robot_status.power_management_chassis_output = (a >> 6) & 0x0001;
+	ext_robot_status.power_management_shooter_output = (a >> 5) & 0x0001;
 
 }
 
-///////ÊµÊ±¹¦ÂÊÈÈÁ¿Êý¾Ý£¨0x0202£©
+//ÊµÊ±µ×ÅÌ¹¦ÂÊºÍÇ¹¿ÚÈÈÁ¿Êý¾Ý£¨0x0202£©
 void ext_power_heat_data_interpret(uint8_t* ext_power_heat_data_Message)
 {
 
-	memcpy((uint8_t*)&ext_power_heat_data.chassis_volt, ext_power_heat_data_Message, 2);
+	memcpy((uint8_t*)&ext_power_heat_data.chassis_voltage, ext_power_heat_data_Message, 2);
 	memcpy((uint8_t*)&ext_power_heat_data.chassis_current, ext_power_heat_data_Message + 2, 2);
 	memcpy((float*)&ext_power_heat_data.chassis_power, ext_power_heat_data_Message + 4, 4);
-
-	memcpy((uint8_t*)&ext_power_heat_data.chassis_power_buffer, (ext_power_heat_data_Message + 8), 2);
-	memcpy((uint8_t*)&ext_power_heat_data.shooter_id1_17mm_cooling_heat, ext_power_heat_data_Message + 10, 2);
-	memcpy((uint8_t*)&ext_power_heat_data.shooter_id2_17mm_cooling_heat, ext_power_heat_data_Message + 12, 2);
-	memcpy((uint8_t*)&ext_power_heat_data.shooter_id1_42mm_cooling_heat, ext_power_heat_data_Message + 14, 2);
+	memcpy((uint8_t*)&ext_power_heat_data.buffer_energy, (ext_power_heat_data_Message + 8), 2);
+	memcpy((uint8_t*)&ext_power_heat_data.shooter_17mm_1_barrel_heat, ext_power_heat_data_Message + 10, 2);
+	memcpy((uint8_t*)&ext_power_heat_data.shooter_17mm_2_barrel_heat, ext_power_heat_data_Message + 12, 2);
+	memcpy((uint8_t*)&ext_power_heat_data.shooter_42mm_barrel_heat, ext_power_heat_data_Message + 14, 2);
 }
 
 
-////»úÆ÷ÈËÎ»ÖÃ£¨0x0203£©
-void ext_game_robot_pos_interpret(uint8_t* ext_game_robot_pos_Message)
+//»úÆ÷ÈËÎ»ÖÃÊý¾Ýs£¨0x0203£©
+void ext_robot_pos_interpret(uint8_t* ext_robot_pos_Message)
 {
-	memcpy((uint8_t*)&ext_game_robot_pos.x, ext_game_robot_pos_Message, 4);
-	memcpy((uint8_t*)&ext_game_robot_pos.y, ext_game_robot_pos_Message + 4, 4);
-	memcpy((uint8_t*)&ext_game_robot_pos.z, ext_game_robot_pos_Message + 8, 4);
-	memcpy((uint8_t*)&ext_game_robot_pos.yaw, ext_game_robot_pos_Message + 12, 4);
-
+	memcpy((uint8_t*)&ext_robot_pos.x, ext_robot_pos_Message, 4);
+	memcpy((uint8_t*)&ext_robot_pos.y, ext_robot_pos_Message + 4, 4);
+	memcpy((uint8_t*)&ext_robot_pos.angle, ext_robot_pos_Message + 12, 4);
 }
 
-////»úÆ÷ÈËÔöÒæ£¨0x0204£©
-void ext_buff_musk_interpret(uint8_t* ext_buff_musk_Message)
+//»úÆ÷ÈËÔöÒæÊý¾Ý£¨0x0204£©
+void ext_buff_interpret(uint8_t* ext_buff_Message)
 {
-	memcpy((uint8_t*)&ext_buff.power_rune_buff, ext_buff_musk_Message, 1);
+	memcpy((uint8_t*)&ext_buff.recovery_buff, ext_buff_Message, 1);
+	memcpy((uint8_t*)&ext_buff.cooling_buff, ext_buff_Message + 1, 1);
+	memcpy((uint8_t*)&ext_buff.defence_buff, ext_buff_Message + 2, 1);
+	memcpy((uint8_t*)&ext_buff.vulnerability_buff, ext_buff_Message + 3, 1);
+	memcpy((uint8_t*)&ext_buff.attack_buff, ext_buff_Message + 4, 2);
 
 }
 
-//¿ÕÖÐ»úÆ÷ÈËÄÜÁ¿×´Ì¬£¨0x0205£©
-void aerial_robot_energy_interpret(uint8_t* aerial_robot_energy_Message)
+//¿ÕÖÐÖ§Ô®Ê±¼äÊý¾Ý£¨0x0205£©
+void air_support_data_interpret(uint8_t* air_support_data_Message)
 {
-	
-    memcpy((uint8_t*)&ext_aerial_robot_energy.attack_time, aerial_robot_energy_Message + 1, 2);
+  memcpy((uint8_t*)&ext_air_support_data.airforce_status, air_support_data_Message, 1);
+	memcpy((uint8_t*)&ext_air_support_data.time_remain, air_support_data_Message + 1, 1);
 }
 
-////ÉËº¦×´Ì¬£¨0x0206£©
-void  ext_robot_hurt_interpret(uint8_t* ext_robot_hurt_Message)
+//ÉËº¦×´Ì¬Êý¾Ý£¨0x0206£©
+void ext_hurt_data_interpret(uint8_t* ext_hurt_data_Message)
 {
 	uint8_t a;
-	memcpy((uint8_t*)&a, ext_robot_hurt_Message, 1);
+	memcpy((uint8_t*)&a, ext_hurt_data_Message, 1);
 
-	ext_robot_hurt.armor_id = a >> 4;
-	ext_robot_hurt.hurt_type = a & 0x000f;
+	ext_hurt_data.armor_id = a >> 4;
+	ext_hurt_data.HP_deduction_reason = a & 0x000f;
 }
 
-////ÊµÊ±Éä»÷ÐÅÏ¢£¨0x0207£©
+//ÊµÊ±Éä»÷Êý¾Ý£¨0x0207£©
 void ext_shoot_data_interpret(uint8_t* ext_shoot_data_Message)
 {
 
 	memcpy((uint8_t*)&ext_shoot_data.bullet_type, ext_shoot_data_Message, 1);
-	memcpy((uint8_t*)&ext_shoot_data.shooter_id, ext_shoot_data_Message + 1, 1);
-	memcpy((uint8_t*)&ext_shoot_data.bullet_freq, ext_shoot_data_Message + 2, 1);
-	memcpy((uint8_t*)&ext_shoot_data.bullet_speed, ext_shoot_data_Message + 3, 4);  //×Óµ¯ÉäËÙ
+	memcpy((uint8_t*)&ext_shoot_data.shooter_number, ext_shoot_data_Message + 1, 1);
+	memcpy((uint8_t*)&ext_shoot_data.launching_frequency, ext_shoot_data_Message + 2, 1);
+	memcpy((uint8_t*)&ext_shoot_data.initial_speed, ext_shoot_data_Message + 3, 4);  //×Óµ¯ÉäËÙ
 
 	shoot_seq++;
 }
 
-//×Óµ¯Ê£Óà·¢ÉäÊý(0x0208)
-void ext_bullet_remaining_interpret(uint8_t* ext_bullet_remaining_Message)
+//ÔÊÐí·¢µ¯Á¿(0x0208)
+void ext_projectile_allowance_interpret(uint8_t* ext_projectile_allowance_Message)
 {
-	memcpy((uint8_t*)&ext_bullet_remaining.remaining_num_17mm, ext_bullet_remaining_Message, 2);
-	memcpy((uint8_t*)&ext_bullet_remaining.remaining_num_42mm, ext_bullet_remaining_Message + 2, 2);
-	memcpy((uint8_t*)&ext_bullet_remaining.coin_remaining_num, ext_bullet_remaining_Message + 4, 2);
+	memcpy((uint8_t*)&ext_projectile_allowance.projectile_allowance_17mm, ext_projectile_allowance_Message, 2);
+	memcpy((uint8_t*)&ext_projectile_allowance.projectile_allowance_42mm, ext_projectile_allowance_Message + 2, 2);
+	memcpy((uint8_t*)&ext_projectile_allowance.remaining_gold_coin, ext_projectile_allowance_Message + 4, 2);
 }
 
-//»úÆ÷ÈËRFID×´Ì¬(0x0209)
+//»úÆ÷ÈË RFID Ä£¿é×´Ì¬(0x0209)
 void ext_rfid_status_interpret(uint8_t* ext_rfid_status_t_Message)
 {
 	memcpy((uint8_t*)&ext_rfid_status.rfid_status, ext_rfid_status_t_Message, 4);
 }
 
-//·Ç±ê»úÆ÷ÈË¿Í»§¶ËÖ¸ÁîÊý¾Ý(0x020A)
+//·ÉïÚÑ¡ÊÖ¶ËÖ¸ÁîÊý¾Ý(0x020A)
 void ext_dart_client_cmd_interpret(uint8_t* ext_dart_client_cmd_Message)
 {
 	memcpy((uint8_t*)&ext_dart_client_cmd.dart_launch_opening_status, ext_dart_client_cmd_Message, 1);
-	memcpy((uint8_t*)&ext_dart_client_cmd.dart_attack_target, ext_dart_client_cmd_Message+1, 1);
 	memcpy((uint8_t*)&ext_dart_client_cmd.target_change_time, ext_dart_client_cmd_Message + 2, 2);
 	memcpy((uint8_t*)&ext_dart_client_cmd.operate_launch_cmd_time, ext_dart_client_cmd_Message + 4, 2);
+}
+
+//µØÃæ»úÆ÷ÈËÎ»ÖÃÊý¾Ý(0x020B)
+void ext_ground_robot_position_interpret(uint8_t* ext_ground_robot_position_Message)
+{
+	memcpy((uint8_t*)&ext_ground_robot_position.hero_x, ext_ground_robot_position_Message, 4);
+	memcpy((uint8_t*)&ext_ground_robot_position.hero_y, ext_ground_robot_position_Message + 4, 4);
+	memcpy((uint8_t*)&ext_ground_robot_position.engineer_x, ext_ground_robot_position_Message + 8, 4);
+	memcpy((uint8_t*)&ext_ground_robot_position.engineer_y, ext_ground_robot_position_Message + 12, 4);
+	memcpy((uint8_t*)&ext_ground_robot_position.standard_3_x, ext_ground_robot_position_Message + 16, 4);
+	memcpy((uint8_t*)&ext_ground_robot_position.standard_3_y, ext_ground_robot_position_Message + 20, 4);
+	memcpy((uint8_t*)&ext_ground_robot_position.standard_4_x, ext_ground_robot_position_Message + 24, 4);
+	memcpy((uint8_t*)&ext_ground_robot_position.standard_4_y, ext_ground_robot_position_Message + 28, 4);
+	memcpy((uint8_t*)&ext_ground_robot_position.standard_5_x, ext_ground_robot_position_Message + 32, 4);
+	memcpy((uint8_t*)&ext_ground_robot_position.standard_5_y, ext_ground_robot_position_Message + 36, 4);
+}
+
+//À×´ï±ê¼Ç½ø¶ÈÊý¾Ý(0x020C)
+void ext_radar_mark_data_interpret(uint8_t* ext_radar_mark_data_Message)
+{
+	memcpy((uint8_t*)&ext_radar_mark_data.mark_hero_progress, ext_radar_mark_data_Message, 1);
+	memcpy((uint8_t*)&ext_radar_mark_data.mark_engineer_progress, ext_radar_mark_data_Message + 1, 1);
+	memcpy((uint8_t*)&ext_radar_mark_data.mark_standard_3_progress, ext_radar_mark_data_Message + 2, 1);
+	memcpy((uint8_t*)&ext_radar_mark_data.mark_standard_4_progress, ext_radar_mark_data_Message + 3, 1);
+	memcpy((uint8_t*)&ext_radar_mark_data.mark_standard_5_progress, ext_radar_mark_data_Message + 4, 1);
+	memcpy((uint8_t*)&ext_radar_mark_data.mark_sentry_progress, ext_radar_mark_data_Message + 5, 1);
+
+}
+
+//ÉÚ±ø×ÔÖ÷¾ö²ßÐÅÏ¢Í¬²½(0x020D)
+void ext_sentry_info_interpret(uint8_t* ext_sentry_info_Message)
+{
+	memcpy((uint8_t*)&ext_sentry_info.sentry_info, ext_sentry_info_Message, 4);
+}
+
+//À×´ï×ÔÖ÷¾ö²ßÐÅÏ¢Í¬²½(0x020E)
+void ext_radar_info_interpret(uint8_t* ext_radar_info_Message)
+{
+	memcpy((uint8_t*)&ext_radar_info.radar_info, ext_radar_info_Message, 1);
 }
 
 ////½»»¥Êý¾Ý½ÓÊÕÐÅÏ¢£¨0x0301£©
@@ -756,100 +812,101 @@ void robot_interactive_data_interpret(uint8_t* robot_interactive_data_Message)
 }
 
 //ÄÚÈÝID£º0x0100:¿Í»§¶ËÉ¾³ýÍ¼ÐÎ
-void ext_client_custom_graphic_delete_interpret(uint8_t* ext_client_custom_graphic_delete_Message)
+void ext_interaction_layer_delete_interpret(uint8_t* ext_interaction_layer_delete_Message)
 {
-	memcpy((uint8_t*)&ext_client_custom_graphic_delete.operate_tpye, ext_client_custom_graphic_delete_Message, 1);
-	memcpy((uint8_t*)&ext_client_custom_graphic_delete.layer, ext_client_custom_graphic_delete_Message+1, 1);
+	memcpy((uint8_t*)&ext_interaction_layer_delete.delete_type, ext_interaction_layer_delete_Message, 1);
+	memcpy((uint8_t*)&ext_interaction_layer_delete.layer, ext_interaction_layer_delete_Message+1, 1);
 }
 
 //ÄÚÈÝID£º0x0101:¿Í»§¶Ë»æÖÆÒ»¸öÍ¼ÐÎ
-void ext_client_custom_graphic_single_interpret(uint8_t* ext_client_custom_graphic_single_Message)
+void ext_interaction_figure_interpret(uint8_t* ext_interaction_figure_Message)
 {
-	memcpy((uint8_t*)&ext_client_custom_graphic_single.graphic_data_struct, ext_client_custom_graphic_single_Message, 15 * 1);
+	memcpy((uint8_t*)&ext_interaction_figure.graphic_data_struct, ext_interaction_figure_Message, 15 * 1);
 }
 //ÄÚÈÝID£º0x0102:¿Í»§¶Ë»æÖÆ¶þ¸öÍ¼ÐÎ
-void ext_client_custom_graphic_double_interpret(uint8_t* ext_client_custom_graphic_double_Message)
+void ext_interaction_figure_double_interpret(uint8_t* ext_interaction_figure_double_Message)
 {
-	memcpy((uint8_t*)ext_client_custom_graphic_double.graphic_data_struct, ext_client_custom_graphic_double_Message, 15 * 2);
+	memcpy((uint8_t*)ext_interaction_figure_double.graphic_data_struct, ext_interaction_figure_double_Message, 15 * 2);
 }
 //ÄÚÈÝID£º0x0103:¿Í»§¶Ë»æÖÆÎå¸öÍ¼ÐÎ
-void ext_client_custom_graphic_five_interpret(uint8_t* ext_client_custom_graphic_five_Message)
+void ext_interaction_figure_five_interpret(uint8_t* ext_interaction_figure_five_Message)
 {
-	memcpy((uint8_t*)ext_client_custom_graphic_five.graphic_data_struct, ext_client_custom_graphic_five_Message, 15 * 5);
+	memcpy((uint8_t*)ext_interaction_figure_five.graphic_data_struct, ext_interaction_figure_five_Message, 15 * 5);
 }
 //ÄÚÈÝID£º0x0104:¿Í»§¶Ë»æÖÆÆß¸öÍ¼ÐÎ
-void ext_client_custom_graphic_seven_interpret(uint8_t* ext_client_custom_graphic_seven_Message)
+void ext_interaction_figure_seven_interpret(uint8_t* ext_interaction_figure_seven_Message)
 {
-	memcpy((uint8_t*)ext_client_custom_graphic_seven.graphic_data_struct, ext_client_custom_graphic_seven_Message, 15 * 7);
+	memcpy((uint8_t*)ext_interaction_figure_seven.graphic_data_struct, ext_interaction_figure_seven_Message, 15 * 7);
 }
 //ÄÚÈÝID£º0x0110:¿Í»§¶Ë»æÖÆ×Ö·ûÍ¼ÐÎ
 void ext_client_custom_character_interpret(uint8_t* ext_client_custom_character_Message)
 {
 	memcpy((uint8_t*)&ext_client_custom_character.graphic_data_struct, ext_client_custom_character_Message, 15);
-	memcpy((uint8_t*)ext_client_custom_character.data, ext_client_custom_character_Message+15, 30);
-
+	memcpy((uint8_t*)ext_client_custom_character.data, ext_client_custom_character_Message + 15, 30);
 }
 
-void ext_student_interactive_header_data_interpret(uint8_t* ext_student_interactive_header_data_Message)
+
+void ext_robot_interactive_header_data_interpret(uint8_t* ext_robot_interactive_header_data_Message)
 {
-	memcpy((uint8_t*)&ext_student_interactive_header_data.data_cmd_id, ext_student_interactive_header_data_Message, 2);//Êý¾Ý¶ÎµÄÄÚÈÝID
-	memcpy((uint8_t*)&ext_student_interactive_header_data.sender_ID, ext_student_interactive_header_data_Message + 2, 2);
-	memcpy((uint8_t*)&ext_student_interactive_header_data.receiver_ID, ext_student_interactive_header_data_Message + 4, 2);
-	uint8_t*  content= ext_student_interactive_header_data_Message + 6;
-	switch (ext_student_interactive_header_data.data_cmd_id)
+	memcpy((uint8_t*)&ext_robot_interactive_header_data.data_cmd_id, ext_robot_interactive_header_data_Message, 2);//Êý¾Ý¶ÎµÄÄÚÈÝID
+	memcpy((uint8_t*)&ext_robot_interactive_header_data.sender_ID, ext_robot_interactive_header_data_Message + 2, 2);
+	memcpy((uint8_t*)&ext_robot_interactive_header_data.receiver_ID, ext_robot_interactive_header_data_Message + 4, 2);
+	uint8_t* content = ext_robot_interactive_header_data_Message + 6;
+	switch (ext_robot_interactive_header_data.data_cmd_id)
 	{
 		//ÄÚÈÝID£º0x0100:¿Í»§¶ËÉ¾³ýÍ¼ÐÎ
-		case 0x0100:ext_client_custom_graphic_delete_interpret(content); break;
+		case 0x0100:ext_interaction_layer_delete_interpret(content); break;
 		//ÄÚÈÝID£º0x0101:¿Í»§¶Ë»æÖÆÒ»¸öÍ¼ÐÎ
-		case 0x0101:ext_client_custom_graphic_single_interpret(content); break;
+		case 0x0101:ext_interaction_figure_interpret(content); break;
 		//ÄÚÈÝID£º0x0102:¿Í»§¶Ë»æÖÆ¶þ¸öÍ¼ÐÎ
-		case 0x0102:ext_client_custom_graphic_double_interpret(content); break;
+		case 0x0102:ext_interaction_figure_double_interpret(content); break;
 		//ÄÚÈÝID£º0x0103:¿Í»§¶Ë»æÖÆÎå¸öÍ¼ÐÎ
-		case 0x0103:ext_client_custom_graphic_five_interpret(content); break;
+		case 0x0103:ext_interaction_figure_five_interpret(content); break;
 		//ÄÚÈÝID£º0x0104:¿Í»§¶Ë»æÖÆÆß¸öÍ¼ÐÎ
-		case 0x0104:ext_client_custom_graphic_seven_interpret(content); break;
+		case 0x0104:ext_interaction_figure_seven_interpret(content); break;
 		//ÄÚÈÝID£º0x0110:¿Í»§¶Ë»æÖÆ×Ö·ûÍ¼ÐÎ
 		case 0x0110:ext_client_custom_character_interpret(content); break;
 		default:  break;
 	};
 	//ÄÚÈÝID£º0x0200~0x02FF:¼º·½»úÆ÷ÈË¼äÍ¨ÐÅ
-	if (ext_student_interactive_header_data.data_cmd_id > 0x0199 && ext_student_interactive_header_data.data_cmd_id < 0x0300)
+	if (ext_robot_interactive_header_data.data_cmd_id > 0x0199 && ext_robot_interactive_header_data.data_cmd_id < 0x0300)
 	{
 		robot_interactive_data_interpret(content);
 	}
 }
 
 
-void ext_robot_command_interpret03(uint8_t * ext_robot_command_Message)
+
+//Ñ¡ÊÖ¶ËÐ¡µØÍ¼½»»¥Êý¾Ý(0x0303)
+void ext_map_command_interpret(uint8_t * ext_map_command_Message)
 {
-	memcpy((float*)&ext_robot_command.target_position_x, ext_robot_command_Message, 4);
-	memcpy((float*)&ext_robot_command.target_position_y, ext_robot_command_Message+4, 4);
-	memcpy((float*)&ext_robot_command.target_position_z, ext_robot_command_Message + 8, 4);
-	memcpy((uint8_t*)&ext_robot_command.commd_keyboard, ext_robot_command_Message + 12, 1);
-	memcpy((uint8_t*)&ext_robot_command.target_robot_ID, ext_robot_command_Message + 13, 2);
+	memcpy((float*)&ext_map_command.target_position_x, ext_map_command_Message, 4);
+	memcpy((float*)&ext_map_command.target_position_y, ext_map_command_Message + 4, 4);
+	memcpy((uint8_t*)&ext_map_command.cmd_keyboard, ext_map_command_Message + 12, 1);
+	memcpy((uint8_t*)&ext_map_command.target_robot_ID, ext_map_command_Message + 13, 1);
+	memcpy((uint8_t*)&ext_map_command.cmd_source, ext_map_command_Message + 14, 2);
 }
 
 
 
-////Í¼´«Ò£¿ØÐÅÏ¢±êÊ¶£¨0x0304£©
-void ext_robot_command_interpret04(uint8_t * ext_robot_command_Message)
+////Í¼´«Á´Â·ÐÅÏ¢±êÊ¶£¨0x0304£©
+void ext_remote_control_interpret(uint8_t * ext_remote_control_Message)
 {
-	memcpy((uint8_t*)&ext_robot_command.mouse_x, ext_robot_command_Message, 2);
-	memcpy((uint8_t*)&ext_robot_command.mouse_y, ext_robot_command_Message+2, 2);
-	memcpy((uint8_t*)&ext_robot_command.mouse_z, ext_robot_command_Message + 4, 2);
-	memcpy((uint8_t*)&ext_robot_command.left_button_down, ext_robot_command_Message + 6, 1);
-	memcpy((uint8_t*)&ext_robot_command.right_button_down, ext_robot_command_Message + 7, 1);
-	memcpy((uint8_t*)&ext_robot_command.keyboard_value, ext_robot_command_Message + 8, 2);
-	memcpy((uint8_t*)&ext_robot_command.reserved, ext_robot_command_Message + 10, 2);
+	memcpy((uint8_t*)&ext_remote_control.mouse_x, ext_remote_control_Message, 2);
+	memcpy((uint8_t*)&ext_remote_control.mouse_y, ext_remote_control_Message + 2, 2);
+	memcpy((uint8_t*)&ext_remote_control.mouse_z, ext_remote_control_Message + 4, 2);
+	memcpy((uint8_t*)&ext_remote_control.left_button_down, ext_remote_control_Message + 6, 1);
+	memcpy((uint8_t*)&ext_remote_control.right_button_down, ext_remote_control_Message + 7, 1);
+	memcpy((uint8_t*)&ext_remote_control.keyboard_value, ext_remote_control_Message + 8, 2);
 }
 
 ////Ð¡µØÍ¼½ÓÊÕÐÅÏ¢±êÊ¶(0x0305)
-void ext_client_map_command_interpret(uint8_t* ext_client_map_command_Message)
-{
-	memcpy((uint8_t*)&ext_client_map_command.target_robot_ID, ext_client_map_command_Message, 2);
-	memcpy((float*)&ext_client_map_command.target_position_x, ext_client_map_command_Message+2, 4);
-	memcpy((float*)&ext_client_map_command.target_position_y, ext_client_map_command_Message+6, 4);
-}
+//void ext_client_map_command_interpret(uint8_t* ext_client_map_command_Message)
+//{
+//	memcpy((uint8_t*)&ext_client_map_command.target_robot_ID, ext_client_map_command_Message, 2);
+//	memcpy((float*)&ext_client_map_command.target_position_x, ext_client_map_command_Message+2, 4);
+//	memcpy((float*)&ext_client_map_command.target_position_y, ext_client_map_command_Message+6, 4);
+//}
 
 
 // ÍêÕûÐ£ÑéÊý¾ÝÖ¡, CRC8ºÍCRC16
@@ -898,17 +955,16 @@ bool frame_interpret(uint8_t* _frame, uint16_t size) {
 			case 0x0001:ext_game_status_interpret(&frame[7]); break;
 			case 0x0002:ext_game_result_interpret(&frame[7]); break;
 			case 0x0003:ext_game_robot_HP_interpret(&frame[7]); break;
-			case 0x0005:ext_ICRA_buff_debuff_zone_status_interpret(&frame[7]);break;
 			case 0x0101:ext_event_data_interpret(&frame[7]); break;
 			case 0x0102:ext_supply_projectile_action_interpret(&frame[7]); break;
-			case 0x0201:ext_game_robot_status_interpret(&frame[7]); break;
+			case 0x0201:ext_robot_status_interpret(&frame[7]); break;
 			case 0x0202:ext_power_heat_data_interpret(&frame[7]); break;
-			case 0x0203:ext_game_robot_pos_interpret(&frame[7]); break;
-			case 0x0204:ext_buff_musk_interpret(&frame[7]); break;
-			case 0x0205:aerial_robot_energy_interpret(&frame[7]); break;
-			case 0x0206:ext_robot_hurt_interpret(&frame[7]); break;
+			case 0x0203:ext_robot_pos_interpret(&frame[7]); break;
+			case 0x0204:ext_buff_interpret(&frame[7]); break;
+			case 0x0205:air_support_data_interpret(&frame[7]); break;
+			case 0x0206:ext_hurt_data_interpret(&frame[7]); break;
 			case 0x0207:ext_shoot_data_interpret(&frame[7]); break;
-			case 0x0301:ext_student_interactive_header_data_interpret(&frame[7]); break;
+			case 0x0301:ext_robot_interactive_header_data_interpret(&frame[7]); break;
 			
 			default: break;
 			}
@@ -929,7 +985,7 @@ void referee_send_client_graphic(ext_id_t target_id, graphic_data_struct_t* grap
 	robot_data.header.data_length = 6+15;
 	Append_CRC8_Check_Sum((uint8_t*)&robot_data.header, sizeof(robot_data.header));
 	
-	robot_data.cmd_id = student_interactive_header;
+	robot_data.cmd_id = robot_interactive_header;
 	robot_data.data_id = 0x0101;
 	robot_data.sender_id = MY_ROBOT_ID;
 	robot_data.robot_id = target_id;
@@ -953,7 +1009,7 @@ void referee_send_client_character(ext_id_t target_id, ext_client_custom_charact
 	robot_data.header.data_length = 6+15+30;
 	Append_CRC8_Check_Sum((uint8_t*)&robot_data.header, sizeof(robot_data.header));
 
-	robot_data.cmd_id = student_interactive_header;
+	robot_data.cmd_id = robot_interactive_header;
 	robot_data.data_id = 0x0110;
 	robot_data.sender_id = MY_ROBOT_ID;
 	robot_data.robot_id = target_id;
@@ -966,7 +1022,7 @@ void referee_send_client_character(ext_id_t target_id, ext_client_custom_charact
 
 }
 
-void referee_send_two_graphic(ext_id_t target_id, ext_client_custom_graphic_double_t* graphic_draw) {
+void referee_send_two_graphic(ext_id_t target_id, ext_interaction_figure_double_t* graphic_draw) {
 
 	static ext_robot_two_graphic_data_t robot_data;
 
@@ -976,7 +1032,7 @@ void referee_send_two_graphic(ext_id_t target_id, ext_client_custom_graphic_doub
 	robot_data.header.data_length = 6 + 2 * 15;
 	Append_CRC8_Check_Sum((uint8_t*)&robot_data.header, sizeof(robot_data.header));
 	
-	robot_data.cmd_id = student_interactive_header;
+	robot_data.cmd_id = robot_interactive_header;
 	robot_data.data_id = 0x0102;
 	robot_data.sender_id = MY_ROBOT_ID;
 	robot_data.robot_id = target_id;
@@ -988,7 +1044,7 @@ void referee_send_two_graphic(ext_id_t target_id, ext_client_custom_graphic_doub
 	usart6_tx_dma_enable(Personal_Data, sizeof(robot_data));//½«¶¨ÖÆºÃµÄÍ¼ÐÎÊý¾Ý´«Êä³öÈ¥
 }
 
-void referee_send_five_graphic(ext_id_t target_id, ext_client_custom_graphic_five_t* graphic_draw) {
+void referee_send_five_graphic(ext_id_t target_id, ext_interaction_figure_five_t* graphic_draw) {
 
 	static ext_robot_five_graphic_data_t robot_data;
 
@@ -998,7 +1054,7 @@ void referee_send_five_graphic(ext_id_t target_id, ext_client_custom_graphic_fiv
 	robot_data.header.data_length = 6 + 5 * 15;
 	Append_CRC8_Check_Sum((uint8_t*)&robot_data.header, sizeof(robot_data.header));
 	
-	robot_data.cmd_id = student_interactive_header;
+	robot_data.cmd_id = robot_interactive_header;
 	robot_data.data_id = 0x0103;
 	robot_data.sender_id = MY_ROBOT_ID;
 	robot_data.robot_id = target_id;
@@ -1011,9 +1067,9 @@ void referee_send_five_graphic(ext_id_t target_id, ext_client_custom_graphic_fiv
 
 }
 
-void referee_send_multi_graphic(ext_id_t target_id, ext_client_custom_graphic_seven_t* graphic_draw) {
+void referee_send_multi_graphic(ext_id_t target_id, ext_interaction_figure_seven_t* graphic_draw) {
 
-	static ext_robot_sev_graphic_data_t robot_data;
+	static ext_robot_seven_graphic_data_t robot_data;
 
 	robot_data.header.sof = REFEREE_FRAME_HEADER_SOF;
 	robot_data.header.seq++;
@@ -1021,7 +1077,7 @@ void referee_send_multi_graphic(ext_id_t target_id, ext_client_custom_graphic_se
 	robot_data.header.data_length = 6 + 7 * 15;
 	Append_CRC8_Check_Sum((uint8_t*)&robot_data.header, sizeof(robot_data.header));
 	
-	robot_data.cmd_id = student_interactive_header;
+	robot_data.cmd_id = robot_interactive_header;
 	robot_data.data_id = 0x0104;
 	robot_data.sender_id = MY_ROBOT_ID;
 	robot_data.robot_id = target_id;
@@ -1044,28 +1100,28 @@ void send_string_test()
 	int32_t ten = ((pitch_angle - one)/10)%10;
 	int32_t hun = ((pitch_angle - ten*10 - one)/100)%10;
 	char stringname[3] = "001";
-	character_draw.graphic_data_struct.graphic_name[0] =stringname[0];
-	character_draw.graphic_data_struct.graphic_name[1] =stringname[1];
-	character_draw.graphic_data_struct.graphic_name[2] =stringname[2];
+	character_draw.graphic_data_struct.figure_name[0] =stringname[0];
+	character_draw.graphic_data_struct.figure_name[1] =stringname[1];
+	character_draw.graphic_data_struct.figure_name[2] =stringname[2];
 	if(first_pitch_draw){
-	character_draw.graphic_data_struct.operate_tpye = 1;
+	character_draw.graphic_data_struct.operate_type = 1;
   first_pitch_draw = false;
 	}
 	else{
-	character_draw.graphic_data_struct.operate_tpye = 2;
+	character_draw.graphic_data_struct.operate_type = 2;
 	}
-	character_draw.graphic_data_struct.graphic_tpye =7;
+	character_draw.graphic_data_struct.graphic_type =7;
 	character_draw.graphic_data_struct.layer =0;
 	character_draw.graphic_data_struct.color =1;
 	
-	character_draw.graphic_data_struct.start_angle =30;
-	character_draw.graphic_data_struct.end_angle = 30;
+	character_draw.graphic_data_struct.details_a =30;
+	character_draw.graphic_data_struct.details_b = 30;
 	character_draw.graphic_data_struct.width =2;
 	character_draw.graphic_data_struct.start_x =10;
 	character_draw.graphic_data_struct.start_y =400;
-	character_draw.graphic_data_struct.radius =0;
-	character_draw.graphic_data_struct.end_x = 0;
-	character_draw.graphic_data_struct.end_y = 0;
+	character_draw.graphic_data_struct.details_c =0;
+	character_draw.graphic_data_struct.details_d = 0;
+	character_draw.graphic_data_struct.details_e = 0;
 	
 	character_draw.data[0] = 'a';
 	character_draw.data[1] = 'b';
@@ -1108,20 +1164,20 @@ void send_float_test()
 	int32_t fudian = 23211;
 	
 	char pitchname[3] = "806";
-	graphic_draw.graphic_name[0] =pitchname[0];
-	graphic_draw.graphic_name[1] =pitchname[1];
-	graphic_draw.graphic_name[2] =pitchname[2];
+	graphic_draw.figure_name[0] =pitchname[0];
+	graphic_draw.figure_name[1] =pitchname[1];
+	graphic_draw.figure_name[2] =pitchname[2];
 	
-	graphic_draw.graphic_tpye = 5;
+	graphic_draw.graphic_type = 5;
 	graphic_draw.color = 1;
 	graphic_draw.layer = 0;
 
-	graphic_draw.start_angle = 80;
-	graphic_draw.end_angle = 3;
+	graphic_draw.details_a = 80;
+	graphic_draw.details_a = 3;
 	graphic_draw.width = 1;
 	graphic_draw.start_x = 90;
 	graphic_draw.start_y = 300;
-	graphic_draw.radius = fudian;
+	graphic_draw.details_c = fudian;
 	
 	referee_send_client_graphic(MY_CLIENT_ID, &graphic_draw);
 }
@@ -1133,17 +1189,17 @@ void send_change_test(int lenth0)
 	graphic_data_struct_t graphic_draw;
 	
 	if(changes){
-		graphic_draw.operate_tpye = 1;
+		graphic_draw.operate_type = 1;
 		changes = false;
 	}
 	else{
-		graphic_draw.operate_tpye = 2;
+		graphic_draw.operate_type = 2;
 	}
 	char pitchname[3] = "606";
-	graphic_draw.graphic_name[0] =pitchname[0];
-	graphic_draw.graphic_name[1] =pitchname[1];
-	graphic_draw.graphic_name[2] =pitchname[2];
-	graphic_draw.graphic_tpye = 0;
+	graphic_draw.figure_name[0] =pitchname[0];
+	graphic_draw.figure_name[1] =pitchname[1];
+	graphic_draw.figure_name[2] =pitchname[2];
+	graphic_draw.graphic_type = 0;
 	graphic_draw.layer = 0;
 	graphic_draw.color = 2;
 	//graphic_draw.start_angle=0;
@@ -1152,8 +1208,8 @@ void send_change_test(int lenth0)
 	graphic_draw.start_x = 100;
 	graphic_draw.start_y = 200;
 	//graphic_draw.radius = 0;
-	graphic_draw.end_x = 100+lenth0;
-	graphic_draw.end_y = 200;
+	graphic_draw.details_d = 100+lenth0;
+	graphic_draw.details_e = 200;
 	
 	//memcpy(graphic_draw.graphic_name, (uint8_t*)name, strlen(name));
 	referee_send_client_graphic(MY_CLIENT_ID, &graphic_draw);
@@ -1161,26 +1217,26 @@ void send_change_test(int lenth0)
 
 
 
-void send_rub_graphic(char graphname[3], int x, int y, int color, int type)
+void send_bool_state_graphic(char graphname[3], int x, int y, int color, int type)
 {
 	
 	graphic_data_struct_t graphic_draw;
-	graphic_draw.graphic_name[0] = graphname[0];
-	graphic_draw.graphic_name[0] = graphname[1];
-	graphic_draw.graphic_name[0] = graphname[2];
+	graphic_draw.figure_name[0] = graphname[0];
+	graphic_draw.figure_name[1] = graphname[1];
+	graphic_draw.figure_name[2] = graphname[2];
 	
-	graphic_draw.operate_tpye = type;
+	graphic_draw.operate_type = type; // ²Ù×÷ÀàÐÍ
 	
 	graphic_draw.color = color;
-	graphic_draw.graphic_tpye = 2;
+	graphic_draw.graphic_type = 2; // ÕýÔ²
 	
 	graphic_draw.layer = 0;
-	graphic_draw.width = 20; //ÏßÌõ¿í¶È
+	graphic_draw.width = 15; //ÏßÌõ¿í¶È
 	
 	graphic_draw.start_x = x;
 	graphic_draw.start_y = y;
 	
-	graphic_draw.radius = 20;
+	graphic_draw.details_c = 15;  // °ë¾¶
 	
 	//memcpy(graphic_draw.graphic_name, (uint8_t*)name, strlen(name));
 
@@ -1191,22 +1247,22 @@ void send_snipeMode(int type)
 {
 	graphic_data_struct_t graphic_draw;
 	char snipename[3] = "508";
-	graphic_draw.graphic_name[0] = snipename[0];
-	graphic_draw.graphic_name[0] = snipename[1];
-	graphic_draw.graphic_name[0] = snipename[2];
+	graphic_draw.figure_name[0] = snipename[0];
+	graphic_draw.figure_name[1] = snipename[1];
+	graphic_draw.figure_name[2] = snipename[2];
 	
-	graphic_draw.operate_tpye = type;
+	graphic_draw.operate_type = type;
 	
 	graphic_draw.color = 4;
-	graphic_draw.graphic_tpye = 1;
+	graphic_draw.graphic_type = 1;
 	
 	graphic_draw.layer = 0;
 	graphic_draw.width = 15; //ÏßÌõ¿í¶È
 	
 	graphic_draw.start_x = 50;
 	graphic_draw.start_y = 600;
-	graphic_draw.end_x = 70;
-	graphic_draw.end_y = 620;
+	graphic_draw.details_d = 70;
+	graphic_draw.details_e = 620;
 	referee_send_client_graphic(MY_CLIENT_ID, &graphic_draw);
 
 }
@@ -1216,7 +1272,7 @@ void send_frame1_graphic(char graphname[3], int x, int y)
 	
 	graphic_data_struct_t graphic_draw;
 	
-	switch(ext_game_robot_status.robot_id){
+	switch(ext_robot_status.robot_id){
 				case robotid_red_hero:{
 						MY_CLIENT_ID = clientid_red_hero;
 						MY_ROBOT_ID = robotid_red_hero;	
@@ -1260,13 +1316,13 @@ void send_frame1_graphic(char graphname[3], int x, int y)
 				}
 			}
 	
-	graphic_draw.graphic_name[0] = graphname[0];
-	graphic_draw.graphic_name[0] = graphname[1];
-	graphic_draw.graphic_name[0] = graphname[2];
+	graphic_draw.figure_name[0] = graphname[0];
+	graphic_draw.figure_name[1] = graphname[1];
+	graphic_draw.figure_name[2] = graphname[2];
 
 	graphic_draw.color = 8;
-	graphic_draw.graphic_tpye = 2;
-	graphic_draw.operate_tpye = 1;
+	graphic_draw.graphic_type = 2;
+	graphic_draw.operate_type = 1;
 
 	graphic_draw.layer = 0;
 	graphic_draw.width = 3; //ÏßÌõ¿í¶È
@@ -1274,7 +1330,7 @@ void send_frame1_graphic(char graphname[3], int x, int y)
 	graphic_draw.start_x = x;
 	graphic_draw.start_y = y;
 	
-	graphic_draw.radius = 33;
+	graphic_draw.details_c = 33;
 	
 	//memcpy(graphic_draw.graphic_name, (uint8_t*)name, strlen(name));
 
@@ -1287,21 +1343,21 @@ void send_frame2_graphic(char graphname[3], int startx, int starty, int endx, in
 	graphic_data_struct_t graphic_draw;
 	
 	
-	graphic_draw.graphic_name[0] = graphname[0];
-	graphic_draw.graphic_name[0] = graphname[1];
-	graphic_draw.graphic_name[0] = graphname[2];
+	graphic_draw.figure_name[0] = graphname[0];
+	graphic_draw.figure_name[1] = graphname[1];
+	graphic_draw.figure_name[2] = graphname[2];
 
 	graphic_draw.color = 8;
-	graphic_draw.graphic_tpye = 1;
-	graphic_draw.operate_tpye = 1;
+	graphic_draw.graphic_type = 1;
+	graphic_draw.operate_type = 1;
 
 	graphic_draw.layer = 0;
 	graphic_draw.width = 3; //ÏßÌõ¿í¶È
 	
 	graphic_draw.start_x = startx;
 	graphic_draw.start_y = starty;
-	graphic_draw.end_x = endx;
-	graphic_draw.end_y = endy;
+	graphic_draw.details_d = endx;
+	graphic_draw.details_e = endy;
 	
 	
 	//memcpy(graphic_draw.graphic_name, (uint8_t*)name, strlen(name));
@@ -1311,34 +1367,34 @@ void send_frame2_graphic(char graphname[3], int startx, int starty, int endx, in
 
 void send_double_text()
 {
-	ext_client_custom_graphic_double_t graphic_draw;
+	ext_interaction_figure_double_t graphic_draw;
 	char name1[3] = "221";
-	graphic_draw.graphic_data_struct[0].graphic_name[0] = name1[0];
-	graphic_draw.graphic_data_struct[0].graphic_name[1] = name1[1];
-	graphic_draw.graphic_data_struct[0].graphic_name[2] = name1[2];
-	graphic_draw.graphic_data_struct[0].operate_tpye = 1;
-	graphic_draw.graphic_data_struct[0].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[0].figure_name[0] = name1[0];
+	graphic_draw.graphic_data_struct[0].figure_name[1] = name1[1];
+	graphic_draw.graphic_data_struct[0].figure_name[2] = name1[2];
+	graphic_draw.graphic_data_struct[0].operate_type = 1;
+	graphic_draw.graphic_data_struct[0].graphic_type = 0;
 	graphic_draw.graphic_data_struct[0].layer = 0;
 	graphic_draw.graphic_data_struct[0].color = 2;
 	graphic_draw.graphic_data_struct[0].width =2;
 	graphic_draw.graphic_data_struct[0].start_x =556;
 	graphic_draw.graphic_data_struct[0].start_y =0;
-	graphic_draw.graphic_data_struct[0].end_x =706;
-	graphic_draw.graphic_data_struct[0].end_y =240;
+	graphic_draw.graphic_data_struct[0].details_d =706;
+	graphic_draw.graphic_data_struct[0].details_e =240;
 	
 	char name2[3] = "223";
-	graphic_draw.graphic_data_struct[1].graphic_name[0] = name2[0];
-	graphic_draw.graphic_data_struct[1].graphic_name[1] = name2[1];
-	graphic_draw.graphic_data_struct[1].graphic_name[2] = name2[2];
-	graphic_draw.graphic_data_struct[1].operate_tpye = 1;
-	graphic_draw.graphic_data_struct[1].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[1].figure_name[0] = name2[0];
+	graphic_draw.graphic_data_struct[1].figure_name[1] = name2[1];
+	graphic_draw.graphic_data_struct[1].figure_name[2] = name2[2];
+	graphic_draw.graphic_data_struct[1].operate_type = 1;
+	graphic_draw.graphic_data_struct[1].graphic_type = 0;
 	graphic_draw.graphic_data_struct[1].layer = 0;
 	graphic_draw.graphic_data_struct[1].color = 2;
 	graphic_draw.graphic_data_struct[1].width =2;
 	graphic_draw.graphic_data_struct[1].start_x =1364;
 	graphic_draw.graphic_data_struct[1].start_y =0;
-	graphic_draw.graphic_data_struct[1].end_x =1214;
-	graphic_draw.graphic_data_struct[1].end_y =240;
+	graphic_draw.graphic_data_struct[1].details_d =1214;
+	graphic_draw.graphic_data_struct[1].details_e =240;
 	
 	referee_send_two_graphic(MY_CLIENT_ID, &graphic_draw);
 	
@@ -1348,13 +1404,13 @@ void send_text_graphic(char GraphName[3])
 {
 	
 	graphic_data_struct_t graphic_draw;
-	graphic_draw.graphic_name[0] =GraphName[0];
-	graphic_draw.graphic_name[1] =GraphName[1];
-	graphic_draw.graphic_name[2] =GraphName[2];
+	graphic_draw.figure_name[0] =GraphName[0];
+	graphic_draw.figure_name[1] =GraphName[1];
+	graphic_draw.figure_name[2] =GraphName[2];
 	
-	graphic_draw.operate_tpye = 1;
+	graphic_draw.operate_type = 1;
 	
-	graphic_draw.graphic_tpye = 0;
+	graphic_draw.graphic_type = 0;
 	
 	graphic_draw.layer = 0;
 	graphic_draw.color = 2;
@@ -1364,8 +1420,8 @@ void send_text_graphic(char GraphName[3])
 	graphic_draw.start_x = 556;
 	graphic_draw.start_y = 0;
 	//graphic_draw.radius = 0;
-	graphic_draw.end_x = 706;
-	graphic_draw.end_y = 240;
+	graphic_draw.details_d = 706;
+	graphic_draw.details_e = 240;
 	
 	//memcpy(graphic_draw.graphic_name, (uint8_t*)name, strlen(name));
 	referee_send_client_graphic(MY_CLIENT_ID, &graphic_draw);
@@ -1373,78 +1429,78 @@ void send_text_graphic(char GraphName[3])
 
 void send_five_graphic()
 {
-	ext_client_custom_graphic_five_t graphic_draw;
+	ext_interaction_figure_five_t graphic_draw;
 	
-	graphic_draw.graphic_data_struct[0].operate_tpye = 1;
-	graphic_draw.graphic_data_struct[1].operate_tpye = 1;
-	graphic_draw.graphic_data_struct[2].operate_tpye = 1;
-	graphic_draw.graphic_data_struct[3].operate_tpye = 1;
-	graphic_draw.graphic_data_struct[4].operate_tpye = 1;
+	graphic_draw.graphic_data_struct[0].operate_type = 1;
+	graphic_draw.graphic_data_struct[1].operate_type = 1;
+	graphic_draw.graphic_data_struct[2].operate_type = 1;
+	graphic_draw.graphic_data_struct[3].operate_type = 1;
+	graphic_draw.graphic_data_struct[4].operate_type = 1;
 	
 	char five1[3] = "501";
-	graphic_draw.graphic_data_struct[0].graphic_name[0] = five1[0];
-	graphic_draw.graphic_data_struct[0].graphic_name[1] = five1[1];
-	graphic_draw.graphic_data_struct[0].graphic_name[2] = five1[2];
-	graphic_draw.graphic_data_struct[0].graphic_tpye = 1;
+	graphic_draw.graphic_data_struct[0].figure_name[0] = five1[0];
+	graphic_draw.graphic_data_struct[0].figure_name[1] = five1[1];
+	graphic_draw.graphic_data_struct[0].figure_name[2] = five1[2];
+	graphic_draw.graphic_data_struct[0].graphic_type = 1;
 	graphic_draw.graphic_data_struct[0].layer = 0;
 	graphic_draw.graphic_data_struct[0].color = 1;
 	graphic_draw.graphic_data_struct[0].width = 1;
 	graphic_draw.graphic_data_struct[0].start_x = 50;
 	graphic_draw.graphic_data_struct[0].start_y = 400;
-	graphic_draw.graphic_data_struct[0].end_x = 80;
-	graphic_draw.graphic_data_struct[0].end_y = 440;
+	graphic_draw.graphic_data_struct[0].details_d = 80;
+	graphic_draw.graphic_data_struct[0].details_e = 440;
 	
 	char five2[3] = "502";
-	graphic_draw.graphic_data_struct[1].graphic_name[0] = five2[0];
-	graphic_draw.graphic_data_struct[1].graphic_name[1] = five2[1];
-	graphic_draw.graphic_data_struct[1].graphic_name[2] = five2[2];
-	graphic_draw.graphic_data_struct[1].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[1].figure_name[0] = five2[0];
+	graphic_draw.graphic_data_struct[1].figure_name[1] = five2[1];
+	graphic_draw.graphic_data_struct[1].figure_name[2] = five2[2];
+	graphic_draw.graphic_data_struct[1].graphic_type = 0;
 	graphic_draw.graphic_data_struct[1].layer = 0;
 	graphic_draw.graphic_data_struct[1].color = 1;
 	graphic_draw.graphic_data_struct[1].width = 1;
 	graphic_draw.graphic_data_struct[1].start_x = 50;
 	graphic_draw.graphic_data_struct[1].start_y = 400;
-	graphic_draw.graphic_data_struct[1].end_x = 50;
-	graphic_draw.graphic_data_struct[1].end_y = 360;
+	graphic_draw.graphic_data_struct[1].details_d = 50;
+	graphic_draw.graphic_data_struct[1].details_e = 360;
 	
 	char five3[3] = "503";
-	graphic_draw.graphic_data_struct[1].graphic_name[0] = five3[0];
-	graphic_draw.graphic_data_struct[1].graphic_name[1] = five3[1];
-	graphic_draw.graphic_data_struct[1].graphic_name[2] = five3[2];
-	graphic_draw.graphic_data_struct[1].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[1].figure_name[0] = five3[0];
+	graphic_draw.graphic_data_struct[1].figure_name[1] = five3[1];
+	graphic_draw.graphic_data_struct[1].figure_name[2] = five3[2];
+	graphic_draw.graphic_data_struct[1].graphic_type = 0;
 	graphic_draw.graphic_data_struct[1].layer = 0;
 	graphic_draw.graphic_data_struct[1].color = 1;
 	graphic_draw.graphic_data_struct[1].width = 1;
 	graphic_draw.graphic_data_struct[1].start_x = 50;
 	graphic_draw.graphic_data_struct[1].start_y = 340;
-	graphic_draw.graphic_data_struct[1].end_x = 65;
-	graphic_draw.graphic_data_struct[1].end_y = 300;
+	graphic_draw.graphic_data_struct[1].details_d = 65;
+	graphic_draw.graphic_data_struct[1].details_e = 300;
 	
 	char five4[3] = "504";
-	graphic_draw.graphic_data_struct[1].graphic_name[0] = five4[0];
-	graphic_draw.graphic_data_struct[1].graphic_name[1] = five4[1];
-	graphic_draw.graphic_data_struct[1].graphic_name[2] = five4[2];
-	graphic_draw.graphic_data_struct[1].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[1].figure_name[0] = five4[0];
+	graphic_draw.graphic_data_struct[1].figure_name[1] = five4[1];
+	graphic_draw.graphic_data_struct[1].figure_name[2] = five4[2];
+	graphic_draw.graphic_data_struct[1].graphic_type = 0;
 	graphic_draw.graphic_data_struct[1].layer = 0;
 	graphic_draw.graphic_data_struct[1].color = 1;
 	graphic_draw.graphic_data_struct[1].width = 1;
 	graphic_draw.graphic_data_struct[1].start_x = 80;
 	graphic_draw.graphic_data_struct[1].start_y = 340;
-	graphic_draw.graphic_data_struct[1].end_x = 65;
-	graphic_draw.graphic_data_struct[1].end_y = 300;
+	graphic_draw.graphic_data_struct[1].details_d = 65;
+	graphic_draw.graphic_data_struct[1].details_e = 300;
 	
 	char five5[3] = "505";
-	graphic_draw.graphic_data_struct[1].graphic_name[0] = five5[0];
-	graphic_draw.graphic_data_struct[1].graphic_name[1] = five5[1];
-	graphic_draw.graphic_data_struct[1].graphic_name[2] = five5[2];
-	graphic_draw.graphic_data_struct[1].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[1].figure_name[0] = five5[0];
+	graphic_draw.graphic_data_struct[1].figure_name[1] = five5[1];
+	graphic_draw.graphic_data_struct[1].figure_name[2] = five5[2];
+	graphic_draw.graphic_data_struct[1].graphic_type = 0;
 	graphic_draw.graphic_data_struct[1].layer = 0;
 	graphic_draw.graphic_data_struct[1].color = 1;
 	graphic_draw.graphic_data_struct[1].width = 1;
 	graphic_draw.graphic_data_struct[1].start_x = 65;
 	graphic_draw.graphic_data_struct[1].start_y = 300;
-	graphic_draw.graphic_data_struct[1].end_x = 65;
-	graphic_draw.graphic_data_struct[1].end_y = 260;
+	graphic_draw.graphic_data_struct[1].details_d = 65;
+	graphic_draw.graphic_data_struct[1].details_e = 260;
 	
 	referee_send_five_graphic(MY_CLIENT_ID, &graphic_draw);
 }
@@ -1454,18 +1510,18 @@ void send_autoaim_state()
 {
 	graphic_data_struct_t graphic_draw;
 	char capname[3] = "409";
-	graphic_draw.graphic_name[0] = capname[0];
-	graphic_draw.graphic_name[1] = capname[1];
-	graphic_draw.graphic_name[2] = capname[2];
+	graphic_draw.figure_name[0] = capname[0];
+	graphic_draw.figure_name[1] = capname[1];
+	graphic_draw.figure_name[2] = capname[2];
 	
 	if(auto_state){
-		graphic_draw.operate_tpye = 1;
+		graphic_draw.operate_type = 1;
 		auto_state = false;
 	}
 	else
-		graphic_draw.operate_tpye = 2;
+		graphic_draw.operate_type = 2;
 	
-	graphic_draw.graphic_tpye = 1;
+	graphic_draw.graphic_type = 1;
 	graphic_draw.layer = 0;
 	if(gimbal_ob == GIMBAL_AUTO)
 		graphic_draw.color = 2;
@@ -1476,8 +1532,8 @@ void send_autoaim_state()
 	graphic_draw.start_x = 1790;
 	graphic_draw.start_y = 610;
 	
-	graphic_draw.end_x = 1810;
-	graphic_draw.end_y = 590;
+	graphic_draw.details_d = 1810;
+	graphic_draw.details_e = 590;
 	referee_send_client_graphic(MY_CLIENT_ID, &graphic_draw);
 }
 
@@ -1486,61 +1542,35 @@ void send_capvol_graphic(int capvols)
 {
 	graphic_data_struct_t graphic_draw;
 	char capname[3] = "209";
-	graphic_draw.graphic_name[0] = capname[0];
-	graphic_draw.graphic_name[1] = capname[1];
-	graphic_draw.graphic_name[2] = capname[2];
+	graphic_draw.figure_name[0] = capname[0];
+	graphic_draw.figure_name[1] = capname[1];
+	graphic_draw.figure_name[2] = capname[2];
 	if(capdraw){
-	graphic_draw.operate_tpye = 1;
+	graphic_draw.operate_type = 1;
 	capdraw = false;
 	}
 	else
 	{
-	graphic_draw.operate_tpye = 2;
+	graphic_draw.operate_type = 2;
 	}
 	
 	graphic_draw.color = 1;
-	graphic_draw.graphic_tpye = 0;
+	graphic_draw.graphic_type = 0;
 	graphic_draw.layer = 0;
 
 	graphic_draw.width = 18; //ÏßÌõ¿í¶È
 	graphic_draw.start_x = 761;
 	graphic_draw.start_y = 70;
 	
-	graphic_draw.end_x = capvols;
-	graphic_draw.end_y = 70;
+	graphic_draw.details_d = capvols;
+	graphic_draw.details_e = 70;
 	
 	//memcpy(graphic_draw.graphic_name, (uint8_t*)name, strlen(name));
 	referee_send_client_graphic(MY_CLIENT_ID, &graphic_draw);
 }
 
 
-void send_spinning_graphic(char name[3], int x, int y, int color, int type)
-{
-	
-	graphic_data_struct_t graphic_draw;
-	
-	graphic_draw.graphic_name[0] =name[0];
-	graphic_draw.graphic_name[1] =name[1];
-	graphic_draw.graphic_name[2] =name[2];
-	
-	
-	graphic_draw.operate_tpye = type;
-	
-	graphic_draw.color = color;
-	graphic_draw.graphic_tpye = 2;
-	
-	graphic_draw.layer = 0;
-	graphic_draw.width = 20; //ÏßÌõ¿í¶È
-	
-	graphic_draw.start_x = x;
-	graphic_draw.start_y = y;
-	
-	graphic_draw.radius = 20;
-	
-	//memcpy(graphic_draw.graphic_name, (uint8_t*)name, strlen(name));
 
-	referee_send_client_graphic(MY_CLIENT_ID, &graphic_draw);
-}
 void send_single_icon(char* name, int x, int y, int type, int color)
 { //²ÎÊýÒÀ´ÎÎª£ºname£ºÍ¼ÐÎÃû³Æ£¬×÷Îª¿Í»§¶ËË÷Òý 
 	//x,y:»æÍ¼Æðµã×ø±ê
@@ -1560,7 +1590,7 @@ void send_single_icon(char* name, int x, int y, int type, int color)
 		else{
 			graphic_draw.operate_tpye = 2;
 		}*/
-	graphic_draw.operate_tpye = type;
+	graphic_draw.operate_type = type;
 	graphic_draw.layer = 0;
 
 
@@ -1569,11 +1599,11 @@ void send_single_icon(char* name, int x, int y, int type, int color)
 	//graphic_draw.end_angle=10;
 	graphic_draw.start_x = x;
 	graphic_draw.start_y = y;
-	graphic_draw.end_x = graphic_draw.start_x;
-	graphic_draw.end_y = graphic_draw.start_y + 20;//+pitchang*10;
+	graphic_draw.details_d = graphic_draw.start_x;
+	graphic_draw.details_e = graphic_draw.start_y + 20;//+pitchang*10;
 	//graphic_draw.radius = 30;
 	//graphic_draw.text_lenght = strlen(value);
-	memcpy(graphic_draw.graphic_name, (uint8_t*)name, strlen(name));
+	memcpy(graphic_draw.figure_name, (uint8_t*)name, strlen(name));
 
 	referee_send_client_graphic(MY_CLIENT_ID, &graphic_draw);
 }
@@ -1593,50 +1623,7 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 	          |
 	          |
 	*/
-	ext_client_custom_graphic_seven_t graphic_draw;
-	switch(ext_game_robot_status.robot_id){
-				case robotid_red_hero:{
-						MY_CLIENT_ID = clientid_red_hero;
-						MY_ROBOT_ID = robotid_red_hero;	
-					  break;
-				}
-				case robotid_red_infantry_1:{
-						MY_CLIENT_ID = clientid_red_infantry_1;
-						MY_ROBOT_ID = robotid_red_infantry_1;	
-					  break;
-				}
-				case robotid_red_infantry_2:{
-						MY_CLIENT_ID = clientid_red_infantry_2;
-						MY_ROBOT_ID = robotid_red_infantry_2;	
-					  break;					
-				}
-				case robotid_red_infantry_3:{
-						MY_CLIENT_ID = clientid_red_infantry_3;
-						MY_ROBOT_ID = robotid_red_infantry_3;
-					  break;					
-				}
-			
-				case robotid_blue_hero:{
-						MY_CLIENT_ID = clientid_blue_hero;
-						MY_ROBOT_ID = robotid_blue_hero;	
-					  break;
-				}
-				case robotid_blue_infantry_1:{
-						MY_CLIENT_ID = clientid_blue_infantry_1;
-						MY_ROBOT_ID = robotid_blue_infantry_1;	
-					  break;
-				}
-				case robotid_blue_infantry_2:{
-						MY_CLIENT_ID = clientid_blue_infantry_2;
-						MY_ROBOT_ID = robotid_blue_infantry_2;
-					  break;					
-				}
-				case robotid_blue_infantry_3:{
-						MY_CLIENT_ID = clientid_blue_infantry_3;
-						MY_ROBOT_ID = robotid_blue_infantry_3;
-					  break;					
-				}
-			}
+	ext_interaction_figure_seven_t graphic_draw;
 	
 	//graph 1£ºÒ»ÌõÏß¿íÎª3µÄ»ÆÉ«Ö±Ïß¡£ÆðµãÎª£¨960£¬200£©ÖÕµãÎª£¨960£¬540£©
 	
@@ -1644,13 +1631,13 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 //	if (first_multi_draw)
 //	{//µÚÒ»´Î»­ÔòÉèÖÃÄ£Ê½ÎªÐÂÔö
 //		first_multi_draw = false;
-		graphic_draw.graphic_data_struct[0].operate_tpye = 1;
-		graphic_draw.graphic_data_struct[1].operate_tpye = 1;
-		graphic_draw.graphic_data_struct[2].operate_tpye = 1;
-		graphic_draw.graphic_data_struct[3].operate_tpye = 1;
-		graphic_draw.graphic_data_struct[4].operate_tpye = 1;
-		graphic_draw.graphic_data_struct[5].operate_tpye = 1;
-		graphic_draw.graphic_data_struct[6].operate_tpye = 1;
+		graphic_draw.graphic_data_struct[0].operate_type = 1;
+		graphic_draw.graphic_data_struct[1].operate_type = 1;
+		graphic_draw.graphic_data_struct[2].operate_type = 1;
+		graphic_draw.graphic_data_struct[3].operate_type = 1;
+		graphic_draw.graphic_data_struct[4].operate_type = 1;
+		graphic_draw.graphic_data_struct[5].operate_type = 1;
+		graphic_draw.graphic_data_struct[6].operate_type = 1;
 //	}
 
 /*	else
@@ -1664,10 +1651,10 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 		graphic_draw.graphic_data_struct[6].operate_tpye = 2;
 	}*/
 	char name1[3] = "701";
-	graphic_draw.graphic_data_struct[0].graphic_name[0] = name1[0];
-	graphic_draw.graphic_data_struct[0].graphic_name[1] = name1[1];
-	graphic_draw.graphic_data_struct[0].graphic_name[2] = name1[2];
-	graphic_draw.graphic_data_struct[6].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[0].figure_name[0] = name1[0];
+	graphic_draw.graphic_data_struct[0].figure_name[1] = name1[1];
+	graphic_draw.graphic_data_struct[0].figure_name[2] = name1[2];
+	graphic_draw.graphic_data_struct[6].graphic_type = 0;
 	//graphic_draw.graphic_data_struct[6].operate_tpye = 1;
 	graphic_draw.graphic_data_struct[6].layer = 0;
 	graphic_draw.graphic_data_struct[6].color = 2;
@@ -1676,18 +1663,18 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 	//graphic_draw.graphic_data_struct[6].end_angle=10;
 	graphic_draw.graphic_data_struct[6].start_x = 900;
 	graphic_draw.graphic_data_struct[6].start_y = 330;
-	graphic_draw.graphic_data_struct[6].end_x = 1020;
-	graphic_draw.graphic_data_struct[6].end_y = 330;
+	graphic_draw.graphic_data_struct[6].details_d = 1020;
+	graphic_draw.graphic_data_struct[6].details_e = 330;
 	//graphic_draw.graphic_data_struct[0].radius = 30;
 	//memcpy(graphic_draw.graphic_data_struct[0].graphic_name, (uint8_t*)name1, strlen(name1));
 	
 	
 	//graph 2£ºÒ»ÌõÏß¿íÎª3µÄ»ÆÉ«Ö±Ïß£¬ÆðµãÎª£¨850£¬540£©£¬ÖÕµãÎª£¨1070£¬540£©
 	char name2[3] = "702";
-	graphic_draw.graphic_data_struct[1].graphic_name[0] = name2[0];
-	graphic_draw.graphic_data_struct[1].graphic_name[1] = name2[1];
-	graphic_draw.graphic_data_struct[1].graphic_name[2] = name2[2];
-	graphic_draw.graphic_data_struct[0].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[1].figure_name[0] = name2[0];
+	graphic_draw.graphic_data_struct[1].figure_name[1] = name2[1];
+	graphic_draw.graphic_data_struct[1].figure_name[2] = name2[2];
+	graphic_draw.graphic_data_struct[0].graphic_type = 0;
 	graphic_draw.graphic_data_struct[0].layer = 0;
 	graphic_draw.graphic_data_struct[0].color = 2;
 	graphic_draw.graphic_data_struct[0].width = 1;
@@ -1695,8 +1682,8 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 	//graphic_draw.graphic_data_struct[0].end_angle=10;
 	graphic_draw.graphic_data_struct[0].start_x = 954;
 	graphic_draw.graphic_data_struct[0].start_y = 200;
-	graphic_draw.graphic_data_struct[0].end_x = 954;
-	graphic_draw.graphic_data_struct[0].end_y = 540;
+	graphic_draw.graphic_data_struct[0].details_d = 954;
+	graphic_draw.graphic_data_struct[0].details_e = 540;
 	
 
 	//graphic_draw.graphic_data_struct[1].radius = 30;
@@ -1705,11 +1692,11 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 	
 	//graph 3£ºÒ²ÊÇÏß¿íÎª3µÄ»ÆÉ«Ö±Ïß£¬ÆðµãÎª£¨860£¬520£©£¬ÖÕµãÎª£¨1060£¬520£©
 	char name3[3] = "703";
-	graphic_draw.graphic_data_struct[2].graphic_name[0] = name3[0];
-	graphic_draw.graphic_data_struct[2].graphic_name[1] = name3[1];
-	graphic_draw.graphic_data_struct[2].graphic_name[2] = name3[2];
-	graphic_draw.graphic_data_struct[2].graphic_tpye = 0;
-	//graphic_draw.graphic_data_struct[2].operate_tpye = 1;
+	graphic_draw.graphic_data_struct[2].figure_name[0] = name3[0];
+	graphic_draw.graphic_data_struct[2].figure_name[1] = name3[1];
+	graphic_draw.graphic_data_struct[2].figure_name[2] = name3[2];
+	graphic_draw.graphic_data_struct[2].graphic_type = 0;
+	//graphic_draw.graphic_data_struct[2].operate_type = 1;
 	graphic_draw.graphic_data_struct[2].layer = 0;
 	graphic_draw.graphic_data_struct[2].color = 2;
 	graphic_draw.graphic_data_struct[2].width = 1;
@@ -1717,18 +1704,18 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 	//graphic_draw.graphic_data_struct[2].end_angle=10;
 	graphic_draw.graphic_data_struct[2].start_x = 910;
 	graphic_draw.graphic_data_struct[2].start_y = 390;
-	graphic_draw.graphic_data_struct[2].end_x = 1010;
-	graphic_draw.graphic_data_struct[2].end_y = 390;
+	graphic_draw.graphic_data_struct[2].details_d = 1010;
+	graphic_draw.graphic_data_struct[2].details_e = 390;
 	//graphic_draw.graphic_data_struct[2].radius = 30;
 	//memcpy(graphic_draw.graphic_data_struct[2].graphic_name, (uint8_t*)name3, strlen(name3));
 	
 	
 	//graph 4
 	char name4[3] = "704";
-	graphic_draw.graphic_data_struct[3].graphic_name[0] = name4[0];
-	graphic_draw.graphic_data_struct[3].graphic_name[1] = name4[1];
-	graphic_draw.graphic_data_struct[3].graphic_name[2] = name4[2];
-	graphic_draw.graphic_data_struct[3].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[3].figure_name[0] = name4[0];
+	graphic_draw.graphic_data_struct[3].figure_name[1] = name4[1];
+	graphic_draw.graphic_data_struct[3].figure_name[2] = name4[2];
+	graphic_draw.graphic_data_struct[3].graphic_type = 0;
 	//graphic_draw.graphic_data_struct[3].operate_tpye = 1;
 	graphic_draw.graphic_data_struct[3].layer = 0;
 	graphic_draw.graphic_data_struct[3].color = 2;
@@ -1737,16 +1724,16 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 	//graphic_draw.graphic_data_struct[3].end_angle=10;
 	graphic_draw.graphic_data_struct[3].start_x = 900;
 	graphic_draw.graphic_data_struct[3].start_y = 400;
-	graphic_draw.graphic_data_struct[3].end_x = 1020;
-	graphic_draw.graphic_data_struct[3].end_y = 400;
+	graphic_draw.graphic_data_struct[3].details_d = 1020;
+	graphic_draw.graphic_data_struct[3].details_e = 400;
 	//graphic_draw.graphic_data_struct[3].radius = 30;
 	//memcpy(graphic_draw.graphic_data_struct[3].graphic_name, (uint8_t*)name4, strlen(name4));
 	//graph 5
 	char name5[3] = "705";
-	graphic_draw.graphic_data_struct[4].graphic_name[0] = name5[0];
-	graphic_draw.graphic_data_struct[4].graphic_name[1] = name5[1];
-	graphic_draw.graphic_data_struct[4].graphic_name[2] = name5[2];
-	graphic_draw.graphic_data_struct[4].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[4].figure_name[0] = name5[0];
+	graphic_draw.graphic_data_struct[4].figure_name[1] = name5[1];
+	graphic_draw.graphic_data_struct[4].figure_name[2] = name5[2];
+	graphic_draw.graphic_data_struct[4].graphic_type = 0;
 	//graphic_draw.graphic_data_struct[4].operate_tpye = 1;
 	graphic_draw.graphic_data_struct[4].layer = 0;
 	graphic_draw.graphic_data_struct[4].color = 2;
@@ -1755,16 +1742,16 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 	//graphic_draw.graphic_data_struct[4].end_angle=10;
 	graphic_draw.graphic_data_struct[4].start_x = 900;
 	graphic_draw.graphic_data_struct[4].start_y = 300;
-	graphic_draw.graphic_data_struct[4].end_x = 1020;
-	graphic_draw.graphic_data_struct[4].end_y = 300;
+	graphic_draw.graphic_data_struct[4].details_d = 1020;
+	graphic_draw.graphic_data_struct[4].details_e = 300;
 	//graphic_draw.graphic_data_struct[4].radius = 30;
 	//memcpy(graphic_draw.graphic_data_struct[4].graphic_name, (uint8_t*)name5, strlen(name5));
 	//graph 6
 	char name6[3] = "706";
-	graphic_draw.graphic_data_struct[5].graphic_name[0] = name6[0];
-	graphic_draw.graphic_data_struct[5].graphic_name[1] = name6[1];
-	graphic_draw.graphic_data_struct[5].graphic_name[2] = name6[2];
-	graphic_draw.graphic_data_struct[5].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[5].figure_name[0] = name6[0];
+	graphic_draw.graphic_data_struct[5].figure_name[1] = name6[1];
+	graphic_draw.graphic_data_struct[5].figure_name[2] = name6[2];
+	graphic_draw.graphic_data_struct[5].graphic_type = 0;
 	//graphic_draw.graphic_data_struct[5].operate_tpye = 1;
 	graphic_draw.graphic_data_struct[5].layer = 0;
 	graphic_draw.graphic_data_struct[5].color = 2;
@@ -1773,16 +1760,16 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 	//graphic_draw.graphic_data_struct[5].end_angle=10;
 	graphic_draw.graphic_data_struct[5].start_x = 890;
 	graphic_draw.graphic_data_struct[5].start_y = 310;
-	graphic_draw.graphic_data_struct[5].end_x = 1030;
-	graphic_draw.graphic_data_struct[5].end_y = 310;
+	graphic_draw.graphic_data_struct[5].details_d = 1030;
+	graphic_draw.graphic_data_struct[5].details_e = 310;
 	//graphic_draw.graphic_data_struct[5].radius = 30;
 	//memcpy(graphic_draw.graphic_data_struct[5].graphic_name, (uint8_t*)name6, strlen(name6));
 	//graph 7
 	char name7[3] = "707";
-	graphic_draw.graphic_data_struct[6].graphic_name[0] = name7[0];
-	graphic_draw.graphic_data_struct[6].graphic_name[1] = name7[1];
-	graphic_draw.graphic_data_struct[6].graphic_name[2] = name7[2];
-	graphic_draw.graphic_data_struct[6].graphic_tpye = 0;
+	graphic_draw.graphic_data_struct[6].figure_name[0] = name7[0];
+	graphic_draw.graphic_data_struct[6].figure_name[1] = name7[1];
+	graphic_draw.graphic_data_struct[6].figure_name[2] = name7[2];
+	graphic_draw.graphic_data_struct[6].graphic_type = 0;
 	//graphic_draw.graphic_data_struct[6].operate_tpye = 1;
 	graphic_draw.graphic_data_struct[6].layer = 0;
 	graphic_draw.graphic_data_struct[6].color = 2;
@@ -1791,8 +1778,8 @@ void send_multi_graphic()//Ïò¿Í»§¶Ë·¢ËÍÆß¸öÍ¼ÐÎµÄÊý¾Ý¡£Ã¿¸öÍ¼ÐÎ°üº¬ÆðµãÖÕµã¡¢²Ù×
 	//graphic_draw.graphic_data_struct[6].end_angle=10;
 	graphic_draw.graphic_data_struct[6].start_x = 880;
 	graphic_draw.graphic_data_struct[6].start_y = 320;
-	graphic_draw.graphic_data_struct[6].end_x = 1040;
-	graphic_draw.graphic_data_struct[6].end_y = 320;
+	graphic_draw.graphic_data_struct[6].details_d = 1040;
+	graphic_draw.graphic_data_struct[6].details_e = 320;
 	//graphic_draw.graphic_data_struct[6].radius = 30;
 	//memcpy(graphic_draw.graphic_data_struct[6].graphic_name, (uint8_t*)name7, strlen(name7));
 
@@ -1806,16 +1793,16 @@ void Send_Middle_rectangle(int level, int color, int x_length, int y_length)
 	graphic_data_struct_t graphic_draw2;
 	char name_temp = (char)(level + 30);
 	char* name = &name_temp;
-	graphic_draw2.operate_tpye = 1;
-	graphic_draw2.graphic_tpye = 2;
+	graphic_draw2.operate_type = 1;
+	graphic_draw2.graphic_type = 2;
 	graphic_draw2.layer = level;
 	graphic_draw2.color = color;
 	graphic_draw2.width = 2;
 	graphic_draw2.start_x = (int)(960 - x_length / 2.0f);
 	graphic_draw2.start_y = (int)(540 - y_length / 2.0f);
-	graphic_draw2.end_x = (int)(960 + x_length / 2.0f);
-	graphic_draw2.end_y = (int)(540 + y_length / 2.0f);
-	memcpy(graphic_draw2.graphic_name, (uint8_t*)name, strlen(name));
+	graphic_draw2.details_d = (int)(960 + x_length / 2.0f);
+	graphic_draw2.details_e = (int)(540 + y_length / 2.0f);
+	memcpy(graphic_draw2.figure_name, (uint8_t*)name, strlen(name));
 	referee_send_client_graphic(MY_CLIENT_ID, &graphic_draw2);
 }
 
@@ -1825,22 +1812,22 @@ void Send_Middle_rectangle(int level, int color, int x_length, int y_length)
 {
 	int len = strlen(str) + 1;
 	ext_client_custom_character_t character_data;
-	character_data.graphic_data_struct.graphic_tpye = 7;//string
+	character_data.graphic_data_struct.graphic_type = 7;//string
 
-	character_data.graphic_data_struct.operate_tpye = upd;//modify
+	character_data.graphic_data_struct.operate_type = upd;//modify
 
 	character_data.graphic_data_struct.layer = 0;
 
 	character_data.graphic_data_struct.color = colour;//green
 
 	character_data.graphic_data_struct.width = 2;
-	character_data.graphic_data_struct.start_angle = 10;//size
-	character_data.graphic_data_struct.end_angle = len;//length
+	character_data.graphic_data_struct.details_a = 10;//size
+	character_data.graphic_data_struct.details_b = len;//length
 	character_data.graphic_data_struct.start_x = x;
 	character_data.graphic_data_struct.start_y = y;
 
 	memcpy(character_data.data, (uint8_t*)str, len);
-	memcpy(character_data.graphic_data_struct.graphic_name, (uint8_t*)name, strlen(name));
+	memcpy(character_data.graphic_data_struct.figure_name, (uint8_t*)name, strlen(name));
 
 	referee_send_client_character(MY_CLIENT_ID, &character_data);
 }

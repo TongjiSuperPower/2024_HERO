@@ -3,9 +3,9 @@
 #include "struct_typedef.h"
 
 typedef enum{
-cover_off,
-cover_on,
-}covermoni;
+servo_up,
+servo_down,
+}servo_control;
 
 extern void servo_task(void const * argument);
 

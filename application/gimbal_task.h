@@ -502,4 +502,6 @@ extern void set_cali_gimbal_hook(const uint16_t yaw_offset, const uint16_t pitch
 
 static void autoaim_init(gimbal_control_t *init);
 
+extern const gimbal_control_t *get_gimbal_control_point(void);
+
 #endif

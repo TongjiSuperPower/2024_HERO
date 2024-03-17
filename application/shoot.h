@@ -115,11 +115,11 @@
 
 #endif
 
-#define FRIC_LEFT_SPEED_PID_KP      5.0f
-#define FRIC_LEFT_SPEED_PID_KI		0.0f
-#define FRIC_LEFT_SPEED_PID_KD		0.3f
-#define FRIC_RIGHT_SPEED_PID_KP		5.0f
-#define FRIC_RIGHT_SPEED_PID_KI     0.0f
+#define FRIC_LEFT_SPEED_PID_KP      32.0f
+#define FRIC_LEFT_SPEED_PID_KI		2.5f
+#define FRIC_LEFT_SPEED_PID_KD		0.5f
+#define FRIC_RIGHT_SPEED_PID_KP		15.5f
+#define FRIC_RIGHT_SPEED_PID_KI     2.0f
 #define FRIC_RIGHT_SPEED_PID_KD     0.3f
 
 #define FRIC_LEFT_PID_MAX_OUT   30000.0f

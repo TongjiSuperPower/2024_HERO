@@ -351,3 +351,12 @@ MDK-ARM/startup_stm32f407xx.lst
 MDK-ARM/startup_stm32f407xx.s
 
 
+MDK-ARM/.vscode/c_cpp_properties.json
+MDK-ARM/.vscode/c_cpp_properties.json
+MDK-ARM/.vscode/keil-assistant.log
+MDK-ARM/.vscode/settings.json
+MDK-ARM/.vscode/uv4.log
+MDK-ARM/.vscode/uv4.log.lock
+MDK-ARM/standard_robot.uvguix.zlw
+MDK-ARM/standard_robot.uvoptx
+MDK-ARM/standard_robot.uvprojx
